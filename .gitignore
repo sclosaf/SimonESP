@@ -2,4 +2,4 @@
 build/
 **/build/
 local.properties
-/.kotlin/
+.kotlin/

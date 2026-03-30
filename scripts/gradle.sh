@@ -8,7 +8,7 @@ MAIN_ACTIVITY=".MainActivity"
 
 usage()
 {
-    echo "Usage: $0 [debug|release|install-debug|install-release|run] [verbose]"
+    echo "Usage: $0 [debug|release|install-debug|install-release|run|clean] [verbose]"
     exit 1
 }
 
@@ -52,6 +52,13 @@ case $COMMAND in
     run)
         echo "Starting app on device..."
         adb shell am start -n "$PACKAGE_NAME/$MAIN_ACTIVITY"
+        ;;
+
+    clean)
+        echo "Cleaning project build directories..."
+        gradle8 clean $GRADLE_FLAGS
+        rm -rf "$PROJECT_ROOT/build/" "$PROJECT_ROOT/app/build/"
+        echo "Local build directories removed."
         ;;
 
     *)

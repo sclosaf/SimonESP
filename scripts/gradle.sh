@@ -8,7 +8,7 @@ MAIN_ACTIVITY=".MainActivity"
 
 usage()
 {
-    echo "Usage: $0 [debug|release|install-debug|install-release|run|clean] [verbose]"
+    echo "Usage: $0 [debug|release|build|install-debug|install-release|deploy|run|clean] [verbose]"
     exit 1
 }
 
@@ -22,6 +22,8 @@ VERBOSE=$2
 GRADLE_FLAGS=""
 if [ "$VERBOSE" == "verbose" ]; then
     GRADLE_FLAGS="--stacktrace --info --debug --warning-mode all"
+else
+    GRADLE_FLAGS="--warning-mode none"
 fi
 
 cd "$PROJECT_ROOT/.." || { echo "Failed to enter project root"; exit 1; }
@@ -37,16 +39,27 @@ case $COMMAND in
         gradle8 assembleRelease $GRADLE_FLAGS
         ;;
 
+    build)
+        echo "Running full build and unit tests..."
+        gradle8 build $GRADLE_FLAGS
+        ;;
+
     install-debug)
         echo "Building and installing debug APK..."
-        gradle8 assembleDebug $GRADLE_FLAGS
-        adb install -r "$APP_APK_DEBUG"
+        gradle8 assembleDebug $GRADLE_FLAGS && adb install -r "$APP_APK_DEBUG"
         ;;
 
     install-release)
         echo "Building and installing release APK..."
-        gradle8 assembleRelease $GRADLE_FLAGS
-        adb install -r "$APP_APK_RELEASE"
+        gradle8 assembleRelease $GRADLE_FLAGS && adb install -r "$APP_APK_RELEASE"
+        ;;
+
+    deploy)
+        echo "Full Deploy: Building, Installing and Running debug APK..."
+        gradle8 assembleDebug $GRADLE_FLAGS && \
+        adb install -r "$APP_APK_DEBUG" && \
+        echo "Starting $PACKAGE_NAME..." && \
+        adb shell am start -n "$PACKAGE_NAME/$MAIN_ACTIVITY"
         ;;
 
     run)

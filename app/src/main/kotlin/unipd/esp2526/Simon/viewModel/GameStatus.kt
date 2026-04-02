@@ -17,13 +17,13 @@ class GameStatus : ViewModel()
         private const val LIGHT_DURATION_MS = 150L
     }
 
-    private var currentSequence by mutableStateOf<List<ColorType>>(emptyList())
+    var currentSequence by mutableStateOf<List<ColorType>>(emptyList())
         private set
 
-    private var isGameActive by mutableStateOf(true)
+    var isGameActive by mutableStateOf(true)
         private set
 
-    private var litColor by mutableStateOf<ColorType?>(null)
+    var litColor by mutableStateOf<ColorType?>(null)
         private set
 
     private var currentLightJob: kotlinx.coroutines.Job? = null

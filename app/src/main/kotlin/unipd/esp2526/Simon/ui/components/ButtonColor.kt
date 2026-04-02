@@ -17,7 +17,7 @@ import unipd.esp2526.Simon.ui.theme.*
 fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier)
 {
     val backgroundColor = getColor(color, isLit)
-    val elevation = if(isLit) 8.dp else 2.dp
+    val elevation = if(isLit) 8.dp else 4.dp
 
     Card(
         modifier = modifier

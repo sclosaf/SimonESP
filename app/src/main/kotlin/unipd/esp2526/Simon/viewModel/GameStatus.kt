@@ -14,7 +14,7 @@ class GameStatus : ViewModel()
 {
     companion object
     {
-        private const val LIGHT_DURATION_MS = 150L
+        private const val LIGHT_DURATION_MS = 275L
     }
 
     var currentSequence by mutableStateOf<List<ColorType>>(emptyList())

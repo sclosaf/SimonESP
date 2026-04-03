@@ -8,8 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+
 import unipd.esp2526.Simon.ui.components.ButtonGrid
 import unipd.esp2526.Simon.ui.components.ColorSequence
+import unipd.esp2526.Simon.ui.components.ButtonUtility
 import unipd.esp2526.Simon.ui.theme.ColorType
 import unipd.esp2526.Simon.viewModel.GameStatus
 
@@ -62,8 +64,12 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
                     modifier = Modifier.weight(1f)
                 )
 
-                // Utility buttons TO DO
-                Spacer(modifier = Modifier.weight(0.5f))
+                ButtonUtility(
+                    onDelete = { viewModel.clearSequence() },
+                    onEnd = { onGameEnd(viewModel.endGame()) },
+                    isDeleteEnabled = currentSequence.isNotEmpty(),
+                )
+
             }
         }
     }
@@ -94,8 +100,11 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
                 modifier = Modifier.weight(1f)
             )
 
-            // Utility buttons TO DO
-            Spacer(modifier = Modifier.weight(0.5f))
+            ButtonUtility(
+                onDelete = { viewModel.clearSequence() },
+                onEnd = { onGameEnd(viewModel.endGame()) },
+                isDeleteEnabled = currentSequence.isNotEmpty(),
+            )
         }
     }
 }

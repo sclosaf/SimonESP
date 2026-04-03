@@ -17,6 +17,14 @@ val lightTertiary = Color(0xFF7D5260)
 val lightBackground = Color(0xFFFFFFFF)
 val lightSurface = Color(0xFFF5F5F5)
 
+val disabledButton = Color(0xFFBDBDBD)
+
+val darkDelete = Color(0xFFEF5350)
+val lightDelete = Color(0xFFE53935)
+
+val darkEnd = Color(0xFF66BB6A)
+val lightEnd = Color(0xFF43A047)
+
 private val DarkColorScheme = darkColorScheme(
     primary = darkPrimary,
     secondary = darkSecondary,

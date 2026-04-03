@@ -22,21 +22,15 @@ class MainActivity : ComponentActivity()
             SimonTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
                 {
-                    App()
+                    val gameViewModel: GameStatus = viewModel()
+
+                    GameScreen(
+                        onGameEnd = { sequence ->
+                            gameViewModel.reset()
+                        }
+                    )
                 }
             }
         }
     }
-}
-
-@Composable
-fun App()
-{
-    val gameViewModel: GameStatus = viewModel()
-
-    GameScreen(
-        onGameEnd = { sequence ->
-            gameViewModel.reset()
-        }
-    )
 }

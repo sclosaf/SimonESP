@@ -42,7 +42,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun SimonTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)
+fun Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)
 {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 

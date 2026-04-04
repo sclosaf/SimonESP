@@ -38,7 +38,8 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .windowInsetsPadding(WindowInsets.statusBars),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
@@ -78,7 +79,8 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
+                .windowInsetsPadding(WindowInsets.statusBars),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp)
         )

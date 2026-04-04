@@ -2,6 +2,8 @@ package unipd.esp2526.Simon.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.CardDefaults
@@ -31,6 +33,7 @@ fun ColorSequence(sequence: List<ColorType>, modifier: Modifier = Modifier)
             textAlign = TextAlign.Start,
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         )
     }

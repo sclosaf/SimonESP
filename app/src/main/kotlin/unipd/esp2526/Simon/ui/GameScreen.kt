@@ -7,22 +7,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 import unipd.esp2526.Simon.ui.components.ButtonGrid
 import unipd.esp2526.Simon.ui.components.ColorSequence
 import unipd.esp2526.Simon.ui.components.ButtonUtility
+import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.theme.ColorType
 import unipd.esp2526.Simon.viewModel.GameStatus
+import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
 @Composable
-fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = viewModel())
+fun GameScreen(
+    onGameEnd: (List<ColorType>) -> Unit,
+    languageSwitcher: LanguageSwitcher,
+    gameStatus: GameStatus
+)
 {
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
-    val currentSequence by remember { derivedStateOf { viewModel.currentSequence } }
-    val litColor by remember { derivedStateOf { viewModel.litColor } }
-    val isGameActive by remember { derivedStateOf { viewModel.isGameActive } }
+    val currentSequence by remember { derivedStateOf { gameStatus.currentSequence } }
+    val litColor by remember { derivedStateOf { gameStatus.litColor } }
+    val isGameActive by remember { derivedStateOf { gameStatus.isGameActive } }
 
     val colors = listOf(
         ColorType.RED,
@@ -43,17 +48,28 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
-            ButtonGrid(
-                colors = colors,
-                lit = litColor,
-                onColorClick = { color ->
-                    if(isGameActive)
-                    {
-                        viewModel.addColor(color)
-                    }
-                },
-                modifier = Modifier.weight(1f)
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             )
+            {
+
+                TopBar(languageSwitcher = languageSwitcher)
+
+                Spacer(modifier = Modifier.width(20.dp))
+
+                ButtonGrid(
+                    colors = colors,
+                    lit = litColor,
+                    onColorClick = { color ->
+                        if(isGameActive)
+                        {
+                            gameStatus.addColor(color)
+                        }
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            }
 
             Column(
                 modifier = Modifier.weight(1f),
@@ -66,8 +82,8 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
                 )
 
                 ButtonUtility(
-                    onDelete = { viewModel.clearSequence() },
-                    onEnd = { onGameEnd(viewModel.endGame()) },
+                    onDelete = { gameStatus.clearSequence() },
+                    onEnd = { onGameEnd(gameStatus.endGame()) },
                     isDeleteEnabled = currentSequence.isNotEmpty(),
                 )
 
@@ -85,13 +101,17 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
             verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
+            TopBar(languageSwitcher = languageSwitcher)
+
+            Spacer(modifier = Modifier.width(24.dp))
+
             ButtonGrid(
                 colors = colors,
                 lit = litColor,
                 onColorClick = { color ->
                     if(isGameActive)
                     {
-                        viewModel.addColor(color)
+                        gameStatus.addColor(color)
                     }
                 },
                 modifier = Modifier.weight(2f)
@@ -103,10 +123,12 @@ fun GameScreen(onGameEnd: (List<ColorType>) -> Unit, viewModel: GameStatus = vie
             )
 
             ButtonUtility(
-                onDelete = { viewModel.clearSequence() },
-                onEnd = { onGameEnd(viewModel.endGame()) },
+                onDelete = { gameStatus.clearSequence() },
+                onEnd = { onGameEnd(gameStatus.endGame()) },
                 isDeleteEnabled = currentSequence.isNotEmpty(),
             )
+
+            Spacer(modifier = Modifier.width(20.dp))
         }
     }
 }

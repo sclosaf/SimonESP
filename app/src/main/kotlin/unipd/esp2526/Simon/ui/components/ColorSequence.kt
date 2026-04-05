@@ -31,10 +31,11 @@ fun ColorSequence(sequence: List<ColorType>, modifier: Modifier = Modifier)
         Text(
             text = textSequence,
             textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(16.dp)
+                .padding(12.dp)
         )
     }
 }

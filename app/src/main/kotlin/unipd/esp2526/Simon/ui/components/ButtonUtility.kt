@@ -58,7 +58,7 @@ fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, modifier: Modifier = 
                 Text(
                     text = stringResource(R.string.clear),
                     style = MaterialTheme.typography.titleMedium,
-                    fontSize = 16.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center
@@ -89,7 +89,7 @@ fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, modifier: Modifier = 
                 Text(
                     text = stringResource(R.string.end),
                     style = MaterialTheme.typography.titleMedium,
-                    fontSize = 16.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center

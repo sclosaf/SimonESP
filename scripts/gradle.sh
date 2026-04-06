@@ -8,7 +8,7 @@ MAIN_ACTIVITY=".MainActivity"
 
 usage()
 {
-    echo "Usage: $0 [debug|release|build|install-debug|install-release|deploy|run|clean] [verbose]"
+    echo "Usage: $0 [build|install|deploy|run|clean] [verbose]"
     exit 1
 }
 
@@ -29,27 +29,13 @@ fi
 cd "$PROJECT_ROOT/.." || { echo "Failed to enter project root"; exit 1; }
 
 case $COMMAND in
-    debug)
-        echo "Building debug APK..."
-        gradle8 assembleDebug $GRADLE_FLAGS
-        ;;
-
-    release)
-        echo "Building release APK..."
-        gradle8 assembleRelease $GRADLE_FLAGS
-        ;;
 
     build)
         echo "Running full build and unit tests..."
         gradle8 build $GRADLE_FLAGS
         ;;
 
-    install-debug)
-        echo "Building and installing debug APK..."
-        gradle8 assembleDebug $GRADLE_FLAGS && adb install -r "$APP_APK_DEBUG"
-        ;;
-
-    install-release)
+    install)
         echo "Building and installing release APK..."
         gradle8 assembleRelease $GRADLE_FLAGS && adb install -r "$APP_APK_RELEASE"
         ;;

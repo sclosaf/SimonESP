@@ -54,9 +54,11 @@ fun GameScreen(
             )
             {
 
+                Spacer(modifier = Modifier.width(20.dp))
+
                 TopBar(languageSwitcher = languageSwitcher)
 
-                Spacer(modifier = Modifier.width(20.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
                 ButtonGrid(
                     colors = colors,
@@ -86,6 +88,8 @@ fun GameScreen(
                     onEnd = { onGameEnd(gameStatus.endGame()) },
                     isDeleteEnabled = currentSequence.isNotEmpty(),
                 )
+
+                Spacer(modifier = Modifier.width(20.dp))
 
             }
         }

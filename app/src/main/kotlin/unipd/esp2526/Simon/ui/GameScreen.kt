@@ -90,7 +90,6 @@ fun GameScreen(
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
-
             }
         }
     }

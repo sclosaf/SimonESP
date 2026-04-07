@@ -11,7 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 import unipd.esp2526.Simon.ui.GameScreen
 import unipd.esp2526.Simon.ui.HistoryScreen
@@ -29,34 +31,38 @@ class MainActivity : AppCompatActivity()
         enableEdgeToEdge()
 
         setContent {
+            val navigationController = rememberNavController()
+
             val languageSwitcher: LanguageSwitcher = viewModel()
             val gameStatus: GameStatus = viewModel()
             val gameHistory: GameHistory = viewModel()
 
-            var showHistory by remember { mutableStateOf(false) }
-
             Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
                 {
-                    if(showHistory)
+                    NavHost(navController = navigationController, startDestination = "GameScreen")
                     {
-                        HistoryScreen(
-                            gameHistory = gameHistory,
-                            languageSwitcher = languageSwitcher,
-                            onBackPressed = { showHistory = false }
-                        )
-                    }
-                    else
-                    {
-                        GameScreen(
-                        onGameEnd = { sequence ->
-                            gameHistory.addSequence(sequence)
-                            gameStatus.reset()
-                            showHistory = true
-                        },
-                        languageSwitcher = languageSwitcher,
-                        gameStatus = gameStatus
-                        )
+                        composable("GameScreen")
+                        {
+                            GameScreen(
+                                onGameEnd = { sequence ->
+                                    gameHistory.addSequence(sequence)
+                                    gameStatus.reset()
+                                    navigationController.navigate("HistoryScreen")
+                                },
+                                languageSwitcher = languageSwitcher,
+                                gameStatus = gameStatus
+                            )
+                        }
+
+                        composable("HistoryScreen")
+                        {
+                            HistoryScreen(
+                                gameHistory = gameHistory,
+                                languageSwitcher = languageSwitcher,
+                                back = { navigationController.popBackStack() }
+                            )
+                        }
                     }
                 }
             }

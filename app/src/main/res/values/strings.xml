@@ -2,4 +2,5 @@
     <string name="app_name">SimonESP</string>
     <string name="clear">Clear</string>
     <string name="end">End Game</string>
+    <string name="back">Back</string>
 </resources>

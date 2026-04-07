@@ -25,6 +25,11 @@ val lightDelete = Color(0xFFE53935)
 val darkEnd = Color(0xFF66BB6A)
 val lightEnd = Color(0xFF43A047)
 
+val darkBack = Color(0xFFEF5350)
+val lightBack = Color(0xFFE53935)
+
+val horizontalDivider = Color(0xFF9E9E9E).copy(alpha = 0.3f)
+
 private val DarkColorScheme = darkColorScheme(
     primary = darkPrimary,
     secondary = darkSecondary,

@@ -53,12 +53,9 @@ fun GameScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             )
             {
-
-                Spacer(modifier = Modifier.width(20.dp))
-
                 TopBar(languageSwitcher = languageSwitcher)
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 ButtonGrid(
                     colors = colors,
@@ -88,8 +85,6 @@ fun GameScreen(
                     onEnd = { onGameEnd(gameStatus.endGame()) },
                     isDeleteEnabled = currentSequence.isNotEmpty(),
                 )
-
-                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }
@@ -106,7 +101,7 @@ fun GameScreen(
         {
             TopBar(languageSwitcher = languageSwitcher)
 
-            Spacer(modifier = Modifier.width(24.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             ButtonGrid(
                 colors = colors,
@@ -130,8 +125,6 @@ fun GameScreen(
                 onEnd = { onGameEnd(gameStatus.endGame()) },
                 isDeleteEnabled = currentSequence.isNotEmpty(),
             )
-
-            Spacer(modifier = Modifier.width(20.dp))
         }
     }
 }

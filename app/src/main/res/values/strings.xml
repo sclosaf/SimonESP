@@ -3,4 +3,6 @@
     <string name="clear">Clear</string>
     <string name="end">End Game</string>
     <string name="back">Back</string>
+    <string name="number">#</string>
+    <string name="sequence">Sequence</string>
 </resources>

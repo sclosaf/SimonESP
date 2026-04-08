@@ -10,6 +10,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.Lifecycle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -60,7 +61,10 @@ class MainActivity : AppCompatActivity()
                             HistoryScreen(
                                 gameHistory = gameHistory,
                                 languageSwitcher = languageSwitcher,
-                                back = { navigationController.popBackStack() }
+                                back = {
+                                    if(navigationController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED)
+                                        navigationController.popBackStack()
+                                }
                             )
                         }
                     }

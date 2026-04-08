@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -20,22 +21,24 @@ fun HistoryEntry(match : Match)
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     )
     {
         Text(
             text = "${match.size}",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .weight(1f)
         )
 
         Text(
             text = match.sequence,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .weight(1f)
+                .weight(11f)
                 .padding(start = 16.dp)
         )
     }

@@ -25,6 +25,7 @@ import unipd.esp2526.Simon.ui.theme.*
 import unipd.esp2526.Simon.ui.components.HistoryEntry
 import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.components.ButtonBack
+import unipd.esp2526.Simon.ui.components.HistoryHeader
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
@@ -47,19 +48,22 @@ fun HistoryScreen(
                 .fillMaxSize()
                 .padding(16.dp)
                 .windowInsetsPadding(WindowInsets.statusBars),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
             TopBar(languageSwitcher = languageSwitcher)
 
+            Spacer(modifier = Modifier.height(12.dp))
+
+            HistoryHeader()
+
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.weight(1f)
             )
             {
                 items(matches)
                 { match ->
                     HistoryEntry(match = match)
+
                     if(matches.last() !== match)
                     {
                         HorizontalDivider(
@@ -72,8 +76,6 @@ fun HistoryScreen(
             }
 
             ButtonBack( onClick = back )
-
-            Spacer(modifier = Modifier.width(20.dp))
         }
 
     }
@@ -84,19 +86,22 @@ fun HistoryScreen(
                 .fillMaxSize()
                 .padding(16.dp)
                 .windowInsetsPadding(WindowInsets.statusBars),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
             TopBar(languageSwitcher = languageSwitcher)
 
+            Spacer(modifier = Modifier.height(20.dp))
+
+            HistoryHeader()
+
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.weight(1f)
             )
             {
                 items(matches)
                 { match ->
                     HistoryEntry(match = match)
+
                     if(matches.last() !== match)
                     {
                         HorizontalDivider(
@@ -109,8 +114,6 @@ fun HistoryScreen(
             }
 
             ButtonBack( onClick = back )
-
-            Spacer(modifier = Modifier.width(20.dp))
         }
     }
 }

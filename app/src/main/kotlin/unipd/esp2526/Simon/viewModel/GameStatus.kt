@@ -20,9 +20,6 @@ class GameStatus : ViewModel()
     var currentSequence by mutableStateOf<List<ColorType>>(emptyList())
         private set
 
-    var isGameActive by mutableStateOf(true)
-        private set
-
     var litColor by mutableStateOf<ColorType?>(null)
         private set
 
@@ -30,11 +27,8 @@ class GameStatus : ViewModel()
 
     public fun addColor(color: ColorType)
     {
-        if(isGameActive)
-        {
-            currentSequence = currentSequence + color
-            illuminateColor(color)
-        }
+        currentSequence = currentSequence + color
+        illuminateColor(color)
     }
 
     private fun illuminateColor(color: ColorType)
@@ -67,7 +61,6 @@ class GameStatus : ViewModel()
 
         val finalSequence = currentSequence
         clearSequence()
-        isGameActive = false
         return finalSequence
     }
 
@@ -75,7 +68,6 @@ class GameStatus : ViewModel()
     {
         currentLightJob?.cancel()
         currentSequence = emptyList()
-        isGameActive = true
         litColor = null
     }
 

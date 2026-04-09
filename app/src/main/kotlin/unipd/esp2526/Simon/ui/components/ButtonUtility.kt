@@ -25,12 +25,12 @@ import unipd.esp2526.Simon.ui.theme.*
 import unipd.esp2526.Simon.R
 
 @Composable
-fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, modifier: Modifier = Modifier, isDeleteEnabled: Boolean = true)
+fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, isDeleteEnabled: Boolean = true)
 {
     val deleteColor = if (isSystemInDarkTheme()) darkDelete else lightDelete
     val endColor = if (isSystemInDarkTheme()) darkEnd else lightEnd
 
-    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp))
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp))
     {
         Card(
             modifier = Modifier

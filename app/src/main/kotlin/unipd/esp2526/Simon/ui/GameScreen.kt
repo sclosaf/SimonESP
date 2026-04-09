@@ -30,7 +30,6 @@ fun GameScreen(
 
     val currentSequence by remember { derivedStateOf { gameStatus.currentSequence } }
     val litColor by remember { derivedStateOf { gameStatus.litColor } }
-    val isGameActive by remember { derivedStateOf { gameStatus.isGameActive } }
 
     val colors = listOf(
         ColorType.RED,
@@ -46,30 +45,22 @@ fun GameScreen(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(12.dp)
                 .windowInsetsPadding(WindowInsets.statusBars),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         )
         {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             )
             {
                 TopBar(stringResource(R.string.name), languageSwitcher = languageSwitcher)
 
-                Spacer(modifier = Modifier.height(8.dp))
-
                 ButtonGrid(
                     colors = colors,
                     lit = litColor,
-                    onColorClick = { color ->
-                        if(isGameActive)
-                        {
-                            gameStatus.addColor(color)
-                        }
-                    },
-                    modifier = Modifier.weight(1f)
+                    onColorClick = { color -> gameStatus.addColor(color) }
                 )
             }
 
@@ -78,10 +69,7 @@ fun GameScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             )
             {
-                ColorSequence(
-                    sequence = currentSequence,
-                    modifier = Modifier.weight(1f)
-                )
+                ColorSequence(sequence = currentSequence)
 
                 ButtonUtility(
                     onDelete = { gameStatus.clearSequence() },
@@ -104,29 +92,20 @@ fun GameScreen(
         {
             TopBar(stringResource(R.string.name), languageSwitcher = languageSwitcher)
 
-            Spacer(modifier = Modifier.height(8.dp))
-
             ButtonGrid(
                 colors = colors,
                 lit = litColor,
-                onColorClick = { color ->
-                    if(isGameActive)
-                    {
-                        gameStatus.addColor(color)
-                    }
-                },
-                modifier = Modifier.weight(2f)
+                onColorClick = { color -> gameStatus.addColor(color) }
             )
 
-            ColorSequence(
-                sequence = currentSequence,
-                modifier = Modifier.weight(1f)
-            )
+            Spacer(modifier = Modifier.weight(1f))
+
+            ColorSequence(sequence = currentSequence)
 
             ButtonUtility(
                 onDelete = { gameStatus.clearSequence() },
                 onEnd = { onGameEnd(gameStatus.endGame()) },
-                isDeleteEnabled = currentSequence.isNotEmpty(),
+                isDeleteEnabled = currentSequence.isNotEmpty()
             )
         }
     }

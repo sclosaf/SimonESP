@@ -16,15 +16,16 @@ import androidx.compose.material3.ElevatedCard
 import unipd.esp2526.Simon.ui.theme.ColorType
 
 @Composable
-fun ColorSequence(sequence: List<ColorType>, modifier: Modifier = Modifier)
+fun ColorSequence(sequence: List<ColorType>)
 {
     val textSequence = if(sequence.isEmpty()) {""} else {sequence.joinToString(", "){ it.shortName }}
 
     ElevatedCard(
-        modifier = modifier
-            .padding(12.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+            .height(250.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         shape = RoundedCornerShape(8.dp)
     )
     {

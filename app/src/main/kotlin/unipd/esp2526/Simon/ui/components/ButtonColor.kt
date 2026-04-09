@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import unipd.esp2526.Simon.ui.theme.*
 
 @Composable
-fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier)
+fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier: Modifier)
 {
     val backgroundColor = getColor(color, isLit)
     val elevation = if (isLit) 8.dp else 4.dp
@@ -26,7 +26,7 @@ fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier:
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .aspectRatio(2.75f),
+            .aspectRatio(2.5f),
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
         elevation = CardDefaults.cardElevation(defaultElevation = elevation),
         shape = RoundedCornerShape(12.dp)

@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 
 import unipd.esp2526.Simon.ui.components.ButtonGrid
 import unipd.esp2526.Simon.ui.components.ColorSequence
@@ -15,6 +16,8 @@ import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.theme.ColorType
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
+import unipd.esp2526.Simon.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun GameScreen(
@@ -53,7 +56,7 @@ fun GameScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             )
             {
-                TopBar(languageSwitcher = languageSwitcher)
+                TopBar(stringResource(R.string.name), languageSwitcher = languageSwitcher)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -99,7 +102,7 @@ fun GameScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
-            TopBar(languageSwitcher = languageSwitcher)
+            TopBar(stringResource(R.string.name), languageSwitcher = languageSwitcher)
 
             Spacer(modifier = Modifier.height(8.dp))
 

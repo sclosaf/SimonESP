@@ -7,19 +7,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.activity.ComponentActivity
 
 import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
 @Composable
-fun TopBar(languageSwitcher: LanguageSwitcher)
+fun TopBar(title: String, languageSwitcher: LanguageSwitcher)
 {
     val context = LocalContext.current
     val currentLanguage = languageSwitcher.currentLanguage
@@ -42,7 +42,7 @@ fun TopBar(languageSwitcher: LanguageSwitcher)
         )
         {
             Text(
-                text = stringResource(R.string.app_name),
+                text = title,
                 style = MaterialTheme.typography.titleLarge
             )
 

@@ -20,7 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 
+import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.ui.theme.*
 import unipd.esp2526.Simon.ui.components.HistoryEntry
 import unipd.esp2526.Simon.ui.components.TopBar
@@ -50,7 +52,7 @@ fun HistoryScreen(
                 .windowInsetsPadding(WindowInsets.statusBars),
         )
         {
-            TopBar(languageSwitcher = languageSwitcher)
+            TopBar(stringResource(R.string.history), languageSwitcher = languageSwitcher)
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -88,7 +90,7 @@ fun HistoryScreen(
                 .windowInsetsPadding(WindowInsets.statusBars),
         )
         {
-            TopBar(languageSwitcher = languageSwitcher)
+            TopBar(stringResource(R.string.history), languageSwitcher = languageSwitcher)
 
             Spacer(modifier = Modifier.height(20.dp))
 

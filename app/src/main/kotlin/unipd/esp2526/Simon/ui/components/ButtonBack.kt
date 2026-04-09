@@ -35,11 +35,7 @@ fun ButtonBack(onClick : () -> Unit)
             .fillMaxWidth()
             .height(56.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = androidx.compose.material.ripple.rememberRipple()
-            )
-            { onClick() },
+            .clickable() { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = if (isSystemInDarkTheme()) darkBack else lightBack
         ),

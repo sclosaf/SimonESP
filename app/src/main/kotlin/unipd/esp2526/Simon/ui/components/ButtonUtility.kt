@@ -36,11 +36,7 @@ fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, modifier: Modifier = 
             modifier = Modifier
                 .weight(1f)
                 .clip(RoundedCornerShape(12.dp))
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = androidx.compose.material.ripple.rememberRipple()
-                )
-                { onDelete() },
+                .clickable() { onDelete() },
             colors = CardDefaults.cardColors(
                 containerColor = if (isDeleteEnabled) deleteColor else disabledButton
             ),
@@ -70,10 +66,7 @@ fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, modifier: Modifier = 
             modifier = Modifier
                 .weight(1f)
                 .clip(RoundedCornerShape(12.dp))
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = androidx.compose.material.ripple.rememberRipple()
-                ) { onEnd() },
+                .clickable() { onEnd() },
             colors = CardDefaults.cardColors(containerColor = endColor),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             shape = RoundedCornerShape(12.dp)

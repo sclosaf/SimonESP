@@ -26,6 +26,7 @@ fun ColorSequence(sequence: List<ColorType>)
             .fillMaxWidth()
             .height(250.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.elevatedCardColors( containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(8.dp)
     )
     {

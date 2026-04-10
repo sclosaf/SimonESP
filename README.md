@@ -1,1 +1,24 @@
-# SimonESP
+# Simon ESP
+This is the implementation of the first assignment for the course "Embedded Systems Programming", 2025 - 2026.
+The project has been implemented by **Sclosa Fabrizio, 2101826**.
+
+## Development Environment
+The following development environment has been used:
+- **Operating System**: EndeavourOS - Linux
+- **Tested Devices**:
+  - *Emulator*: Unused
+  - *Physical*: Samsung Galaxy A34 5G, running Android 16
+  - *Physical*: Samsung Galaxy S21 Ultra 5G, running Android 15
+- **Android Studio version**: Unused
+- **Gradle version**: 8
+- **Min SDK**: API 33 – Android 13
+- **Target SDK**: API 34 – Android 14
+- **Supported languages**: English, Italian
+
+## Repository Structure
+The root directory contains:
+- `app/` folder with the source code and the resources needed by the project
+- `workspace/` folder which contains the assignment .pdf followed
+- `scripts/` folder with the utility scripts used to build and install the app on the devices
+- The build generated files (`build/`, `app/build/`, `local.properties`, etc.) are not included in the repository
+- The remaining files define the gradle dependencies and the build settings

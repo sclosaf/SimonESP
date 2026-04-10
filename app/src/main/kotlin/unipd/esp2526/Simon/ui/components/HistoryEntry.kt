@@ -9,11 +9,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import unipd.esp2526.Simon.viewModel.Match
 
+/**
+ * A component that displays a single history entry.
+ *
+ * This composable shows the information about a completed match,
+ * displaying the length of the sequence and the sequence itself.
+ *
+ * @param match The Match object containing the sequence string and its size
+ *              to be displayed in the history entry.
+ */
 @Composable
 fun HistoryEntry(match : Match)
 {

@@ -18,6 +18,15 @@ import androidx.activity.ComponentActivity
 import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
+/**
+ * Top bar with title and language toggle button.
+ * It displays a title and a button icon to toggle between
+ * the supported languages (English and Italian).
+ *
+ * @param title The text to display as the bar title
+ * @param languageSwitcher ViewModel that manages the current language state
+ *                         and provides the toggleLanguage method
+ */
 @Composable
 fun TopBar(title: String, languageSwitcher: LanguageSwitcher)
 {

@@ -17,6 +17,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import unipd.esp2526.Simon.ui.theme.*
 
+/**
+ * A single colored, illuminable button.
+ *
+ * This composable is used to create the buttons needed for the Simon game.
+ * Each button has two visual states:
+ * - **Normal**: Standard color when not pressed
+ * - **Lit**: Brighter color providing visual feedback when pressed
+ *
+ * @param color The type of color this button represents
+ * @param isLit Whether the button should be displayed in its lit (illuminated) state.
+ * @param onClick Callback invoked when the button is pressed by the user.
+ *                Should add the corresponding color to the current sequence.
+ * @param modifier Modifier to be applied to the button for layout customization.
+ */
 @Composable
 fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier: Modifier)
 {
@@ -47,6 +61,14 @@ fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier:
     }
 }
 
+/**
+ * Returns the appropriate color for a button based on its type and illumination state.
+ *
+ * @param color The type of color button
+ * @param isLit Whether the button is currently illuminated
+ *
+ * @return The corresponding Color value for the button's current state
+ */
 fun getColor(color: ColorType, isLit: Boolean): Color
 {
     return when (color)

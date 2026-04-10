@@ -18,6 +18,10 @@ import androidx.compose.ui.unit.sp
 import unipd.esp2526.Simon.ui.theme.*
 import unipd.esp2526.Simon.R
 
+/**
+ * Header component for the history screen,
+ * indicating what each column represents.
+ */
 @Composable
 fun HistoryHeader()
 {

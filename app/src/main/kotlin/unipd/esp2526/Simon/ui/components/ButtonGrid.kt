@@ -12,11 +12,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 
 import unipd.esp2526.Simon.ui.theme.*
 
+/**
+ * A grid for the six colored buttons of the game.
+ *
+ * This composable displays all the buttons arranged
+ * in a 3x2 grid layout (3 rows, 2 columns).
+ *
+ * @param colors List of six ColorType values defining the colors to display
+ *               in the grid. Must contain exactly 6 elements for proper layout.
+ * @param lit The currently illuminated color, or null if none is lit.
+ *            Buttons matching this value will display their lit state.
+ * @param onColorClick Callback invoked when a button is pressed.
+ */
 @Composable
 fun ButtonGrid(colors: List<ColorType>, lit: ColorType?, onColorClick: (ColorType) -> Unit)
 {

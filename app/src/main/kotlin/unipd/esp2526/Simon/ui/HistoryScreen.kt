@@ -31,6 +31,25 @@ import unipd.esp2526.Simon.ui.components.HistoryHeader
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
+/**
+ * Screen that displays the history of played games.
+ *
+ * This composable function defines a scrollable list of all the previously
+ * confirmed games, showing for each sequence the first elements
+ * pressed (as long as there is space) and its length.
+ * It properly adapts to the device orientation.
+ *
+ * The layout in both the orientations shows a title bar, the list of played games
+ * and a back button to start a new game (action that can also be triggered
+ * with the Android back gesture).
+ *
+ * @param gameHistory ViewModel containing the list of completed matches
+ *                    to be displayed in the screen
+ * @param languageSwitcher ViewModel for managing language toggle
+ * @param back Callback invoked when the user wants to return to the
+ *             previous screen (GameScreen). Triggered by both the
+ *             system back button/gesture and the back button component.
+ */
 @Composable
 fun HistoryScreen(
     gameHistory: GameHistory,

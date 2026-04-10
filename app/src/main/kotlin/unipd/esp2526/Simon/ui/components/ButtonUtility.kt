@@ -1,7 +1,6 @@
 package unipd.esp2526.Simon.ui.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,7 +9,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,10 +22,20 @@ import androidx.compose.ui.unit.sp
 import unipd.esp2526.Simon.ui.theme.*
 import unipd.esp2526.Simon.R
 
+/**
+ * A couple of utility buttons, arranged in a row:
+ * - **Clear Button**: Clears the current sequence (disabled when the sequence is empty)
+ * - **End Button**: Ends the current game and saves the sequence
+ *
+ * @param onClear Callback invoked when the Clear button is pressed.
+ * @param onEnd Callback invoked when the End button is pressed.
+ * @param isClearEnabled Whether the Clear button is enabled. When false, the button
+ *                       appears gray and does not respond to clicks. Default is true.
+ */
 @Composable
-fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, isDeleteEnabled: Boolean = true)
+fun ButtonUtility(onClear: () -> Unit, onEnd: () -> Unit, isClearEnabled: Boolean = true)
 {
-    val deleteColor = if (isSystemInDarkTheme()) darkDelete else lightDelete
+    val clearColor = if (isSystemInDarkTheme()) darkClear else lightClear
     val endColor = if (isSystemInDarkTheme()) darkEnd else lightEnd
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp))
@@ -36,9 +44,9 @@ fun ButtonUtility(onDelete: () -> Unit, onEnd: () -> Unit, isDeleteEnabled: Bool
             modifier = Modifier
                 .weight(1f)
                 .clip(RoundedCornerShape(12.dp))
-                .clickable() { onDelete() },
+                .clickable() { onClear() },
             colors = CardDefaults.cardColors(
-                containerColor = if (isDeleteEnabled) deleteColor else disabledButton
+                containerColor = if (isClearEnabled) clearColor else disabledButton
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             shape = RoundedCornerShape(12.dp)

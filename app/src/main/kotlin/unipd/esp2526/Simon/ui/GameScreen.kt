@@ -17,8 +17,23 @@ import unipd.esp2526.Simon.ui.theme.ColorType
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.R
-import androidx.compose.ui.res.stringResource
 
+/**
+ * Main screen of the game.
+ *
+ * This composable function defines the whole first screen and displays
+ * the interface where the user can play.
+ * It properly adapts to the device orientation.
+ *
+ * The layout in both the orientations shows a title bar, the six game buttons,
+ * a text box containing the current sequence played and two utility buttons
+ * which can be used to manage the current match.
+ *
+ * @param onGameEnd Callback invoked when the user ends the game,
+ *                  receives the final sequence as a parameter
+ * @param languageSwitcher ViewModel for managing language toggle
+ * @param gameStatus ViewModel containing the current sequence
+ */
 @Composable
 fun GameScreen(
     onGameEnd: (List<ColorType>) -> Unit,

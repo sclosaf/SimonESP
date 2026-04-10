@@ -15,10 +15,17 @@ import androidx.compose.material3.ElevatedCard
 
 import unipd.esp2526.Simon.ui.theme.ColorType
 
+/**
+ * A component that displays the current color sequence as text,
+ * as a comma separated list of abbreviations.
+ *
+ * @param sequence The list of ColorType representing the current game sequence.
+ *                 If empty, a placeholder text is displayed to guide the user.
+ */
 @Composable
 fun ColorSequence(sequence: List<ColorType>)
 {
-    val textSequence = if(sequence.isEmpty()) {""} else {sequence.joinToString(", "){ it.shortName }}
+    val textSequence = if(sequence.isEmpty()) {"Press a button to start"} else {sequence.joinToString(", "){ it.shortName }}
 
     ElevatedCard(
         modifier = Modifier

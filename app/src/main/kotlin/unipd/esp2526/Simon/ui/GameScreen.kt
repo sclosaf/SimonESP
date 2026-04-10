@@ -87,9 +87,9 @@ fun GameScreen(
                 ColorSequence(sequence = currentSequence)
 
                 ButtonUtility(
-                    onDelete = { gameStatus.clearSequence() },
+                    onClear = { gameStatus.clearSequence() },
                     onEnd = { onGameEnd(gameStatus.endGame()) },
-                    isDeleteEnabled = currentSequence.isNotEmpty(),
+                    isClearEnabled = currentSequence.isNotEmpty(),
                 )
             }
         }
@@ -118,9 +118,9 @@ fun GameScreen(
             ColorSequence(sequence = currentSequence)
 
             ButtonUtility(
-                onDelete = { gameStatus.clearSequence() },
+                onClear = { gameStatus.clearSequence() },
                 onEnd = { onGameEnd(gameStatus.endGame()) },
-                isDeleteEnabled = currentSequence.isNotEmpty()
+                isClearEnabled = currentSequence.isNotEmpty()
             )
         }
     }

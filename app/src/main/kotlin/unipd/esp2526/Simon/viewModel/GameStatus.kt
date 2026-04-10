@@ -19,12 +19,15 @@ import unipd.esp2526.Simon.ui.theme.ColorType
  */
 class GameStatus : ViewModel()
 {
-    /**
-     * Duration in milliseconds for which a color remains illuminated.
-     *
-     * Used to control how long the visual feedback lasts.
-     */
-    private const val LIGHT_DURATION_MS = 275L
+    companion object
+    {
+        /**
+         * Duration in milliseconds for which a color remains illuminated.
+         *
+         * Used to control how long the visual feedback lasts.
+         */
+        private const val LIGHT_DURATION_MS = 275L
+    }
 
     /**
      * The sequence of color entered during the current session played.

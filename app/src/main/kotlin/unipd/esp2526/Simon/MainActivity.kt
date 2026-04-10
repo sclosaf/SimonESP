@@ -23,8 +23,43 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.GameHistory
 
+/**
+ * Main (and only) activity used for the 'Simon' application.
+ *
+ * This activity manages the user interface of the application,
+ * which implements the navigation among the different screens (Game and Match History)
+ * initializes the needed ViewModels for the state management.
+ *
+ * Jetpack Compose is used for the general interface and navigation.
+ *
+ * ## ViewModels
+ * - GameStatus: manages the current sequence and the light effect of the game buttons
+ * - LanguageSwitcher: manages the language toggle
+ * - GameHistory: stores the history of the played matches
+ *
+ * ## Application flow
+ * 1. The game starts on the GameScreen
+ * 2. Once the user ends the match, the sequence played is saved
+ * 3. The user is brought to the HistoryScreen, where all the previous matches are displayed
+ * 4. With the Android back button the user can play a new game
+ */
 class MainActivity : AppCompatActivity()
 {
+    /**
+     * Overridden method called on creation.
+     *
+     * Enables edge-to-edge display.
+     * Initializes the ViewModels to manage variables lifecycles.
+     * Sets the application theme, support for both light and dark.
+     * Initializes the navigation controller.
+     *
+     * ## Note
+     * The popBackStack method is called only when the current back stack entry
+     * is in the Lifecycle.State.RESUMED state to prevent invalid navigation
+     * during state transitions.
+     *
+     * @param savedInstanceState Saved state of the activity
+     */
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -43,6 +78,9 @@ class MainActivity : AppCompatActivity()
                 {
                     NavHost(navController = navigationController, startDestination = "GameScreen")
                     {
+                        /**
+                         * Main screen of the application.
+                         */
                         composable("GameScreen")
                         {
                             GameScreen(
@@ -56,6 +94,9 @@ class MainActivity : AppCompatActivity()
                             )
                         }
 
+                        /**
+                         * History screen of the application.
+                         */
                         composable("HistoryScreen")
                         {
                             HistoryScreen(

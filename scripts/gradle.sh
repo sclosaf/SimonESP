@@ -8,7 +8,7 @@ MAIN_ACTIVITY=".MainActivity"
 
 usage()
 {
-    echo "Usage: $0 [build|install|deploy|run|clean] [verbose]"
+    echo "Usage: $0 [build|install|deploy|run|log|clean] [verbose]"
     exit 1
 }
 
@@ -58,6 +58,15 @@ case $COMMAND in
         gradle8 clean $GRADLE_FLAGS
         rm -rf "$PROJECT_ROOT/build/" "$PROJECT_ROOT/app/build/"
         echo "Local build directories removed."
+        ;;
+
+    log)
+        echo "Showing logs (Ctrl+C to stop)..."
+        adb logcat -c
+        PID=$(adb shell pidof -s $PACKAGE_NAME)
+        if [ -n "$PID" ]; then
+            adb logcat -v brief --pid=$PID
+        fi
         ;;
 
     *)

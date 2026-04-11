@@ -7,4 +7,5 @@
     <string name="back">Back</string>
     <string name="number">#</string>
     <string name="sequence">Sequence</string>
+    <string name="press">Press a button to start...</string>
 </resources>

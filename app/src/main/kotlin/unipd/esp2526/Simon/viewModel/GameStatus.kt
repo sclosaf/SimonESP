@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -27,6 +28,11 @@ class GameStatus : ViewModel()
          * Used to control how long the visual feedback lasts.
          */
         private const val LIGHT_DURATION_MS = 275L
+
+        /**
+         * Tag identifier used for Android logging messages.
+         */
+        private val TAG = GameStatus::class.java.simpleName
     }
 
     /**
@@ -61,7 +67,12 @@ class GameStatus : ViewModel()
      */
     public fun addColor(color: ColorType)
     {
+        Log.d(TAG, "Adding ${color.longName} color to the sequence")
+
         currentSequence = currentSequence + color
+
+        Log.i(TAG, "New sequence size: ${currentSequence.size}")
+
         illuminateColor(color)
     }
 
@@ -73,16 +84,20 @@ class GameStatus : ViewModel()
      */
     private fun illuminateColor(color: ColorType)
     {
+        Log.d(TAG, "Lighting color")
+
         currentLightJob?.cancel()
 
         currentLightJob = viewModelScope.launch{
             litColor = color
 
+            Log.i(TAG, "Color lit: ${color.shortName}")
             delay(LIGHT_DURATION_MS)
 
             if(litColor == color)
             {
                 litColor = null
+                Log.i(TAG, "Color unlit: ${color.shortName}")
             }
         }
     }
@@ -93,6 +108,8 @@ class GameStatus : ViewModel()
      */
     public fun clearSequence()
     {
+        Log.d(TAG, "Clearing sequence")
+
         currentLightJob?.cancel()
         litColor = null
         currentSequence = emptyList()
@@ -106,6 +123,11 @@ class GameStatus : ViewModel()
      */
     public fun endGame() : List<ColorType>
     {
+        Log.d(TAG, "Ending game")
+
+        Log.i(TAG, "Ending game with sequence: ${currentSequence.joinToString { it.shortName }}")
+        Log.i(TAG, "Ending game with sequence size: ${currentSequence.size}")
+
         currentLightJob?.cancel()
         litColor = null
 
@@ -120,6 +142,8 @@ class GameStatus : ViewModel()
      */
     public fun reset()
     {
+        Log.d(TAG, "Resetting game")
+
         currentLightJob?.cancel()
         currentSequence = emptyList()
         litColor = null

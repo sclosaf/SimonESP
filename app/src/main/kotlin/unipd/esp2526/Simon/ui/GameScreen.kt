@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -41,6 +42,8 @@ fun GameScreen(
     gameStatus: GameStatus
 )
 {
+    val TAG = "GameScreen"
+
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
     val currentSequence by remember { derivedStateOf { gameStatus.currentSequence } }
@@ -57,6 +60,8 @@ fun GameScreen(
 
     if(isLandscape)
     {
+        Log.d(TAG, "Orientation setted to landscape")
+
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -96,6 +101,8 @@ fun GameScreen(
     }
     else
     {
+        Log.d(TAG, "Orientation setted to portrait")
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

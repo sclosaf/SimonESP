@@ -1,6 +1,7 @@
 package unipd.esp2526.Simon
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -45,6 +46,14 @@ import unipd.esp2526.Simon.viewModel.GameHistory
  */
 class MainActivity : AppCompatActivity()
 {
+    companion object
+    {
+        /**
+         * Tag identifier used for Android logging messages.
+         */
+        private val TAG = MainActivity::class.java.simpleName
+    }
+
     /**
      * Overridden method called on creation.
      *
@@ -63,15 +72,21 @@ class MainActivity : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "Activity created")
 
         enableEdgeToEdge()
+        Log.v(TAG, "Edge to edge enabled")
 
         setContent {
+            Log.d(TAG, "Setting up Compose content")
+
             val navigationController = rememberNavController()
+            Log.v(TAG, "Navigation controller initialized")
 
             val languageSwitcher: LanguageSwitcher = viewModel()
             val gameStatus: GameStatus = viewModel()
             val gameHistory: GameHistory = viewModel()
+            Log.v(TAG, "ViewModels initialized")
 
             Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
@@ -83,10 +98,17 @@ class MainActivity : AppCompatActivity()
                          */
                         composable("GameScreen")
                         {
+                            Log.d(TAG, "Navigation to GameScreen")
+
                             GameScreen(
                                 onGameEnd = { sequence ->
+                                    Log.i(TAG, "Game ended with sequence: ${sequence.joinToString(", ") { it.shortName }}")
+                                    Log.i(TAG, "Game ended with sequence size: ${sequence.size}")
+
                                     gameHistory.addSequence(sequence)
                                     gameStatus.reset()
+
+                                    Log.d(TAG, "Game has been resetted, navigating to HistoryScreen")
                                     navigationController.navigate("HistoryScreen")
                                 },
                                 languageSwitcher = languageSwitcher,
@@ -99,12 +121,19 @@ class MainActivity : AppCompatActivity()
                          */
                         composable("HistoryScreen")
                         {
+                            Log.d(TAG, "Navigation to HistoryScreen")
                             HistoryScreen(
                                 gameHistory = gameHistory,
                                 languageSwitcher = languageSwitcher,
                                 back = {
+                                    Log.d(TAG, "Navigating back to the GameScreen")
                                     if(navigationController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED)
+                                    {
+                                        Log.d(TAG, "Current back stack entry is resumed, popping back stack")
                                         navigationController.popBackStack()
+                                    }
+                                    else
+                                        Log.w(TAG, "Stack cannot be pop back, current state hasn't been resumed yet")
                                 }
                             )
                         }

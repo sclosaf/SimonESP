@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.ui
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.width
@@ -57,6 +58,8 @@ fun HistoryScreen(
     back: () -> Unit
 )
 {
+    val TAG = "HistoryScreen"
+
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
     val matches = gameHistory.endedMatches
 
@@ -64,6 +67,8 @@ fun HistoryScreen(
 
     if(isLandscape)
     {
+        Log.d(TAG, "Orientation setted to landscape")
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -102,6 +107,8 @@ fun HistoryScreen(
     }
     else
     {
+        Log.d(TAG, "Orientation setted to portrait")
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

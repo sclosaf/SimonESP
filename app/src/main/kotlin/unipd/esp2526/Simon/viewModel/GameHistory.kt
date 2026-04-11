@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.viewModel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 
@@ -28,6 +29,14 @@ data class Match(
  */
 class GameHistory : ViewModel()
 {
+    companion object
+    {
+        /**
+         * Tag identifier used for Android logging messages.
+         */
+        private val TAG = GameHistory::class.java.simpleName
+    }
+
     /**
      * The list of all completed matches in the current session.
      */
@@ -43,8 +52,14 @@ class GameHistory : ViewModel()
      */
     public fun addSequence(colorSequence : List<ColorType>)
     {
+        Log.d(TAG, "Adding a new sequence")
+
         val sequence = colorSequence.joinToString(", ") { it.shortName }
         val size = colorSequence.size
+
+        Log.i(TAG, "Sequence: ${sequence}")
+        Log.i(TAG, "Size: ${size}")
+
         endedMatches.add(
             Match(
                 sequence = sequence,

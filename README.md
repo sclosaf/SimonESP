@@ -7,8 +7,8 @@ The following development environment has been used:
 - **Operating System**: EndeavourOS - Linux
 - **Tested Devices**:
   - *Emulator*: Unused
-  - *Physical*: Samsung Galaxy A34 5G, running Android 16
-  - *Physical*: Samsung Galaxy S21 Ultra 5G, running Android 15
+  - *Physical*: Samsung Galaxy A34 5G (Model: SM-A346B), running Android 16
+  - *Physical*: Samsung Galaxy S21 Ultra 5G (Model: SM-G998B), running Android 15
 - **Android Studio version**: Unused
 - **Gradle version**: 8
 - **Min SDK**: API 33 – Android 13

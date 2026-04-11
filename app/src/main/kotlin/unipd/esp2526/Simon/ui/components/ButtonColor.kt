@@ -15,7 +15,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import unipd.esp2526.Simon.ui.theme.*
+import unipd.esp2526.Simon.ui.theme.BlueLit
+import unipd.esp2526.Simon.ui.theme.BlueNormal
+import unipd.esp2526.Simon.ui.theme.ColorType
+import unipd.esp2526.Simon.ui.theme.CyanLit
+import unipd.esp2526.Simon.ui.theme.CyanNormal
+import unipd.esp2526.Simon.ui.theme.GreenLit
+import unipd.esp2526.Simon.ui.theme.GreenNormal
+import unipd.esp2526.Simon.ui.theme.MagentaLit
+import unipd.esp2526.Simon.ui.theme.MagentaNormal
+import unipd.esp2526.Simon.ui.theme.RedLit
+import unipd.esp2526.Simon.ui.theme.RedNormal
+import unipd.esp2526.Simon.ui.theme.YellowLit
+import unipd.esp2526.Simon.ui.theme.YellowNormal
 
 /**
  * A single colored, illuminable button.

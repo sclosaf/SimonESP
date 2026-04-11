@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import unipd.esp2526.Simon.ui.theme.*
+import unipd.esp2526.Simon.ui.theme.horizontalDivider
 import unipd.esp2526.Simon.R
 
 /**

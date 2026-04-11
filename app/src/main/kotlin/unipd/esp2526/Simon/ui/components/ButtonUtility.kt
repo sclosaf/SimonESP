@@ -1,7 +1,11 @@
 package unipd.esp2526.Simon.ui.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -19,7 +23,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import unipd.esp2526.Simon.ui.theme.*
+import unipd.esp2526.Simon.ui.theme.darkClear
+import unipd.esp2526.Simon.ui.theme.darkEnd
+import unipd.esp2526.Simon.ui.theme.disabledButton
+import unipd.esp2526.Simon.ui.theme.lightClear
+import unipd.esp2526.Simon.ui.theme.lightEnd
 import unipd.esp2526.Simon.R
 
 /**

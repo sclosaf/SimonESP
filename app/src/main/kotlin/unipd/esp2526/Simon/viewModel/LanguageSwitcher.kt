@@ -30,22 +30,35 @@ class LanguageSwitcher : ViewModel()
      *
      * It attempts to retrieve the current application locale,
      * extracting the language code from the first locale in the list (index 0).
+     * If unable to get the locale, it falls back to the system default locale.
      * Defaulting in English if no locale is set or extraction fails.
      */
-    var currentLanguage by mutableStateOf( AppCompatDelegate.getApplicationLocales().get(0)?.language ?: "en" )
+    var currentLanguage by mutableStateOf(getCurrentActiveLanguage())
         private set
+
+    /**
+     * Helper function used to retrie the currently active language code.
+     * Applying specifics fallbacks:
+     * 1. Application locale
+     * 2. System locale
+     * 3. Default "En"
+     *
+     * @return The language code (e.g., "en", "it") of the current active locale
+     */
+    private fun getCurrentActiveLanguage(): String
+    {
+        return AppCompatDelegate.getApplicationLocales().get(0)?.language ?: java.util.Locale.getDefault().language ?: "en"
+    }
 
     /**
      * Toggles the application language between English and Italian.
      * It may cause the activity to be recreated with the new strings.
-     *
-     * @param context The application or activity context. Required for locale operations.
      */
-    fun toggleLanguage(context: Context)
+    fun toggleLanguage()
     {
         Log.d(TAG, "Toggling language")
 
-        val nextLanguage = if (currentLanguage == "it") "en" else "it"
+        val nextLanguage = if (currentLanguage.startsWith("it")) "en" else "it"
 
         Log.i(TAG, "Switching from $currentLanguage to $nextLanguage")
 

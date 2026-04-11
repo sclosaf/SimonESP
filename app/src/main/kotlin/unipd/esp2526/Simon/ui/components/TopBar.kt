@@ -66,7 +66,7 @@ fun TopBar(title: String, languageSwitcher: LanguageSwitcher)
 
             IconButton(
                 onClick = {
-                    languageSwitcher.toggleLanguage(context)
+                    languageSwitcher.toggleLanguage()
                     (context as? ComponentActivity)?.recreate()
                 },
                 modifier = Modifier

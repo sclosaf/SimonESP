@@ -138,7 +138,7 @@ class GameStatus : ViewModel()
 
     /**
      * Resets the game state to its initial values.
-     * Additionally cancels any pending illuminations.
+     * Cancels any pending illuminations.
      */
     public fun reset()
     {

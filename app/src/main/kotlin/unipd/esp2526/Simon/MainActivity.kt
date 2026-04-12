@@ -27,8 +27,8 @@ import unipd.esp2526.Simon.viewModel.GameHistory
  * Main (and only) activity used for the 'Simon' application.
  *
  * This activity manages the user interface of the application,
- * which implements the navigation among the different screens (Game and Match History)
- * initializes the needed ViewModels for the state management.
+ * which implements the navigation among the different screens (Game and History)
+ * initializes the needed ViewModels for the state management of the application.
  *
  * Jetpack Compose is used for the general interface and navigation.
  *
@@ -41,7 +41,7 @@ import unipd.esp2526.Simon.viewModel.GameHistory
  * 1. The game starts on the GameScreen
  * 2. Once the user ends the match, the sequence played is saved
  * 3. The user is brought to the HistoryScreen, where all the previous matches are displayed
- * 4. With the Android back button the user can play a new game
+ * 4. With the Android back motion or the button the user can play a new game, returning to the start screen
  */
 class MainActivity : AppCompatActivity()
 {
@@ -57,14 +57,14 @@ class MainActivity : AppCompatActivity()
      * Overridden method called on creation.
      *
      * Enables edge-to-edge display.
-     * Initializes the ViewModels to manage variables lifecycles.
-     * Sets the application theme, support for both light and dark.
+     * Initializes the ViewModels to manage the variables lifecycles.
+     * Sets the application theme, supports both light and dark.
      * Initializes the navigation controller.
      *
      * ## Note
      * The popBackStack method is called only when the current back stack entry
-     * is in the Lifecycle.State.RESUMED state to prevent invalid navigation
-     * during state transitions.
+     * is in the Lifecycle.State.RESUMED state to prevent any invalid navigation
+     * during the state transitions.
      *
      * @param savedInstanceState Saved state of the activity
      */

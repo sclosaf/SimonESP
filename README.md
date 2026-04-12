@@ -17,8 +17,8 @@ The following development environment has been used:
 
 ## Repository Structure
 The root directory contains:
-- `app/` folder with the source code and the resources needed by the project
-- `workspace/` folder which contains the assignment .pdf followed
-- `scripts/` folder with the utility scripts used to build and install the app on the devices
-- The build generated files (`build/`, `app/build/`, `local.properties`, etc.) are not included in the repository
-- The remaining files define the gradle dependencies and the build settings
+- The `app/` folder with the source code and the resources needed by the project
+- The `workspace/` folder which contains the assignment .pdf, containing the guidelines
+- The `scripts/` folder with the utility scripts used to build and install the app on the devices
+- The build generated files (`build/`, `app/build/`, `local.properties`, etc.) are not included in the repository, as defined by the .gitignore
+- The remaining files define the gradle dependencies and the build settings for this project

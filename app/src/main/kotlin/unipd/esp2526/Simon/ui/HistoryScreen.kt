@@ -33,7 +33,7 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
  *
  * This composable function defines a scrollable list of all the previously
  * confirmed games, showing for each sequence the first elements
- * pressed (as long as there is space) and its length.
+ * pressed (as long as there is space on the screen) and its length.
  * It properly adapts to the device orientation.
  *
  * The layout in both the orientations shows a title bar, the list of played games

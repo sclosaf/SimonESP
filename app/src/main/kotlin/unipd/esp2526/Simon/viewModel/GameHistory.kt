@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import unipd.esp2526.Simon.ui.theme.ColorType
 
 /**
- * Data structure to represent a completed match,
+ * Data structure used to represent a completed match,
  * it stores the essential information of the sesson.
  *
  * @property sequence String representation of the color sequence played in a match,
- *                    each entry is separated by a comma (e.g., "R, G, B, B, Y, M").
- * @property size Integer number of elements in the sequence.
+ *                    each entry is separated by a comma (e.g. "R, G, B, B, Y, M").
+ * @property size Integer representation of the number of elements in the sequence.
  */
 data class Match(
     val sequence : String,
@@ -25,7 +25,7 @@ data class Match(
  * Played matches are stored in a mutable state list to trigger a proper
  * update of the interface when a game is added.
  *
- * @property endedMatches Read-only list of completed matches.
+ * @property endedMatches List of completed matches.
  */
 class GameHistory : ViewModel()
 {

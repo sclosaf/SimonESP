@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModel
 /**
  * ViewModel used to manage the application's language.
  *
- * This class is responsible to handling the current language preference
- * and toggle between supported languages (English and Italian).
+ * This class is responsible to handl the current language preference
+ * and toggles between supported languages (English and Italian).
  */
 class LanguageSwitcher : ViewModel()
 {
@@ -37,13 +37,13 @@ class LanguageSwitcher : ViewModel()
         private set
 
     /**
-     * Helper function used to retrie the currently active language code.
+     * Helper function used to retrieve the currently active language code.
      * Applying specifics fallbacks:
      * 1. Application locale
      * 2. System locale
      * 3. Default "En"
      *
-     * @return The language code (e.g., "en", "it") of the current active locale
+     * @return The language code (e.g. "en", "it") of the current active locale
      */
     private fun getCurrentActiveLanguage(): String
     {
@@ -52,7 +52,7 @@ class LanguageSwitcher : ViewModel()
 
     /**
      * Toggles the application language between English and Italian.
-     * It may cause the activity to be recreated with the new strings.
+     * Additionally, causing the activity to be recreated with the new strings.
      */
     fun toggleLanguage()
     {

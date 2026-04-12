@@ -34,7 +34,7 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
  *
  * @param title The text to display as the bar title
  * @param languageSwitcher ViewModel that manages the current language state
- *                         and provides the toggleLanguage method
+ *                         and provides the toggle method
  */
 @Composable
 fun TopBar(title: String, languageSwitcher: LanguageSwitcher)

@@ -69,7 +69,8 @@ val CyanLit = Color(0xFF80DEEA)
  * short name used for sequence display.
  *
  * @property longName The full name of the color
- * @property shortName A abbreviation of the color used for compact sequence representation in the history
+ * @property shortName A abbreviation of the color used for
+ *                     compact sequence representation in the history
  */
 enum class ColorType(val longName: String, val shortName: String)
 {

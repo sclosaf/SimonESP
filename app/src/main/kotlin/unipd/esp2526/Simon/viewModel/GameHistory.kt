@@ -8,7 +8,7 @@ import unipd.esp2526.Simon.ui.theme.ColorType
 
 /**
  * Data structure used to represent a completed match,
- * it stores the essential information of the sesson.
+ * it stores the essential information of a sesson.
  *
  * @property sequence String representation of the color sequence played in a match,
  *                    each entry is separated by a comma (e.g. "R, G, B, B, Y, M").

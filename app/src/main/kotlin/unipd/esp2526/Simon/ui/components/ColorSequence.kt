@@ -2,6 +2,7 @@ package unipd.esp2526.Simon.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.rememberScrollState
@@ -35,7 +36,7 @@ fun ColorSequence(sequence: List<ColorType>)
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
-            .height(250.dp),
+            .aspectRatio(1.6f),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.elevatedCardColors( containerColor = MaterialTheme.colorScheme.surface),
         shape = RoundedCornerShape(8.dp)

@@ -17,7 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 import unipd.esp2526.Simon.ui.GameScreen
-import unipd.esp2526.Simon.ui.HistoryScreen
+import unipd.esp2526.Simon.ui.HomeScreen
 import unipd.esp2526.Simon.ui.theme.Theme
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.GameStatus
@@ -90,8 +90,20 @@ class MainActivity : AppCompatActivity()
             Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
                 {
-                    NavHost(navController = navigationController, startDestination = "GameScreen")
+                    NavHost(navController = navigationController, startDestination = "HomeScreen")
                     {
+                       /**
+                         * Home screen of the application.
+                         */
+                        composable("HomeScreen")
+                        {
+                            Log.d(TAG, "Navigation to HomeScreen")
+                            HomeScreen(
+                                gameHistory = gameHistory,
+                                languageSwitcher = languageSwitcher,
+                            )
+                        }
+
                         /**
                          * Main screen of the application.
                          */
@@ -108,32 +120,10 @@ class MainActivity : AppCompatActivity()
                                     gameStatus.reset()
 
                                     Log.d(TAG, "Game has been resetted, navigating to HistoryScreen")
-                                    navigationController.navigate("HistoryScreen")
+                                    navigationController.navigate("HomeScreen")
                                 },
                                 languageSwitcher = languageSwitcher,
                                 gameStatus = gameStatus
-                            )
-                        }
-
-                        /**
-                         * History screen of the application.
-                         */
-                        composable("HistoryScreen")
-                        {
-                            Log.d(TAG, "Navigation to HistoryScreen")
-                            HistoryScreen(
-                                gameHistory = gameHistory,
-                                languageSwitcher = languageSwitcher,
-                                back = {
-                                    Log.d(TAG, "Navigating back to the GameScreen")
-                                    if(navigationController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED)
-                                    {
-                                        Log.d(TAG, "Current back stack entry is resumed, popping back stack")
-                                        navigationController.popBackStack()
-                                    }
-                                    else
-                                        Log.w(TAG, "Stack cannot be pop back, current state hasn't been resumed yet")
-                                }
                             )
                         }
                     }

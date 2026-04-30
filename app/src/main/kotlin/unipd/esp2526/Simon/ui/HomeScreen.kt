@@ -1,7 +1,6 @@
 package unipd.esp2526.Simon.ui
 
 import android.util.Log
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
@@ -23,8 +23,8 @@ import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.ui.theme.horizontalDivider
 import unipd.esp2526.Simon.ui.components.HistoryEntry
 import unipd.esp2526.Simon.ui.components.TopBar
-import unipd.esp2526.Simon.ui.components.ButtonBack
 import unipd.esp2526.Simon.ui.components.HistoryHeader
+import unipd.esp2526.Simon.ui.components.WelcomeHeader
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
@@ -48,18 +48,15 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
  *             system back button/gesture and the back button component.
  */
 @Composable
-fun HistoryScreen(
+fun HomeScreen(
     gameHistory: GameHistory,
-    languageSwitcher: LanguageSwitcher,
-    back: () -> Unit
+    languageSwitcher: LanguageSwitcher
 )
 {
-    val TAG = "HistoryScreen"
+    val TAG = "HomeScreen"
 
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
     val matches = gameHistory.endedMatches
-
-    BackHandler { back() }
 
     if(isLandscape)
     {
@@ -70,34 +67,40 @@ fun HistoryScreen(
                 .fillMaxSize()
                 .padding(16.dp)
                 .windowInsetsPadding(WindowInsets.statusBars),
+            horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            TopBar(stringResource(R.string.history), languageSwitcher = languageSwitcher)
+            TopBar(stringResource(R.string.home), languageSwitcher = languageSwitcher)
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            HistoryHeader()
-
-            LazyColumn(
-                modifier = Modifier.weight(1f)
-            )
+            if(matches.isEmpty())
             {
-                items(matches)
-                { match ->
-                    HistoryEntry(match = match)
+                WelcomeHeader()
+            }
+            else
+            {
+                HistoryHeader()
 
-                    if(matches.last() !== match)
-                    {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            thickness = 0.5.dp,
-                            color = horizontalDivider
-                        )
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                )
+                {
+                    items(matches)
+                    { match ->
+                        HistoryEntry(match = match)
+
+                        if(matches.last() !== match)
+                        {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = 4.dp),
+                                thickness = 0.5.dp,
+                                color = horizontalDivider
+                            )
+                        }
                     }
                 }
             }
-
-            ButtonBack( onClick = back )
         }
 
     }
@@ -110,34 +113,40 @@ fun HistoryScreen(
                 .fillMaxSize()
                 .padding(16.dp)
                 .windowInsetsPadding(WindowInsets.statusBars),
+            horizontalAlignment = Alignment.CenterHorizontally
         )
         {
-            TopBar(stringResource(R.string.history), languageSwitcher = languageSwitcher)
+            TopBar(stringResource(R.string.home), languageSwitcher = languageSwitcher)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            HistoryHeader()
-
-            LazyColumn(
-                modifier = Modifier.weight(1f)
-            )
+            if(matches.isEmpty())
             {
-                items(matches)
-                { match ->
-                    HistoryEntry(match = match)
+                WelcomeHeader()
+            }
+            else
+            {
+                HistoryHeader()
 
-                    if(matches.last() !== match)
-                    {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            thickness = 0.5.dp,
-                            color = horizontalDivider
-                        )
+                LazyColumn(
+                    modifier = Modifier.weight(1f)
+                )
+                {
+                    items(matches)
+                    { match ->
+                        HistoryEntry(match = match)
+
+                        if(matches.last() !== match)
+                        {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = 4.dp),
+                                thickness = 0.5.dp,
+                                color = horizontalDivider
+                            )
+                        }
                     }
                 }
             }
-
-            ButtonBack( onClick = back )
         }
     }
 }

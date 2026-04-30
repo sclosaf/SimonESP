@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">SimonESP</string>
     <string name="name">Simon</string>
-    <string name="history">Game History</string>
+    <string name="welcome">Welcome to Simon, no matches have been played yet, start your first game!</string>
+    <string name="home">Home Screen</string>
     <string name="clear">Clear</string>
     <string name="end">End Game</string>
     <string name="back">Back</string>

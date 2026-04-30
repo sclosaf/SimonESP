@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">SimonESP</string>
     <string name="name">Simon</string>
-    <string name="history">Storico Partite</string>
+    <string name="welcome">Benvenuto in Simon, nessuna partita è stata ancora giocata, inizia la tua prima!</string>
+    <string name="home">Schermata Principale</string>
     <string name="clear">Cancella</string>
     <string name="end">Fine Partita</string>
     <string name="back">Indietro</string>

@@ -63,35 +63,17 @@ val lightSurface = Color(0xFFF5F5F5)
  */
 val disabledButton = Color(0xFFBDBDBD)
 
-/**
- * Clear button color used in dark theme.
- */
-val darkClear = Color(0xFFEF5350)
+val darkStart = Color(0xFF0D7F5B)
+val lightStart = Color(0xFF059669)
 
-/**
- * Clear button color used in light theme.
- */
-val lightClear = Color(0xFFE53935)
+val darkPause = Color(0xFFEF5350)
+val lightPause = Color(0xFFE53935)
 
-/**
- * End game button color used in dark theme.
- */
-val darkEnd = Color(0xFF66BB6A)
+val darkResume = Color(0xFF66BB6A)
+val lightResume = Color(0xFF43A047)
 
-/**
- * End game button color used in light theme.
- */
-val lightEnd = Color(0xFF43A047)
-
-/**
- * Back button color used in dark theme.
- */
-val darkBack = Color(0xFFEF5350)
-
-/**
- * Back button color used in light theme.
- */
-val lightBack = Color(0xFFE53935)
+val darkEnd = Color(0xFF3B82F6)
+val lightEnd = Color(0xFF2563EB)
 
 /**
  * Color used for horizontal dividers between history entries.

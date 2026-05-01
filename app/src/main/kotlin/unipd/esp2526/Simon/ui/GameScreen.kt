@@ -105,9 +105,12 @@ fun GameScreen(
                 ColorSequence(sequence = currentSequence)
 
                 ButtonUtility(
-                    onClear = { gameStatus.clearSequence() },
+                    onStart = {},
+                    onPauseResume = {},
                     onEnd = { onGameEnd(gameStatus.endGame()) },
-                    isClearEnabled = currentSequence.isNotEmpty(),
+                    isStartEnabled = false,
+                    isPaused = false,
+                    isEndEnabled = currentSequence.isNotEmpty()
                 )
             }
         }
@@ -138,9 +141,12 @@ fun GameScreen(
             ColorSequence(sequence = currentSequence)
 
             ButtonUtility(
-                onClear = { gameStatus.clearSequence() },
+                onStart = {},
+                onPauseResume = {},
                 onEnd = { onGameEnd(gameStatus.endGame()) },
-                isClearEnabled = currentSequence.isNotEmpty()
+                isStartEnabled = false,
+                isPaused = false,
+                isEndEnabled = currentSequence.isNotEmpty()
             )
         }
     }

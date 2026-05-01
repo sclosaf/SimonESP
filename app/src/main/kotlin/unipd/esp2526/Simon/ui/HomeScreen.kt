@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
@@ -25,6 +26,7 @@ import unipd.esp2526.Simon.ui.components.HistoryEntry
 import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.components.HistoryHeader
 import unipd.esp2526.Simon.ui.components.WelcomeHeader
+import unipd.esp2526.Simon.ui.components.NewGameButton
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
@@ -50,23 +52,22 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 @Composable
 fun HomeScreen(
     gameHistory: GameHistory,
-    languageSwitcher: LanguageSwitcher
+    languageSwitcher: LanguageSwitcher,
+    onNewGame: () -> Unit
 )
 {
-    val TAG = "HomeScreen"
-
-    val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
     val matches = gameHistory.endedMatches
 
-    if(isLandscape)
+    Box(
+        modifier = Modifier
+        .fillMaxSize()
+        .windowInsetsPadding(WindowInsets.statusBars)
+    )
     {
-        Log.d(TAG, "Orientation setted to landscape")
-
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .windowInsetsPadding(WindowInsets.statusBars),
+            .fillMaxSize()
+            .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         )
         {
@@ -103,50 +104,12 @@ fun HomeScreen(
             }
         }
 
-    }
-    else
-    {
-        Log.d(TAG, "Orientation setted to portrait")
-
-        Column(
+        NewGameButton(
+            onClick = onNewGame,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .windowInsetsPadding(WindowInsets.statusBars),
-            horizontalAlignment = Alignment.CenterHorizontally
+            .align(Alignment.BottomEnd)
+            .padding(20.dp)
         )
-        {
-            TopBar(stringResource(R.string.home), languageSwitcher = languageSwitcher)
 
-            Spacer(modifier = Modifier.height(20.dp))
-
-            if(matches.isEmpty())
-            {
-                WelcomeHeader()
-            }
-            else
-            {
-                HistoryHeader()
-
-                LazyColumn(
-                    modifier = Modifier.weight(1f)
-                )
-                {
-                    items(matches)
-                    { match ->
-                        HistoryEntry(match = match)
-
-                        if(matches.last() !== match)
-                        {
-                            HorizontalDivider(
-                                modifier = Modifier.padding(horizontal = 4.dp),
-                                thickness = 0.5.dp,
-                                color = horizontalDivider
-                            )
-                        }
-                    }
-                }
-            }
-        }
     }
 }

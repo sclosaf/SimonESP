@@ -101,6 +101,7 @@ class MainActivity : AppCompatActivity()
                             HomeScreen(
                                 gameHistory = gameHistory,
                                 languageSwitcher = languageSwitcher,
+                                onNewGame = { navigationController.navigate("GameScreen") }
                             )
                         }
 

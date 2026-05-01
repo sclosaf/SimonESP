@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 /**
  * Primary color used in dark theme.
  */
-val darkPrimary = Color(0xFFD0BCFF)
+val darkPrimary = Color(0xFF3B82F6)
 
 /**
  * Secondary color used in dark theme.
@@ -36,7 +36,7 @@ val darkSurface = Color(0xFF2A2A2A)
 /**
  * Primary color used in light theme.
  */
-val lightPrimary = Color(0xFF6650a4)
+val lightPrimary = Color(0xFF2563EB)
 
 /**
  * Secondary color used in light theme.

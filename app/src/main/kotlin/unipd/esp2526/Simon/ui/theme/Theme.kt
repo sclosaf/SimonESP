@@ -63,16 +63,44 @@ val lightSurface = Color(0xFFF5F5F5)
  */
 val disabledButton = Color(0xFFBDBDBD)
 
+/**
+ * Color for the start button in dark theme.
+ */
 val darkStart = Color(0xFF0D7F5B)
+
+/**
+ * Color for the start button in light theme.
+ */
 val lightStart = Color(0xFF059669)
 
+/**
+ * Color for the pause button in dark theme.
+ */
 val darkPause = Color(0xFFEF5350)
+
+/**
+ * Color for the pause button in light theme.
+ */
 val lightPause = Color(0xFFE53935)
 
+/**
+ * Color for the resume button in dark theme.
+ */
 val darkResume = Color(0xFF66BB6A)
+
+/**
+ * Color for the resume button in light theme.
+ */
 val lightResume = Color(0xFF43A047)
 
+/**
+ * Color for the end button in dark theme.
+ */
 val darkEnd = Color(0xFF3B82F6)
+
+/**
+ * Color for the end button in light theme.
+ */
 val lightEnd = Color(0xFF2563EB)
 
 /**

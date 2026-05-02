@@ -9,19 +9,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import unipd.esp2526.Simon.viewModel.Match
 
-/**
- * A component that displays a single history entry.
- *
- * This composable shows the information about a completed match,
- * displaying the length of the sequence and the sequence itself.
- *
- * @param match The Match object containing the sequence
- *              string and its size to be displayed in the history entry.
- */
+import unipd.esp2526.Simon.viewModel.Match
+import unipd.esp2526.Simon.ui.theme.ColorType
+
 @Composable
 fun HistoryEntry(match : Match)
 {
@@ -34,14 +32,14 @@ fun HistoryEntry(match : Match)
     )
     {
         Text(
-            text = "${match.size}",
+            text = (match.errorIndex ?: match.fullSequence.size).toString(),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .weight(1f)
         )
 
         Text(
-            text = match.sequence,
+            text = buildSequence(match.fullSequence, match.errorIndex),
             style = MaterialTheme.typography.bodyLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -49,5 +47,25 @@ fun HistoryEntry(match : Match)
                 .weight(11f)
                 .padding(start = 16.dp)
         )
+    }
+}
+
+fun buildSequence(fullSequence: List<ColorType>, errorIndex: Int?) : AnnotatedString
+{
+    if(fullSequence.isEmpty())
+        return AnnotatedString("")
+
+    val separator = errorIndex ?: fullSequence.size
+
+    return buildAnnotatedString{
+        fullSequence.forEachIndexed{ index, color ->
+
+            withStyle(style = SpanStyle(color = if(index >= separator) Color.Red else Color.Green))
+            {
+                append(color.shortName)
+                if(index < fullSequence.size - 1)
+                    append(", ")
+            }
+        }
     }
 }

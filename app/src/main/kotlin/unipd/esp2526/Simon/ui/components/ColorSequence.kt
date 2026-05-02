@@ -19,19 +19,11 @@ import androidx.compose.material3.ElevatedCard
 
 import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.ui.theme.ColorType
+import unipd.esp2526.Simon.viewModel.GamePhase
 
-/**
- * A component that displays the current color sequence as text,
- * as a comma separated list of abbreviations.
- *
- * @param sequence The list of ColorType representing the current game sequence.
- *                 If empty, a placeholder text is displayed to guide the user.
- */
 @Composable
-fun ColorSequence(sequence: List<ColorType>)
+fun ColorSequence(sequence: String, phase: GamePhase)
 {
-    val textSequence = if(sequence.isEmpty()) {stringResource(R.string.press)} else {sequence.joinToString(", "){ it.shortName }}
-
     ElevatedCard(
         modifier = Modifier
             .padding(10.dp)
@@ -43,7 +35,14 @@ fun ColorSequence(sequence: List<ColorType>)
     )
     {
         Text(
-            text = textSequence,
+            text =  when(phase)
+            {
+                GamePhase.IDLE -> if(sequence.isEmpty()) stringResource(R.string.press, stringResource(R.string.start)) else sequence
+                GamePhase.COMPUTER -> { stringResource(R.string.wait) }
+                GamePhase.PLAYER -> { sequence }
+                GamePhase.OVER -> if(sequence.isEmpty()) stringResource(R.string.concluded, stringResource(R.string.end)) else sequence
+                else -> sequence
+            },
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier

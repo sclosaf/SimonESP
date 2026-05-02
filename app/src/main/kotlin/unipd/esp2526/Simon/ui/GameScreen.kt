@@ -1,6 +1,5 @@
 package unipd.esp2526.Simon.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -30,37 +30,28 @@ import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.theme.ColorType
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
+import unipd.esp2526.Simon.viewModel.GamePhase
 import unipd.esp2526.Simon.R
 
-/**
- * Main screen of the game.
- *
- * This composable function defines the whole first screen and displays
- * the interface where the user can play.
- * It properly adapts to the device orientation.
- *
- * The layout in both the orientations shows a title bar, the six game buttons,
- * a text box containing the current sequence played and two utility buttons
- * which can be used to manage the current match.
- *
- * @param onGameEnd Callback invoked when the user ends the game,
- *                  receives the final sequence as a parameter
- * @param languageSwitcher ViewModel for managing language toggle
- * @param gameStatus ViewModel containing the current sequence
- */
 @Composable
 fun GameScreen(
-    onGameEnd: (List<ColorType>) -> Unit,
+    onGameEnd: (fullSequence: List<ColorType>, errorIndex: Int?) -> Unit,
     languageSwitcher: LanguageSwitcher,
     gameStatus: GameStatus
 )
 {
-    val TAG = "GameScreen"
+    LaunchedEffect(Unit) { gameStatus.startGame() }
 
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
-    val currentSequence by remember { derivedStateOf { gameStatus.currentSequence } }
+    val currentPhase by remember { derivedStateOf { gameStatus.currentPhase } }
+    val playedSequence by remember { derivedStateOf { gameStatus.playedSequence } }
+
     val litColor by remember { derivedStateOf { gameStatus.litColor } }
+    val isPaused by remember { derivedStateOf { gameStatus.isPaused } }
+
+    val isStartEnabled = currentPhase == GamePhase.IDLE
+    val isEndEnabled = currentPhase != GamePhase.IDLE && currentPhase != GamePhase.OVER
 
     val colors = listOf(
         ColorType.RED,
@@ -71,10 +62,22 @@ fun GameScreen(
         ColorType.CYAN
     )
 
+    fun clickColor(color: ColorType)
+    {
+        val result = gameStatus.colorPressed(color)
+        if(result != null)
+            onGameEnd(result.first, result.second)
+    }
+
+    fun clickEnd()
+    {
+        val result = gameStatus.forceEndGame()
+        if(result != null)
+            onGameEnd(result.first, result.second)
+    }
+
     if(isLandscape)
     {
-        Log.d(TAG, "Orientation setted to landscape")
-
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -93,7 +96,7 @@ fun GameScreen(
                 ButtonGrid(
                     colors = colors,
                     lit = litColor,
-                    onColorClick = { color -> gameStatus.addColor(color) }
+                    onColorClick = { color -> clickColor(color) }
                 )
             }
 
@@ -102,23 +105,21 @@ fun GameScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             )
             {
-                ColorSequence(sequence = currentSequence)
+                ColorSequence(sequence = playedSequence.joinToString(", ") { it.shortName }, phase = currentPhase)
 
                 ButtonUtility(
-                    onStart = {},
-                    onPauseResume = {},
-                    onEnd = { onGameEnd(gameStatus.endGame()) },
-                    isStartEnabled = false,
-                    isPaused = false,
-                    isEndEnabled = currentSequence.isNotEmpty()
+                    onStart = { gameStatus.startGame() },
+                    onPauseResume = { gameStatus.togglePause() },
+                    onEnd = { clickEnd() },
+                    isStartEnabled = isStartEnabled,
+                    isPaused = isPaused,
+                    isEndEnabled = isEndEnabled
                 )
             }
         }
     }
     else
     {
-        Log.d(TAG, "Orientation setted to portrait")
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -133,20 +134,21 @@ fun GameScreen(
             ButtonGrid(
                 colors = colors,
                 lit = litColor,
-                onColorClick = { color -> gameStatus.addColor(color) }
+                onColorClick = { color -> clickColor(color) }
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
-            ColorSequence(sequence = currentSequence)
+            ColorSequence(sequence = playedSequence.joinToString(", ") { it.shortName }, phase = currentPhase)
+
 
             ButtonUtility(
-                onStart = {},
-                onPauseResume = {},
-                onEnd = { onGameEnd(gameStatus.endGame()) },
-                isStartEnabled = false,
-                isPaused = false,
-                isEndEnabled = currentSequence.isNotEmpty()
+                onStart = { gameStatus.startGame() },
+                onPauseResume = { gameStatus.togglePause() },
+                onEnd = { clickEnd() },
+                isStartEnabled = isStartEnabled,
+                isPaused = isPaused,
+                isEndEnabled = isEndEnabled
             )
         }
     }

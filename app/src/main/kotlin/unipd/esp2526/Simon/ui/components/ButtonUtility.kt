@@ -34,16 +34,6 @@ import unipd.esp2526.Simon.ui.theme.darkEnd
 import unipd.esp2526.Simon.ui.theme.lightEnd
 import unipd.esp2526.Simon.R
 
-/**
- * A couple of utility buttons, arranged in a row:
- * - **Clear Button**: Clears the current sequence (disabled when the sequence is empty)
- * - **End Button**: Ends the current game and saves the sequence
- *
- * @param onClear Callback invoked when the Clear button is pressed.
- * @param onEnd Callback invoked when the End button is pressed.
- * @param isClearEnabled Whether the Clear button is enabled. When false, the button
- *                       appears gray and does not respond to clicks. Default is true.
- */
 @Composable
 fun ButtonUtility(
     onStart: () -> Unit,

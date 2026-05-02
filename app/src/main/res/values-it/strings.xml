@@ -9,5 +9,7 @@
     <string name="end">Fine Partita</string>
     <string name="number">#</string>
     <string name="sequence">Sequenza</string>
-    <string name="press">Premere un pulsante per iniziare ...</string>
+    <string name="press">Premi \'%s\' per iniziare una partita</string>
+    <string name="concluded">Premi \'%s\' per concludere la partita</string>
+    <string name="wait">Memorizza la sequenza...</string>
 </resources>

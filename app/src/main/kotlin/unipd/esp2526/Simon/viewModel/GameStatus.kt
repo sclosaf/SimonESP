@@ -1,6 +1,5 @@
 package unipd.esp2526.Simon.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,151 +10,195 @@ import kotlinx.coroutines.launch
 
 import unipd.esp2526.Simon.ui.theme.ColorType
 
-/**
- * ViewModel used to manage the state of the active game session.
- *
- * It is responsible for tracking the current color sequence,
- * managing the visual feedback of the buttons illumination,
- * resetting or ending the session.
- */
+enum class GamePhase
+{
+    IDLE,
+    COMPUTER,
+    PLAYER,
+    OVER
+}
+
 class GameStatus : ViewModel()
 {
     companion object
     {
-        /**
-         * Duration in milliseconds for which a color remains illuminated.
-         *
-         * Used to control how long the visual feedback lasts.
-         */
-        private const val LIGHT_DURATION_MS = 275L
-
-        /**
-         * Tag identifier used for Android logging messages.
-         */
-        private val TAG = GameStatus::class.java.simpleName
+        private const val LIGHT_DURATION_MS = 500L
+        private const val DELAY_BETWEEN_COLORS_DURATION_MS = 500L
+        private const val DELAY_BETWEEN_ROUNDS_DURATION_MS = 800L
+        private const val DELAY_PAUSED_GAME_DURATION_MS = 150L
     }
 
-    /**
-     * The sequence of color entered during the current session played.
-     *
-     * Restarts as empty once a new session begins.
-     */
-    var currentSequence by mutableStateOf<List<ColorType>>(emptyList())
+    var currentPhase by mutableStateOf(GamePhase.IDLE)
         private set
 
-    /**
-     * The color currently illuminated.
-     *
-     * This effect is played once a button is pressed,
-     * it lasts as many milliseconds as LIGHT_DURATION_MS defines.
-     */
+    var targetSequence by mutableStateOf<List<ColorType>>(emptyList())
+        private set
+
+    var playedSequence by mutableStateOf<List<ColorType>>(emptyList())
+        private set
+
     var litColor by mutableStateOf<ColorType?>(null)
         private set
 
-    /**
-     * Reference to the currently running illumination coroutine job.
-     *
-     * It manages the mutual exclusion between sequential pressions,
-     * preventing overlapping effects.
-     */
-    private var currentLightJob: kotlinx.coroutines.Job? = null
+    var isPaused by mutableStateOf(false)
+        private set
 
-    /**
-     * Adds a color to the current sequence and triggers its illumination.
-     *
-     * @param color The color to add to the sequence and illuminate
-     */
-    public fun addColor(color: ColorType)
+    var errorIndex by mutableStateOf<Int?>(null)
+        private set
+
+    private var playerLightJob: kotlinx.coroutines.Job? = null
+    private var computerLightJob: kotlinx.coroutines.Job? = null
+
+    public fun startGame()
     {
-        Log.d(TAG, "Adding ${color.longName} color to the sequence")
-
-        currentSequence = currentSequence + color
-
-        Log.i(TAG, "New sequence size: ${currentSequence.size}")
-
-        illuminateColor(color)
+        resetGame()
+        currentPhase = GamePhase.COMPUTER
+        nextRound()
     }
 
-    /**
-     * Illuminates a specific color for visual feedback.
-     * It cancels any previously running illumination to prevent conflicts.
-     *
-     * @param color The color to illuminate
-     */
-    private fun illuminateColor(color: ColorType)
+    private fun nextRound()
     {
-        Log.d(TAG, "Lighting color")
+        if(currentPhase != GamePhase.COMPUTER)
+            return
 
-        currentLightJob?.cancel()
+        targetSequence += ColorType.values().random()
 
-        currentLightJob = viewModelScope.launch{
-            litColor = color
+        illuminateComputerSequence()
+    }
 
-            Log.i(TAG, "Color lit: ${color.shortName}")
-            delay(LIGHT_DURATION_MS)
+    private fun illuminateComputerSequence()
+    {
+        computerLightJob?.cancel()
+        computerLightJob = viewModelScope.launch{
 
-            if(litColor == color)
+            for((index, color) in targetSequence.withIndex())
             {
-                litColor = null
-                Log.i(TAG, "Color unlit: ${color.shortName}")
+                while(isPaused)
+                    delay(DELAY_PAUSED_GAME_DURATION_MS)
+
+                illuminateColor(color)
+                delay(LIGHT_DURATION_MS)
+                turnOffColor(color)
+                delay(DELAY_BETWEEN_COLORS_DURATION_MS)
+            }
+
+            if(!isPaused && currentPhase == GamePhase.COMPUTER)
+            {
+                currentPhase = GamePhase.PLAYER
+                playedSequence = emptyList()
             }
         }
+
     }
 
-    /**
-     * Clears the current game sequence without returning it.
-     * Used when the user decides to cancel a game.
-     */
-    public fun clearSequence()
+    public fun colorPressed(color: ColorType) : Pair<List<ColorType>, Int?>?
     {
-        Log.d(TAG, "Clearing sequence")
+        if(currentPhase != GamePhase.PLAYER)
+            return null
 
-        currentLightJob?.cancel()
-        litColor = null
-        currentSequence = emptyList()
+        playerLightJob?.cancel()
+        playerLightJob = viewModelScope.launch{
+
+            illuminateColor(color)
+            delay(LIGHT_DURATION_MS)
+            turnOffColor(color)
+        }
+
+        playedSequence += color
+
+        if(color != targetSequence[playedSequence.size - 1])
+        {
+            errorIndex = playedSequence.size - 1
+            return endGame()
+        }
+
+        if(playedSequence.size == targetSequence.size)
+        {
+            currentPhase = GamePhase.COMPUTER
+            playedSequence = emptyList()
+
+            viewModelScope.launch{
+                delay(DELAY_BETWEEN_ROUNDS_DURATION_MS)
+                nextRound()
+            }
+        }
+
+        return null
     }
 
-    /**
-     * Ends the current game and returns the final sequence.
-     * Used when the user confirms the end of a game.
-     *
-     * @return The final sequence of colors from the ended game
-     */
-    public fun endGame() : List<ColorType>
+    private fun illuminateColor(color: ColorType)
     {
-        Log.d(TAG, "Ending game")
-
-        Log.i(TAG, "Ending game with sequence: ${currentSequence.joinToString { it.shortName }}")
-        Log.i(TAG, "Ending game with sequence size: ${currentSequence.size}")
-
-        currentLightJob?.cancel()
-        litColor = null
-
-        val finalSequence = currentSequence
-        clearSequence()
-        return finalSequence
+        litColor = color
     }
 
-    /**
-     * Resets the game state to its initial values.
-     * Cancels any pending illuminations.
-     */
-    public fun reset()
+    private fun turnOffColor(color: ColorType)
     {
-        Log.d(TAG, "Resetting game")
-
-        currentLightJob?.cancel()
-        currentSequence = emptyList()
-        litColor = null
+        if(litColor == color)
+            litColor = null
     }
 
-    /**
-     * Called when the ViewModel is about to be destroyed.
-     * Cancels any pending illumination.
-     */
+    public fun togglePause()
+    {
+        if(currentPhase == GamePhase.COMPUTER)
+            isPaused = !isPaused
+    }
+
+    private fun endGame() : Pair<List<ColorType>, Int?>?
+    {
+        if(currentPhase == GamePhase.OVER || currentPhase == GamePhase.IDLE)
+            return null
+
+        playerLightJob?.cancel()
+        computerLightJob?.cancel()
+        litColor = null
+
+        if(currentPhase != GamePhase.IDLE && targetSequence.isNotEmpty())
+        {
+            currentPhase = GamePhase.OVER
+            return Pair(targetSequence, errorIndex)
+        }
+
+        currentPhase = GamePhase.OVER
+        return null
+    }
+
+    public fun forceEndGame() : Pair<List<ColorType>, Int?>?
+    {
+        playerLightJob?.cancel()
+        computerLightJob?.cancel()
+        litColor = null
+
+        if(targetSequence.size == 1 && playedSequence.isEmpty() && errorIndex == null)
+        {
+            resetGame()
+            return null
+        }
+
+        if(errorIndex == null && targetSequence.isNotEmpty())
+            errorIndex = playedSequence.size
+
+        return endGame()
+    }
+
+    private fun resetGame()
+    {
+        playerLightJob?.cancel()
+        computerLightJob?.cancel()
+
+        targetSequence = emptyList()
+        playedSequence = emptyList()
+
+        currentPhase = GamePhase.IDLE
+
+        litColor = null
+        isPaused = false
+        errorIndex = null
+    }
+
     override fun onCleared()
     {
         super.onCleared()
-        currentLightJob?.cancel()
+        playerLightJob?.cancel()
+        computerLightJob?.cancel()
     }
 }

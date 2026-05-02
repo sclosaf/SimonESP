@@ -1,7 +1,6 @@
 package unipd.esp2526.Simon
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,81 +22,28 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.GameHistory
 
-/**
- * Main (and only) activity used for the 'Simon' application.
- *
- * This activity manages the user interface of the application,
- * which implements the navigation among the different screens (Game and History)
- * initializes the needed ViewModels for the state management of the application.
- *
- * Jetpack Compose is used for the general interface and navigation.
- *
- * ## ViewModels
- * - GameStatus: manages the current sequence and the light effect of the game buttons
- * - LanguageSwitcher: manages the language toggle
- * - GameHistory: stores the history of the played matches
- *
- * ## Application flow
- * 1. The game starts on the GameScreen
- * 2. Once the user ends the match, the sequence played is saved
- * 3. The user is brought to the HistoryScreen, where all the previous matches are displayed
- * 4. With the Android back motion or the button the user can play a new game, returning to the start screen
- */
 class MainActivity : AppCompatActivity()
 {
-    companion object
-    {
-        /**
-         * Tag identifier used for Android logging messages.
-         */
-        private val TAG = MainActivity::class.java.simpleName
-    }
-
-    /**
-     * Overridden method called on creation.
-     *
-     * Enables edge-to-edge display.
-     * Initializes the ViewModels to manage the variables lifecycles.
-     * Sets the application theme, supports both light and dark.
-     * Initializes the navigation controller.
-     *
-     * ## Note
-     * The popBackStack method is called only when the current back stack entry
-     * is in the Lifecycle.State.RESUMED state to prevent any invalid navigation
-     * during the state transitions.
-     *
-     * @param savedInstanceState Saved state of the activity
-     */
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "Activity created")
 
         enableEdgeToEdge()
-        Log.v(TAG, "Edge to edge enabled")
 
         setContent {
-            Log.d(TAG, "Setting up Compose content")
-
             val navigationController = rememberNavController()
-            Log.v(TAG, "Navigation controller initialized")
 
             val languageSwitcher: LanguageSwitcher = viewModel()
             val gameStatus: GameStatus = viewModel()
             val gameHistory: GameHistory = viewModel()
-            Log.v(TAG, "ViewModels initialized")
 
             Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
                 {
                     NavHost(navController = navigationController, startDestination = "HomeScreen")
                     {
-                       /**
-                         * Home screen of the application.
-                         */
                         composable("HomeScreen")
                         {
-                            Log.d(TAG, "Navigation to HomeScreen")
                             HomeScreen(
                                 gameHistory = gameHistory,
                                 languageSwitcher = languageSwitcher,
@@ -105,23 +51,12 @@ class MainActivity : AppCompatActivity()
                             )
                         }
 
-                        /**
-                         * Main screen of the application.
-                         */
                         composable("GameScreen")
                         {
-                            Log.d(TAG, "Navigation to GameScreen")
-
                             GameScreen(
-                                onGameEnd = { sequence ->
-                                    Log.i(TAG, "Game ended with sequence: ${sequence.joinToString(", ") { it.shortName }}")
-                                    Log.i(TAG, "Game ended with sequence size: ${sequence.size}")
-
-                                    gameHistory.addSequence(sequence)
-                                    gameStatus.reset()
-
-                                    Log.d(TAG, "Game has been resetted, navigating to HistoryScreen")
-                                    navigationController.navigate("HomeScreen")
+                                onGameEnd = { sequence, errorIndex ->
+                                    gameHistory.addSequence(sequence, errorIndex)
+                                    navigationController.navigate("HomeScreen") { popUpTo("GameScreen") }
                                 },
                                 languageSwitcher = languageSwitcher,
                                 gameStatus = gameStatus

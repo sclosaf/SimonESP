@@ -5,12 +5,12 @@ import androidx.compose.ui.graphics.Color
 /**
  * Color used for the normal (unlit) state of the RED button.
  */
-val RedNormal = Color(0xFFE53935)
+val RedNormal = Color(0xFFB71C1C)
 
 /**
  * Color used for the normal (unlit) state of the GREEN button.
  */
-val GreenNormal = Color(0xFF43A047)
+val GreenNormal = Color(0xFF2E7D32)
 
 /**
  * Color used for the normal (unlit) state of the BLUE button.
@@ -20,47 +20,47 @@ val BlueNormal = Color(0xFF0D47A1)
 /**
  * Color used for the normal (unlit) state of the MAGENTA button.
  */
-val MagentaNormal = Color(0xFFE91E63)
+val MagentaNormal = Color(0xFFAD1457)
 
 /**
  * Color used for the normal (unlit) state of the YELLOW button.
  */
-val YellowNormal = Color(0xFFFDD835)
+val YellowNormal = Color(0xFFF9A825)
 
 /**
  * Color used for the normal (unlit) state of the CYAN button.
  */
-val CyanNormal = Color(0xFF4DD0E1)
+val CyanNormal = Color(0xFF00838F)
 
 /**
  * Color used for the illuminated (lit) state of the RED button.
  */
-val RedLit = Color(0xFFFF6B68)
+val RedLit = Color(0xFFFF5252)
 
 /**
  * Color used for the illuminated (lit) state of the GREEN button.
  */
-val GreenLit = Color(0xFF66BB6A)
+val GreenLit = Color(0xFF69F0AE)
 
 /**
  * Color used for the illuminated (lit) state of the BLUE button.
  */
-val BlueLit = Color(0xFF1976D2)
+val BlueLit = Color(0xFF448AFF)
 
 /**
  * Color used for the illuminated (lit) state of the MAGENTA button.
  */
-val MagentaLit = Color(0xFFEC407A)
+val MagentaLit = Color(0xFFFF4081)
 
 /**
  * Color used for the illuminated (lit) state of the YELLOW button.
  */
-val YellowLit = Color(0xFFFFEB3B)
+val YellowLit = Color(0xFFFFFF00)
 
 /**
  * Color used for the illuminated (lit) state of the CYAN button.
  */
-val CyanLit = Color(0xFF80DEEA)
+val CyanLit = Color(0xFF18FFFF)
 
 /**
  * Enumeration representing the six possible colors in the game.

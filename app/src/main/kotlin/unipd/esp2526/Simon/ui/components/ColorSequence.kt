@@ -39,6 +39,7 @@ fun ColorSequence(sequence: String, phase: GamePhase)
             {
                 GamePhase.IDLE -> if(sequence.isEmpty()) stringResource(R.string.press, stringResource(R.string.start)) else sequence
                 GamePhase.COMPUTER -> { stringResource(R.string.wait) }
+                GamePhase.CONTINUE -> { stringResource(R.string.choice, stringResource(R.string.advance), stringResource(R.string.end)) }
                 GamePhase.PLAYER -> if(sequence.isEmpty()) stringResource(R.string.play) else sequence
                 GamePhase.OVER -> stringResource(R.string.concluded, stringResource(R.string.end))
                 else -> sequence

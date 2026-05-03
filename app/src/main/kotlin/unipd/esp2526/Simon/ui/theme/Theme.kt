@@ -74,6 +74,16 @@ val darkStart = Color(0xFF0D7F5B)
 val lightStart = Color(0xFF059669)
 
 /**
+ * Color for the continue button in dark theme.
+ */
+val darkContinue = Color(0xFF0D7F5B)
+
+/**
+ * Color for the continue button in the light theme
+ */
+val lightContinue = Color(0xFF059669)
+
+/**
  * Color for the pause button in dark theme.
  */
 val darkPause = Color(0xFFEF5350)

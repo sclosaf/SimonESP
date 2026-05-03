@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.sp
 import unipd.esp2526.Simon.ui.theme.disabledButton
 import unipd.esp2526.Simon.ui.theme.darkStart
 import unipd.esp2526.Simon.ui.theme.lightStart
+import unipd.esp2526.Simon.ui.theme.darkContinue
+import unipd.esp2526.Simon.ui.theme.lightContinue
 import unipd.esp2526.Simon.ui.theme.darkPause
 import unipd.esp2526.Simon.ui.theme.lightPause
 import unipd.esp2526.Simon.ui.theme.darkResume
@@ -37,15 +39,18 @@ import unipd.esp2526.Simon.R
 @Composable
 fun ButtonUtility(
     onStart: () -> Unit,
+    onContinue: () -> Unit,
     onPauseResume: () -> Unit,
     onEnd: () -> Unit,
     isStartEnabled: Boolean = true,
+    isContinueEnabled: Boolean = false,
     isPaused: Boolean = false,
     isPauseEnabled: Boolean = false,
     isEndEnabled: Boolean = false
 ){
 
     val startColor = if(isSystemInDarkTheme()) darkStart else lightStart
+    val continueColor = if(isSystemInDarkTheme()) darkContinue else lightContinue
     val pauseColor = if(isSystemInDarkTheme()) darkPause else lightPause
     val resumeColor = if(isSystemInDarkTheme()) darkResume else lightResume
     val endColor = if(isSystemInDarkTheme()) darkEnd else lightEnd
@@ -56,9 +61,18 @@ fun ButtonUtility(
             modifier = Modifier
             .weight(1f)
             .clip(RoundedCornerShape(12.dp))
-            .clickable(enabled = isStartEnabled) { onStart() },
+            .clickable(enabled = isStartEnabled || isContinueEnabled){
+                when {
+                    isStartEnabled -> onStart()
+                    isContinueEnabled -> onContinue()
+                }
+            },
             colors = CardDefaults.cardColors(
-                containerColor = if(isStartEnabled) startColor else disabledButton
+                containerColor = when {
+                    isStartEnabled -> startColor
+                    isContinueEnabled -> continueColor
+                    else -> disabledButton
+                }
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
             shape = RoundedCornerShape(12.dp)
@@ -72,11 +86,15 @@ fun ButtonUtility(
             )
             {
                 Text(
-                    text = stringResource(R.string.start),
+                    text = when {
+                        isStartEnabled -> stringResource(R.string.start)
+                        isContinueEnabled -> stringResource(R.string.advance)
+                        else -> stringResource(R.string.advance)
+                    },
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = if(isStartEnabled) Color.White else Color.Gray,
+                    color = if(isStartEnabled || isContinueEnabled) Color.White else Color.Gray,
                     textAlign = TextAlign.Center
                 )
             }

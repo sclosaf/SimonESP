@@ -15,6 +15,7 @@ enum class GamePhase
     IDLE,
     COMPUTER,
     PLAYER,
+    CONTINUE,
     OVER
 }
 
@@ -24,7 +25,6 @@ class GameStatus : ViewModel()
     {
         private const val LIGHT_DURATION_MS = 800L
         private const val DELAY_BETWEEN_COLORS_DURATION_MS = 500L
-        private const val DELAY_BETWEEN_ROUNDS_DURATION_MS = 800L
         private const val DELAY_PAUSED_GAME_DURATION_MS = 150L
     }
 
@@ -114,16 +114,20 @@ class GameStatus : ViewModel()
 
         if(playedSequence.size == targetSequence.size)
         {
-            currentPhase = GamePhase.COMPUTER
+            currentPhase = GamePhase.CONTINUE
             playedSequence = emptyList()
-
-            viewModelScope.launch{
-                delay(DELAY_BETWEEN_ROUNDS_DURATION_MS)
-                nextRound()
-            }
         }
 
         return null
+    }
+
+    public fun continueToNextRound()
+    {
+        if(currentPhase != GamePhase.CONTINUE)
+            return
+
+        currentPhase = GamePhase.COMPUTER
+        nextRound()
     }
 
     private fun illuminateColor(color: ColorType)
@@ -175,7 +179,12 @@ class GameStatus : ViewModel()
         }
 
         if(errorIndex == null && targetSequence.isNotEmpty())
-            errorIndex = playedSequence.size
+        {
+            if(currentPhase == GamePhase.CONTINUE && playedSequence.isEmpty())
+                errorIndex = targetSequence.size
+            else
+                errorIndex = playedSequence.size
+        }
 
         return endGame()
     }

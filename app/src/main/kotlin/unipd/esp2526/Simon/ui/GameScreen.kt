@@ -50,6 +50,7 @@ fun GameScreen(
     val isPaused by remember { derivedStateOf { gameStatus.isPaused } }
 
     val isStartEnabled = currentPhase == GamePhase.IDLE
+    val isContinueEnabled = currentPhase == GamePhase.CONTINUE
     val isPauseEnabled = currentPhase == GamePhase.COMPUTER
     val isEndEnabled = currentPhase != GamePhase.IDLE
 
@@ -121,9 +122,11 @@ fun GameScreen(
 
                 ButtonUtility(
                     onStart = { gameStatus.startGame() },
+                    onContinue = { gameStatus.continueToNextRound() },
                     onPauseResume = { gameStatus.togglePause() },
                     onEnd = { clickEnd() },
                     isStartEnabled = isStartEnabled,
+                    isContinueEnabled = isContinueEnabled,
                     isPaused = isPaused,
                     isPauseEnabled = isPauseEnabled,
                     isEndEnabled = isEndEnabled
@@ -156,9 +159,11 @@ fun GameScreen(
 
             ButtonUtility(
                 onStart = { gameStatus.startGame() },
+                onContinue = { gameStatus.continueToNextRound() },
                 onPauseResume = { gameStatus.togglePause() },
                 onEnd = { clickEnd() },
                 isStartEnabled = isStartEnabled,
+                isContinueEnabled = isContinueEnabled,
                 isPaused = isPaused,
                 isPauseEnabled = isPauseEnabled,
                 isEndEnabled = isEndEnabled

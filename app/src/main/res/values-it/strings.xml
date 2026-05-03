@@ -10,6 +10,7 @@
     <string name="number">#</string>
     <string name="sequence">Sequenza</string>
     <string name="press">Premi \'%s\' per iniziare una partita</string>
-    <string name="concluded">Premi \'%s\' per concludere la partita</string>
+    <string name="concluded">La partita è finita. Premi \'%s\' per uscire</string>
     <string name="wait">Memorizza la sequenza...</string>
+    <string name="play">Riproduci la sequenza...</string>
 </resources>

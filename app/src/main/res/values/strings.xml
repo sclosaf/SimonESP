@@ -10,6 +10,7 @@
     <string name="number">#</string>
     <string name="sequence">Sequence</string>
     <string name="press">Press \'%s\' to begin a match</string>
-    <string name="concluded">Press \'%s\' to conclude the match</string>
+    <string name="concluded">The match ended. Press \'%s\' to exit</string>
     <string name="wait">Memorize the sequence...</string>
+    <string name="play">Play the sequence...</string>
 </resources>

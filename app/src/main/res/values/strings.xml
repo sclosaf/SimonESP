@@ -13,4 +13,7 @@
     <string name="concluded">The match ended. Press \'%s\' to exit</string>
     <string name="wait">Memorize the sequence...</string>
     <string name="play">Play the sequence...</string>
+    <string name="advance">Continue</string>
+    <string name="choice">Press \'%s\' to continue playing, otherwise use \'%s\' to exit</string>
 </resources>
+

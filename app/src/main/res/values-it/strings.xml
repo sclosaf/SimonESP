@@ -13,4 +13,6 @@
     <string name="concluded">La partita è finita. Premi \'%s\' per uscire</string>
     <string name="wait">Memorizza la sequenza...</string>
     <string name="play">Riproduci la sequenza...</string>
+    <string name="advance">Continua</string>
+    <string name="choice">Premi \'%s\' per continuare a giocare, altrimenti usa \'%s\' per uscire</string>
 </resources>

@@ -16,7 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -40,8 +41,6 @@ fun GameScreen(
     gameStatus: GameStatus
 )
 {
-    LaunchedEffect(Unit) { gameStatus.startGame() }
-
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
     val currentPhase by remember { derivedStateOf { gameStatus.currentPhase } }
@@ -51,7 +50,10 @@ fun GameScreen(
     val isPaused by remember { derivedStateOf { gameStatus.isPaused } }
 
     val isStartEnabled = currentPhase == GamePhase.IDLE
-    val isEndEnabled = currentPhase != GamePhase.IDLE && currentPhase != GamePhase.OVER
+    val isPauseEnabled = currentPhase == GamePhase.COMPUTER
+    val isEndEnabled = currentPhase != GamePhase.IDLE
+
+    var lastResult by remember { mutableStateOf<Pair<List<ColorType>, Int?>?>(null) }
 
     val colors = listOf(
         ColorType.RED,
@@ -66,14 +68,24 @@ fun GameScreen(
     {
         val result = gameStatus.colorPressed(color)
         if(result != null)
-            onGameEnd(result.first, result.second)
+            lastResult = result
     }
 
     fun clickEnd()
     {
         val result = gameStatus.forceEndGame()
         if(result != null)
+        {
             onGameEnd(result.first, result.second)
+            lastResult = null
+        }
+        else if(lastResult != null)
+        {
+            lastResult?.let { (fullSequence, errorIndex) ->
+                onGameEnd(fullSequence, errorIndex)
+                lastResult = null
+            }
+        }
     }
 
     if(isLandscape)
@@ -113,6 +125,7 @@ fun GameScreen(
                     onEnd = { clickEnd() },
                     isStartEnabled = isStartEnabled,
                     isPaused = isPaused,
+                    isPauseEnabled = isPauseEnabled,
                     isEndEnabled = isEndEnabled
                 )
             }
@@ -141,13 +154,13 @@ fun GameScreen(
 
             ColorSequence(sequence = playedSequence.joinToString(", ") { it.shortName }, phase = currentPhase)
 
-
             ButtonUtility(
                 onStart = { gameStatus.startGame() },
                 onPauseResume = { gameStatus.togglePause() },
                 onEnd = { clickEnd() },
                 isStartEnabled = isStartEnabled,
                 isPaused = isPaused,
+                isPauseEnabled = isPauseEnabled,
                 isEndEnabled = isEndEnabled
             )
         }

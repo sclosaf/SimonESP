@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity()
                                 onGameEnd = { sequence, errorIndex ->
                                     gameHistory.addSequence(sequence, errorIndex)
                                     navigationController.navigate("HomeScreen") { popUpTo("GameScreen") }
+                                    gameStatus.resetGame()
                                 },
                                 languageSwitcher = languageSwitcher,
                                 gameStatus = gameStatus

@@ -41,6 +41,7 @@ fun ButtonUtility(
     onEnd: () -> Unit,
     isStartEnabled: Boolean = true,
     isPaused: Boolean = false,
+    isPauseEnabled: Boolean = false,
     isEndEnabled: Boolean = false
 ){
 
@@ -85,9 +86,9 @@ fun ButtonUtility(
             modifier = Modifier
             .weight(1f)
             .clip(RoundedCornerShape(12.dp))
-            .clickable(enabled = !isStartEnabled) { onPauseResume() },
+            .clickable(enabled = isPauseEnabled) { onPauseResume() },
             colors = CardDefaults.cardColors(
-                containerColor = if(!isStartEnabled) {
+                containerColor = if(isPauseEnabled) {
                     if(isPaused) resumeColor else pauseColor
                 } else {
                     disabledButton
@@ -109,7 +110,7 @@ fun ButtonUtility(
                     style = MaterialTheme.typography.titleMedium,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
-                    color = if(!isStartEnabled) Color.White else Color.Gray,
+                    color = if(isPauseEnabled) Color.White else Color.Gray,
                     textAlign = TextAlign.Center
                 )
             }

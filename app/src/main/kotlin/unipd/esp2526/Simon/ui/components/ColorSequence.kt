@@ -39,8 +39,8 @@ fun ColorSequence(sequence: String, phase: GamePhase)
             {
                 GamePhase.IDLE -> if(sequence.isEmpty()) stringResource(R.string.press, stringResource(R.string.start)) else sequence
                 GamePhase.COMPUTER -> { stringResource(R.string.wait) }
-                GamePhase.PLAYER -> { sequence }
-                GamePhase.OVER -> if(sequence.isEmpty()) stringResource(R.string.concluded, stringResource(R.string.end)) else sequence
+                GamePhase.PLAYER -> if(sequence.isEmpty()) stringResource(R.string.play) else sequence
+                GamePhase.OVER -> stringResource(R.string.concluded, stringResource(R.string.end))
                 else -> sequence
             },
             textAlign = TextAlign.Start,

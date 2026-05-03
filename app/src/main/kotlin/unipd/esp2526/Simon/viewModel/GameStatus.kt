@@ -22,7 +22,7 @@ class GameStatus : ViewModel()
 {
     companion object
     {
-        private const val LIGHT_DURATION_MS = 500L
+        private const val LIGHT_DURATION_MS = 800L
         private const val DELAY_BETWEEN_COLORS_DURATION_MS = 500L
         private const val DELAY_BETWEEN_ROUNDS_DURATION_MS = 800L
         private const val DELAY_PAUSED_GAME_DURATION_MS = 150L
@@ -180,7 +180,7 @@ class GameStatus : ViewModel()
         return endGame()
     }
 
-    private fun resetGame()
+    public fun resetGame()
     {
         playerLightJob?.cancel()
         computerLightJob?.cancel()

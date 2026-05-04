@@ -32,7 +32,7 @@ import unipd.esp2526.Simon.R
 fun GameScore(match : Match)
 {
     val longest = if(match.errorIndex == match.fullSequence.size) match.fullSequence.size else match.fullSequence.size - 1
-    val error = if(match.errorIndex == match.fullSequence.size) 0 else match.errorIndex
+    val error = if(match.errorIndex == match.fullSequence.size) -1 else match.errorIndex
 
     ElevatedCard(
         modifier = Modifier
@@ -49,39 +49,42 @@ fun GameScore(match : Match)
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         )
         {
-            Column(
-                modifier = Modifier
-                    .weight(1f),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            )
+            if(error != -1)
             {
-                Text(
-                    text = stringResource(R.string.index),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center
+                Column(
+                    modifier = Modifier
+                        .weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 )
+                {
+                    Text(
+                        text = stringResource(R.string.index),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
 
-                Text(
-                    text = error.toString(),
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center
+                    Text(
+                        text = error.toString(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+                }
+
+                VerticalDivider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(vertical = 4.dp),
+                    thickness = 0.75.dp,
+                    color = divider
                 )
             }
-
-            VerticalDivider(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(vertical = 4.dp),
-                thickness = 0.75.dp,
-                color = divider
-            )
 
             Column(
                 modifier = Modifier

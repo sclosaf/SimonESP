@@ -18,5 +18,5 @@
     <string name="choice">Premi \'%s\' per continuare a giocare, altrimenti usa \'%s\' per uscire</string>
     <string name="detail">Dettaglio Partita</string>
     <string name="longest">Sequenza più lunga:</string>
-    <string name="index">Indice d\'errore:</string>
+    <string name="index">Elemento errato:</string>
 </resources>

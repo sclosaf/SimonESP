@@ -18,6 +18,6 @@
     <string name="choice">Press \'%s\' to continue playing, otherwise use \'%s\' to exit</string>
     <string name="detail">Detail Match</string>
     <string name="longest">Longest sequence:</string>
-    <string name="index">Error index:</string>
+    <string name="index">Erroneous element:</string>
 </resources>
 

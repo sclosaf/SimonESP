@@ -17,7 +17,9 @@ import androidx.navigation.compose.rememberNavController
 
 import unipd.esp2526.Simon.ui.GameScreen
 import unipd.esp2526.Simon.ui.HomeScreen
+import unipd.esp2526.Simon.ui.DetailScreen
 import unipd.esp2526.Simon.ui.theme.Theme
+import unipd.esp2526.Simon.viewModel.Match
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.GameHistory
@@ -47,7 +49,28 @@ class MainActivity : AppCompatActivity()
                             HomeScreen(
                                 gameHistory = gameHistory,
                                 languageSwitcher = languageSwitcher,
-                                onNewGame = { navigationController.navigate("GameScreen") }
+                                onNewGame = { navigationController.navigate("GameScreen") },
+                                onMatchClick = { index ->
+                                    navigationController.navigate("DetailScreen/${index}")
+                                }
+                            )
+                        }
+
+                        composable("DetailScreen/{index}") { entry ->
+                            val index = entry.arguments?.getString("index")?.toIntOrNull() ?: -1
+
+                            val match = if (index in gameHistory.endedMatches.indices)
+                                gameHistory.endedMatches[index]
+                            else
+                                Match(emptyList(), null)
+
+                            DetailScreen(
+                                languageSwitcher = languageSwitcher,
+                                onBack = {
+                                    if(navigationController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED)
+                                        navigationController.popBackStack()
+                                },
+                                match = match
                             )
                         }
 
@@ -56,8 +79,10 @@ class MainActivity : AppCompatActivity()
                             GameScreen(
                                 onGameEnd = { sequence, errorIndex ->
                                     gameHistory.addSequence(sequence, errorIndex)
-                                    navigationController.navigate("HomeScreen") { popUpTo("GameScreen") }
                                     gameStatus.resetGame()
+
+                                    if(navigationController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED)
+                                        navigationController.popBackStack()
                                 },
                                 languageSwitcher = languageSwitcher,
                                 gameStatus = gameStatus

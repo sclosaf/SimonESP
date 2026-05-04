@@ -4,6 +4,7 @@
     <string name="welcome">Benvenuto in Simon, nessuna partita è stata ancora giocata, inizia la tua prima!</string>
     <string name="home">Schermata Principale</string>
     <string name="start">Avvia Partita</string>
+    <string name="back">Indietro</string>
     <string name="pause">Pausa</string>
     <string name="resume">Riprendi</string>
     <string name="end">Fine Partita</string>
@@ -15,4 +16,7 @@
     <string name="play">Riproduci la sequenza...</string>
     <string name="advance">Continua</string>
     <string name="choice">Premi \'%s\' per continuare a giocare, altrimenti usa \'%s\' per uscire</string>
+    <string name="detail">Dettaglio Partita</string>
+    <string name="longest">Sequenza più lunga:</string>
+    <string name="index">Indice d\'errore:</string>
 </resources>

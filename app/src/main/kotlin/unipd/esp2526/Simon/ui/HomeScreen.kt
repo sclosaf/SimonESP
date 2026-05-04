@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 
 import unipd.esp2526.Simon.R
-import unipd.esp2526.Simon.ui.theme.horizontalDivider
+import unipd.esp2526.Simon.ui.theme.divider
 import unipd.esp2526.Simon.ui.components.HistoryEntry
 import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.components.HistoryHeader
@@ -33,6 +33,7 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 fun HomeScreen(
     gameHistory: GameHistory,
     languageSwitcher: LanguageSwitcher,
+    onMatchClick: (Int) -> Unit,
     onNewGame: () -> Unit
 )
 {
@@ -67,16 +68,18 @@ fun HomeScreen(
                     modifier = Modifier.weight(1f)
                 )
                 {
-                    items(matches)
-                    { match ->
-                        HistoryEntry(match = match)
+                    itemsIndexed(matches) { index, match ->
+                        HistoryEntry(
+                            match = match,
+                            onClick = { onMatchClick(index) }
+                        )
 
                         if(matches.last() !== match)
                         {
                             HorizontalDivider(
                                 modifier = Modifier.padding(horizontal = 4.dp),
                                 thickness = 0.5.dp,
-                                color = horizontalDivider
+                                color = divider
                             )
                         }
                     }

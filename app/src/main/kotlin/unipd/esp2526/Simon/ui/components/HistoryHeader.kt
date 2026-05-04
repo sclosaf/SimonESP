@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import unipd.esp2526.Simon.ui.theme.horizontalDivider
+import unipd.esp2526.Simon.ui.theme.divider
 import unipd.esp2526.Simon.R
 
 /**
@@ -56,7 +56,7 @@ fun HistoryHeader()
         HorizontalDivider(
             modifier = Modifier.padding(top = 4.dp),
             thickness = 2.dp,
-            color = horizontalDivider
+            color = divider
         )
     }
 }

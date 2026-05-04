@@ -35,7 +35,7 @@ fun ColorSequence(sequence: String, phase: GamePhase)
     )
     {
         Text(
-            text =  when(phase)
+            text = when(phase)
             {
                 GamePhase.IDLE -> if(sequence.isEmpty()) stringResource(R.string.press, stringResource(R.string.start)) else sequence
                 GamePhase.COMPUTER -> { stringResource(R.string.wait) }

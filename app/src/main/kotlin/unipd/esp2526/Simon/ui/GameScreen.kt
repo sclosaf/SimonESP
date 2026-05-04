@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -88,6 +89,8 @@ fun GameScreen(
             }
         }
     }
+
+    BackHandler(enabled = currentPhase != GamePhase.IDLE) { clickEnd() }
 
     if(isLandscape)
     {

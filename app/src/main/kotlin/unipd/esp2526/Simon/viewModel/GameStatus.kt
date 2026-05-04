@@ -56,11 +56,12 @@ class GameStatus : ViewModel()
         nextRound()
     }
 
-    private fun nextRound()
+    public fun nextRound()
     {
         if(currentPhase != GamePhase.COMPUTER)
             return
 
+        playedSequence = emptyList()
         targetSequence += ColorType.values().random()
 
         illuminateComputerSequence()
@@ -113,21 +114,9 @@ class GameStatus : ViewModel()
         }
 
         if(playedSequence.size == targetSequence.size)
-        {
             currentPhase = GamePhase.CONTINUE
-            playedSequence = emptyList()
-        }
 
         return null
-    }
-
-    public fun continueToNextRound()
-    {
-        if(currentPhase != GamePhase.CONTINUE)
-            return
-
-        currentPhase = GamePhase.COMPUTER
-        nextRound()
     }
 
     private fun illuminateColor(color: ColorType)

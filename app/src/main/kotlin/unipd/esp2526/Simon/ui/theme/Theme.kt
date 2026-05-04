@@ -9,21 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 /**
- * Primary color used in dark theme.
- */
-val darkPrimary = Color(0xFF3B82F6)
-
-/**
- * Secondary color used in dark theme.
- */
-val darkSecondary = Color(0xFFCCC2DC)
-
-/**
- * Tertiary color used in dark theme.
- */
-val darkTertiary = Color(0xFFEFB8C8)
-
-/**
  * Background color used in dark theme.
  */
 val darkBackground = Color(0xFF1A1A1A)
@@ -32,21 +17,6 @@ val darkBackground = Color(0xFF1A1A1A)
  * Surface color used in dark theme.
  */
 val darkSurface = Color(0xFF2A2A2A)
-
-/**
- * Primary color used in light theme.
- */
-val lightPrimary = Color(0xFF2563EB)
-
-/**
- * Secondary color used in light theme.
- */
-val lightSecondary = Color(0xFF625b71)
-
-/**
- * Tertiary color used in light theme.
- */
-val lightTertiary = Color(0xFF7D5260)
 
 /**
  * Background color used in light theme.
@@ -59,9 +29,29 @@ val lightBackground = Color(0xFFFFFFFF)
 val lightSurface = Color(0xFFF5F5F5)
 
 /**
+ * Color used for new game button in dark theme.
+ */
+val darkNewGame = Color(0xFF3B82F6)
+
+/**
+ * Color used for new game button in light theme.
+ */
+val lightNewGame = Color(0xFF2563EB)
+
+/**
  * Color used for disabled buttons.
  */
 val disabledButton = Color(0xFFBDBDBD)
+
+/**
+ * Back button color used in dark theme.
+ */
+val darkBack = Color(0xFFEF5350)
+
+/**
+ * Back button color used in light theme.
+ */
+val lightBack = Color(0xFFE53935)
 
 /**
  * Color for the start button in dark theme.
@@ -114,28 +104,22 @@ val darkEnd = Color(0xFF3B82F6)
 val lightEnd = Color(0xFF2563EB)
 
 /**
- * Color used for horizontal dividers between history entries.
+ * Color used for dividers.
  */
-val horizontalDivider = Color(0xFF9E9E9E).copy(alpha = 0.3f)
+val divider = Color(0xFF9E9E9E).copy(alpha = 0.3f)
 
 /**
- * Dark color scheme following Material Design 3 guidelines.
+ * Dark color scheme.
  */
 private val DarkColorScheme = darkColorScheme(
-    primary = darkPrimary,
-    secondary = darkSecondary,
-    tertiary = darkTertiary,
     background = darkBackground,
     surface = darkSurface
 )
 
 /**
- * Light color scheme following Material Design 3 guidelines.
+ * Light color scheme.
  */
 private val LightColorScheme = lightColorScheme(
-    primary = lightPrimary,
-    secondary = lightSecondary,
-    tertiary = lightTertiary,
     background = lightBackground,
     surface = lightSurface
 )

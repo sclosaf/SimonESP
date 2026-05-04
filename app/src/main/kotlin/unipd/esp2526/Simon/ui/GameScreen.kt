@@ -125,7 +125,7 @@ fun GameScreen(
 
                 ButtonUtility(
                     onStart = { gameStatus.startGame() },
-                    onContinue = { gameStatus.nextRound() },
+                    onContinue = { gameStatus.continueNextRound() },
                     onPauseResume = { gameStatus.togglePause() },
                     onEnd = { clickEnd() },
                     isStartEnabled = isStartEnabled,
@@ -162,7 +162,7 @@ fun GameScreen(
 
             ButtonUtility(
                 onStart = { gameStatus.startGame() },
-                onContinue = { gameStatus.nextRound() },
+                onContinue = { gameStatus.continueNextRound() },
                 onPauseResume = { gameStatus.togglePause() },
                 onEnd = { clickEnd() },
                 isStartEnabled = isStartEnabled,

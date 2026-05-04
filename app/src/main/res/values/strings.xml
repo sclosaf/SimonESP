@@ -4,6 +4,7 @@
     <string name="welcome">Welcome to Simon, no matches have been played yet, start your first game!</string>
     <string name="home">Home Screen</string>
     <string name="start">Start Game</string>
+    <string name="back">Back</string>
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
     <string name="end">End Game</string>
@@ -15,5 +16,8 @@
     <string name="play">Play the sequence...</string>
     <string name="advance">Continue</string>
     <string name="choice">Press \'%s\' to continue playing, otherwise use \'%s\' to exit</string>
+    <string name="detail">Detail Match</string>
+    <string name="longest">Longest sequence:</string>
+    <string name="index">Error index:</string>
 </resources>
 

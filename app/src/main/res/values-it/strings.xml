@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SimonESP</string>
     <string name="name">Simon</string>
-    <string name="welcome">Benvenuto in Simon, nessuna partita è stata ancora giocata, inizia la tua prima!</string>
+    <string name="welcome">Benvenuto in Simon, nessuna partita è stata ancora giocata, inizia la prima!</string>
     <string name="home">Schermata Principale</string>
     <string name="start">Avvia Partita</string>
     <string name="back">Indietro</string>

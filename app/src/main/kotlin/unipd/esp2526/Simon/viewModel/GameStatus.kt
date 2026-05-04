@@ -70,7 +70,7 @@ class GameStatus : ViewModel()
     public fun continueNextRound()
     {
         if(currentPhase != GamePhase.CONTINUE)
-        return
+            return
 
         currentPhase = GamePhase.COMPUTER
         nextRound()
@@ -123,7 +123,7 @@ class GameStatus : ViewModel()
         }
 
         if(playedSequence.size == targetSequence.size)
-        currentPhase = GamePhase.CONTINUE
+            currentPhase = GamePhase.CONTINUE
 
         return null
     }

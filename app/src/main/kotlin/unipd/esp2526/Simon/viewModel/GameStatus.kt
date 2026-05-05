@@ -92,13 +92,15 @@ class GameStatus : ViewModel()
                 delay(DELAY_BETWEEN_COLORS_DURATION_MS)
             }
 
-            if(!isPaused && currentPhase == GamePhase.COMPUTER)
+            if(currentPhase == GamePhase.COMPUTER)
             {
+                while(isPaused)
+                    delay(DELAY_PAUSED_GAME_DURATION_MS)
+
                 currentPhase = GamePhase.PLAYER
                 playedSequence = emptyList()
             }
         }
-
     }
 
     public fun colorPressed(color: ColorType) : Pair<List<ColorType>, Int?>?

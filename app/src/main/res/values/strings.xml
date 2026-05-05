@@ -15,7 +15,7 @@
     <string name="wait">Memorize the sequence...</string>
     <string name="play">Play the sequence...</string>
     <string name="advance">Continue</string>
-    <string name="choice">Press \'%s\' to continue playing, otherwise use \'%s\' to exit</string>
+    <string name="choice">Press \'%1$s\' to continue playing, otherwise use \'%2$s\' to exit</string>
     <string name="detail">Detail Match</string>
     <string name="longest">Longest sequence:</string>
     <string name="index">Erroneous element:</string>

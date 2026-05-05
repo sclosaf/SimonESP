@@ -15,7 +15,7 @@
     <string name="wait">Memorizza la sequenza...</string>
     <string name="play">Riproduci la sequenza...</string>
     <string name="advance">Continua</string>
-    <string name="choice">Premi \'%s\' per continuare a giocare, altrimenti usa \'%s\' per uscire</string>
+    <string name="choice">Premi \'%1$s\' per continuare a giocare, altrimenti usa \'%2$s\' per uscire</string>
     <string name="detail">Dettaglio Partita</string>
     <string name="longest">Sequenza più lunga:</string>
     <string name="index">Elemento errato:</string>

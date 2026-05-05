@@ -32,7 +32,7 @@ import unipd.esp2526.Simon.R
 fun GameScore(match : Match)
 {
     val longest = if(match.errorIndex == match.fullSequence.size) match.fullSequence.size else match.fullSequence.size - 1
-    val error = if(match.errorIndex == match.fullSequence.size) -1 else match.errorIndex
+    val error = if(match.errorIndex == null || match.errorIndex == match.fullSequence.size) -1 else match.errorIndex + 1
 
     ElevatedCard(
         modifier = Modifier

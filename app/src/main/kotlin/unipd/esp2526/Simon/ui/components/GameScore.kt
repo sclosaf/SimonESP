@@ -67,14 +67,28 @@ fun GameScore(match : Match)
                         textAlign = TextAlign.Center
                     )
 
-                    Text(
-                        text = error.toString(),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontSize = 48.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White,
-                        textAlign = TextAlign.Center
+                    Row(
+                        horizontalArrangement = Arrangement.Center
                     )
+                    {
+                        Text(
+                            text = error.toString(),
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 48.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Text(
+                            text = "^",
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(start = 2.dp)
+                        )
+                    }
                 }
 
                 VerticalDivider(

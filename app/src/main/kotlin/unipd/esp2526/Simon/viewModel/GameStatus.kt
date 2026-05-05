@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.viewModel
 
+import android.os.Bundle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -26,6 +27,12 @@ class GameStatus : ViewModel()
         private const val LIGHT_DURATION_MS = 800L
         private const val DELAY_BETWEEN_COLORS_DURATION_MS = 500L
         private const val DELAY_PAUSED_GAME_DURATION_MS = 150L
+
+        private const val KEY_CURRENT_PHASE = "currentPhase"
+        private const val KEY_TARGET_SEQUENCE = "targetSequence"
+        private const val KEY_PLAYED_SEQUENCE = "playedSequence"
+        private const val KEY_IS_PAUSED = "isPaused"
+        private const val KEY_ERROR_INDEX = "errorIndex"
     }
 
     var currentPhase by mutableStateOf(GamePhase.IDLE)
@@ -45,6 +52,8 @@ class GameStatus : ViewModel()
 
     var errorIndex by mutableStateOf<Int?>(null)
         private set
+
+    private var toResume = false
 
     private var playerLightJob: kotlinx.coroutines.Job? = null
     private var computerLightJob: kotlinx.coroutines.Job? = null
@@ -202,6 +211,42 @@ class GameStatus : ViewModel()
         litColor = null
         isPaused = false
         errorIndex = null
+    }
+
+    public fun saveState(bundle: Bundle)
+    {
+        bundle.putString(KEY_CURRENT_PHASE, currentPhase.name)
+        bundle.putStringArrayList(KEY_TARGET_SEQUENCE, ArrayList(targetSequence.map { it.name }))
+        bundle.putStringArrayList(KEY_PLAYED_SEQUENCE, ArrayList(playedSequence.map { it.name }))
+        bundle.putBoolean(KEY_IS_PAUSED, isPaused)
+
+        if(errorIndex != null)
+            bundle.putInt(KEY_ERROR_INDEX, errorIndex!!)
+    }
+
+    public fun restoreState(bundle: Bundle)
+    {
+        toResume = true
+
+        currentPhase = GamePhase.valueOf(bundle.getString(KEY_CURRENT_PHASE, GamePhase.IDLE.name))
+
+        targetSequence = bundle.getStringArrayList(KEY_TARGET_SEQUENCE)?.mapNotNull { name -> ColorType.valueOf(name) } ?: emptyList()
+        playedSequence = bundle.getStringArrayList(KEY_PLAYED_SEQUENCE)?.mapNotNull { name -> ColorType.valueOf(name) } ?: emptyList()
+
+        isPaused = bundle.getBoolean(KEY_IS_PAUSED, true)
+
+        errorIndex = if(bundle.containsKey(KEY_ERROR_INDEX)) bundle.getInt(KEY_ERROR_INDEX) else null
+    }
+
+    public fun resumeIfNeeded()
+    {
+        if(!toResume)
+            return
+
+        toResume = false
+
+        if(currentPhase == GamePhase.COMPUTER)
+            illuminateComputerSequence()
     }
 
     override fun onCleared()

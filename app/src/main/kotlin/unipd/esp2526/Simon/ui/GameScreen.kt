@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -54,6 +55,12 @@ fun GameScreen(
     val isContinueEnabled = currentPhase == GamePhase.CONTINUE
     val isPauseEnabled = currentPhase == GamePhase.COMPUTER
     val isEndEnabled = currentPhase != GamePhase.IDLE
+
+    LaunchedEffect(currentPhase)
+    {
+        if(currentPhase == GamePhase.COMPUTER)
+            gameStatus.resumeIfNeeded()
+    }
 
     var lastResult by remember { mutableStateOf<Pair<List<ColorType>, Int?>?>(null) }
 

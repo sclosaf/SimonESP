@@ -26,6 +26,13 @@ import unipd.esp2526.Simon.viewModel.GameHistory
 
 class MainActivity : AppCompatActivity()
 {
+    companion object
+    {
+        private const val KEY_GAME_STATUS= "gameStatus"
+    }
+
+    private lateinit var gameStatus: GameStatus
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -36,8 +43,10 @@ class MainActivity : AppCompatActivity()
             val navigationController = rememberNavController()
 
             val languageSwitcher: LanguageSwitcher = viewModel()
-            val gameStatus: GameStatus = viewModel()
             val gameHistory: GameHistory = viewModel()
+
+            gameStatus = viewModel()
+            savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
 
             Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
@@ -91,6 +100,18 @@ class MainActivity : AppCompatActivity()
                     }
                 }
             }
+        }
+    }
+
+    override fun onSaveInstanceState(outState : Bundle)
+    {
+        super.onSaveInstanceState(outState)
+
+        if(::gameStatus.isInitialized)
+        {
+            val bundle = Bundle()
+            gameStatus.saveState(bundle)
+            outState.putBundle(KEY_GAME_STATUS, bundle)
         }
     }
 }

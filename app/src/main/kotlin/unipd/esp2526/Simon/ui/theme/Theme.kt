@@ -39,6 +39,16 @@ val darkNewGame = Color(0xFF3B82F6)
 val lightNewGame = Color(0xFF2563EB)
 
 /**
+ * Clear button color used in dark theme.
+ */
+val darkClear = Color(0xFFEF5350)
+
+/**
+ * Clear button color used in light theme.
+ */
+val lightClear = Color(0xFFE53935)
+
+/**
  * Color used for disabled buttons.
  */
 val disabledButton = Color(0xFFBDBDBD)

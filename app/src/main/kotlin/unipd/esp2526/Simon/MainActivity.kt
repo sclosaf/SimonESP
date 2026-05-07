@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity()
     }
 
     private lateinit var gameStatus: GameStatus
+    private lateinit var gameHistory: GameHistory
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -41,9 +42,10 @@ class MainActivity : AppCompatActivity()
 
         setContent {
             val navigationController = rememberNavController()
-
             val languageSwitcher: LanguageSwitcher = viewModel()
-            val gameHistory: GameHistory = viewModel()
+
+            gameHistory = viewModel()
+            gameHistory.initDatabase(this)
 
             gameStatus = viewModel()
             savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
@@ -61,17 +63,18 @@ class MainActivity : AppCompatActivity()
                                 onNewGame = { navigationController.navigate("GameScreen") },
                                 onMatchClick = { index ->
                                     navigationController.navigate("DetailScreen/${index}")
-                                }
+                                },
+                                onClearHistory = { gameHistory.clearHistory() }
                             )
                         }
 
                         composable("DetailScreen/{index}") { entry ->
                             val index = entry.arguments?.getString("index")?.toIntOrNull() ?: -1
 
-                            val match = if (index in gameHistory.endedMatches.indices)
-                                gameHistory.endedMatches[index]
+                            val match = if(index in gameHistory.endedMatches.indices)
+                            gameHistory.endedMatches[index]
                             else
-                                Match(emptyList(), null)
+                            Match(emptyList(), null)
 
                             DetailScreen(
                                 languageSwitcher = languageSwitcher,

@@ -26,6 +26,7 @@ import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.components.HistoryHeader
 import unipd.esp2526.Simon.ui.components.WelcomeHeader
 import unipd.esp2526.Simon.ui.components.NewGameButton
+import unipd.esp2526.Simon.ui.components.ClearHistoryButton
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
@@ -34,7 +35,8 @@ fun HomeScreen(
     gameHistory: GameHistory,
     languageSwitcher: LanguageSwitcher,
     onMatchClick: (Int) -> Unit,
-    onNewGame: () -> Unit
+    onNewGame: () -> Unit,
+    onClearHistory: () -> Unit
 )
 {
     val matches = gameHistory.endedMatches
@@ -87,12 +89,21 @@ fun HomeScreen(
             }
         }
 
+        if(matches.isNotEmpty())
+        {
+            ClearHistoryButton(
+                onClick = onClearHistory,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 90.dp, end = 20.dp)
+            )
+        }
+
         NewGameButton(
             onClick = onNewGame,
             modifier = Modifier
-            .align(Alignment.BottomEnd)
-            .padding(20.dp)
+                .align(Alignment.BottomEnd)
+                .padding(20.dp)
         )
-
     }
 }

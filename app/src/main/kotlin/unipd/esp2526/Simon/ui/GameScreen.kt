@@ -33,6 +33,7 @@ import unipd.esp2526.Simon.ui.components.TopBar
 import unipd.esp2526.Simon.ui.theme.ColorType
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
+import unipd.esp2526.Simon.viewModel.AudioPlayer
 import unipd.esp2526.Simon.viewModel.GamePhase
 import unipd.esp2526.Simon.R
 
@@ -40,7 +41,8 @@ import unipd.esp2526.Simon.R
 fun GameScreen(
     onGameEnd: (fullSequence: List<ColorType>, errorIndex: Int?) -> Unit,
     languageSwitcher: LanguageSwitcher,
-    gameStatus: GameStatus
+    gameStatus: GameStatus,
+    audioPlayer: AudioPlayer
 )
 {
     val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
@@ -114,7 +116,11 @@ fun GameScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             )
             {
-                TopBar(stringResource(R.string.name), languageSwitcher = languageSwitcher)
+                TopBar(
+                    stringResource(R.string.name),
+                    languageSwitcher = languageSwitcher,
+                    audioPlayer = audioPlayer
+                )
 
                 ButtonGrid(
                     colors = colors,
@@ -155,7 +161,11 @@ fun GameScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         )
         {
-            TopBar(stringResource(R.string.name), languageSwitcher = languageSwitcher)
+            TopBar(
+                stringResource(R.string.name),
+                languageSwitcher = languageSwitcher,
+                audioPlayer = audioPlayer
+            )
 
             ButtonGrid(
                 colors = colors,

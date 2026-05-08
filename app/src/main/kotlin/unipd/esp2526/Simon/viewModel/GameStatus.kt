@@ -20,7 +20,7 @@ enum class GamePhase
     OVER
 }
 
-class GameStatus : ViewModel()
+class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 {
     companion object
     {
@@ -95,6 +95,7 @@ class GameStatus : ViewModel()
                 while(isPaused)
                     delay(DELAY_PAUSED_GAME_DURATION_MS)
 
+                audioPlayer.play(color)
                 illuminateColor(color)
                 delay(LIGHT_DURATION_MS)
                 turnOffColor(color)
@@ -116,6 +117,8 @@ class GameStatus : ViewModel()
     {
         if(currentPhase != GamePhase.PLAYER)
             return null
+
+        audioPlayer.play(color)
 
         playerLightJob?.cancel()
         playerLightJob = viewModelScope.launch{

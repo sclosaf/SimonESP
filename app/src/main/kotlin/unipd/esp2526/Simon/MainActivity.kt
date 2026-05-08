@@ -10,8 +10,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.compose.NavHost
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
@@ -23,32 +25,36 @@ import unipd.esp2526.Simon.viewModel.Match
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.GameStatus
 import unipd.esp2526.Simon.viewModel.GameHistory
+import unipd.esp2526.Simon.viewModel.AudioPlayer
 
 class MainActivity : AppCompatActivity()
 {
     companion object
     {
-        private const val KEY_GAME_STATUS= "gameStatus"
+        private const val KEY_GAME_STATUS ="gameStatus"
     }
 
-    private lateinit var gameStatus: GameStatus
+    private lateinit var languageSwitcher: LanguageSwitcher
+    private lateinit var audioPlayer: AudioPlayer
     private lateinit var gameHistory: GameHistory
+    private lateinit var gameStatus: GameStatus
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
+        audioPlayer = ViewModelProvider(this)[AudioPlayer::class.java]
+        languageSwitcher = ViewModelProvider(this)[LanguageSwitcher::class.java]
+        gameHistory = ViewModelProvider(this)[GameHistory::class.java]
+        gameStatus = GameStatus(audioPlayer)
+
+        gameHistory.initDatabase(this@MainActivity)
+        savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
+
         enableEdgeToEdge()
 
         setContent {
             val navigationController = rememberNavController()
-            val languageSwitcher: LanguageSwitcher = viewModel()
-
-            gameHistory = viewModel()
-            gameHistory.initDatabase(this)
-
-            gameStatus = viewModel()
-            savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
 
             Theme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background)
@@ -65,6 +71,7 @@ class MainActivity : AppCompatActivity()
                                     navigationController.navigate("DetailScreen/${index}")
                                 },
                                 onClearHistory = { gameHistory.clearHistory() }
+
                             )
                         }
 
@@ -97,7 +104,8 @@ class MainActivity : AppCompatActivity()
                                         navigationController.popBackStack()
                                 },
                                 languageSwitcher = languageSwitcher,
-                                gameStatus = gameStatus
+                                gameStatus = gameStatus,
+                                audioPlayer = audioPlayer
                             )
                         }
                     }
@@ -116,5 +124,26 @@ class MainActivity : AppCompatActivity()
             gameStatus.saveState(bundle)
             outState.putBundle(KEY_GAME_STATUS, bundle)
         }
+    }
+
+    override fun onPause()
+    {
+        super.onPause()
+        if(::audioPlayer.isInitialized)
+            audioPlayer.pause()
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        if(::audioPlayer.isInitialized)
+            audioPlayer.resume()
+    }
+
+    override fun onDestroy()
+    {
+        super.onDestroy()
+        if(::audioPlayer.isInitialized)
+            audioPlayer.release()
     }
 }

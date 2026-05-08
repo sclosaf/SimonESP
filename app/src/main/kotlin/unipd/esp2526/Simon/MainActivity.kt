@@ -139,11 +139,4 @@ class MainActivity : AppCompatActivity()
         if(::audioPlayer.isInitialized)
             audioPlayer.resume()
     }
-
-    override fun onDestroy()
-    {
-        super.onDestroy()
-        if(::audioPlayer.isInitialized)
-            audioPlayer.release()
-    }
 }

@@ -60,11 +60,6 @@ class AudioPlayer(app: Application) : AndroidViewModel(app)
             pause()
     }
 
-    public fun release()
-    {
-        pool.release()
-    }
-
     public fun pause()
     {
         pool.autoPause()

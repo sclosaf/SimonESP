@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -63,7 +64,7 @@ fun GameScore(match : Match)
                         style = MaterialTheme.typography.titleSmall,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White,
+                        color = if(isSystemInDarkTheme()) Color.White else Color.Black,
                         textAlign = TextAlign.Center
                     )
 
@@ -76,7 +77,7 @@ fun GameScore(match : Match)
                             style = MaterialTheme.typography.bodyLarge,
                             fontSize = 48.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = Color.White,
+                            color = if(isSystemInDarkTheme()) Color.White else Color.Black,
                             textAlign = TextAlign.Center
                         )
 
@@ -84,8 +85,8 @@ fun GameScore(match : Match)
                             text = "^",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = Color.White,
                             textAlign = TextAlign.Center,
+                            color = if(isSystemInDarkTheme()) Color.White else Color.Black,
                             modifier = Modifier.padding(start = 2.dp)
                         )
                     }
@@ -112,7 +113,7 @@ fun GameScore(match : Match)
                     style = MaterialTheme.typography.titleSmall,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = if(isSystemInDarkTheme()) Color.White else Color.Black,
                     textAlign = TextAlign.Center
                 )
 
@@ -121,7 +122,7 @@ fun GameScore(match : Match)
                     style = MaterialTheme.typography.bodyLarge,
                     fontSize = 48.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
+                    color = if(isSystemInDarkTheme()) Color.White else Color.Black,
                     textAlign = TextAlign.Center
                 )
             }

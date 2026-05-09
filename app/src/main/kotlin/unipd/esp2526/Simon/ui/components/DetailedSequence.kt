@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.ui.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,7 @@ fun DetailedSequence(match: Match)
     )
     {
         Text(
-            text = buildSequence(match.fullSequence, match.errorIndex),
+            text = buildSequence(match.fullSequence, match.errorIndex, isSystemInDarkTheme()),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier

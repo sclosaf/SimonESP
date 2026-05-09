@@ -47,7 +47,7 @@ import unipd.esp2526.Simon.ui.theme.YellowNormal
 fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier: Modifier)
 {
     val backgroundColor = getColor(color, isLit)
-    val elevation = if (isLit) 8.dp else 4.dp
+    val elevation = if(isLit) 20.dp else 4.dp
 
     Card(
         modifier = modifier
@@ -83,13 +83,13 @@ fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier:
  */
 fun getColor(color: ColorType, isLit: Boolean): Color
 {
-    return when (color)
+    return when(color)
     {
-        ColorType.RED -> if (isLit) RedLit else RedNormal
-        ColorType.GREEN -> if (isLit) GreenLit else GreenNormal
-        ColorType.BLUE -> if (isLit) BlueLit else BlueNormal
-        ColorType.MAGENTA -> if (isLit) MagentaLit else MagentaNormal
-        ColorType.YELLOW -> if (isLit) YellowLit else YellowNormal
-        ColorType.CYAN -> if (isLit) CyanLit else CyanNormal
+        ColorType.RED -> if(isLit) RedLit else RedNormal
+        ColorType.GREEN -> if(isLit) GreenLit else GreenNormal
+        ColorType.BLUE -> if(isLit) BlueLit else BlueNormal
+        ColorType.MAGENTA -> if(isLit) MagentaLit else MagentaNormal
+        ColorType.YELLOW -> if(isLit) YellowLit else YellowNormal
+        ColorType.CYAN -> if(isLit) CyanLit else CyanNormal
     }
 }

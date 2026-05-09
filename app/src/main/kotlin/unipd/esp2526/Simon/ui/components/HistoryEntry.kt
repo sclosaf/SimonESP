@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.ui.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,7 +41,7 @@ fun HistoryEntry(
         )
 
         Text(
-            text = buildSequence(match.fullSequence, match.errorIndex),
+            text = buildSequence(match.fullSequence, match.errorIndex, isSystemInDarkTheme()),
             style = MaterialTheme.typography.bodyLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

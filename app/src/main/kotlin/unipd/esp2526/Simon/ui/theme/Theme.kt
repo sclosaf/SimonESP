@@ -114,6 +114,26 @@ val darkEnd = Color(0xFF3B82F6)
 val lightEnd = Color(0xFF2563EB)
 
 /**
+ * Red color for text in dark theme.
+ */
+val darkRedText = Color(0xFFFFB4AB)
+
+/**
+ * Red color for text in light theme.
+ */
+val lightRedText = Color(0xFFBA1A1A)
+
+/**
+ * Green color for text in dark theme.
+ */
+val darkGreenText = Color(0xFFB6FFB5)
+
+/**
+ * Green color for text in light theme.
+ */
+val lightGreenText = Color(0xFF006E06)
+
+/**
  * Color used for dividers.
  */
 val divider = Color(0xFF9E9E9E).copy(alpha = 0.3f)

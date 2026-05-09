@@ -6,10 +6,17 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.graphics.Color
 
+import unipd.esp2526.Simon.ui.theme.darkRedText
+import unipd.esp2526.Simon.ui.theme.lightRedText
+import unipd.esp2526.Simon.ui.theme.darkGreenText
+import unipd.esp2526.Simon.ui.theme.lightGreenText
 import unipd.esp2526.Simon.ui.theme.ColorType
 
-fun buildSequence(fullSequence: List<ColorType>, errorIndex: Int?) : AnnotatedString
+fun buildSequence(fullSequence: List<ColorType>, errorIndex: Int?, isDarkTheme: Boolean) : AnnotatedString
 {
+    val errorColor = if(isDarkTheme) darkRedText else lightRedText
+    val correctColor = if (isDarkTheme) darkGreenText else lightGreenText
+
     if(fullSequence.isEmpty())
         return AnnotatedString("")
 

@@ -9,8 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
@@ -34,20 +34,19 @@ class MainActivity : AppCompatActivity()
         private const val KEY_GAME_STATUS ="gameStatus"
     }
 
-    private lateinit var languageSwitcher: LanguageSwitcher
-    private lateinit var audioPlayer: AudioPlayer
-    private lateinit var gameHistory: GameHistory
+    private val languageSwitcher: LanguageSwitcher by viewModels()
+    private val audioPlayer: AudioPlayer by viewModels()
+    private val gameHistory: GameHistory by viewModels()
+
     private lateinit var gameStatus: GameStatus
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
-        audioPlayer = ViewModelProvider(this)[AudioPlayer::class.java]
-        languageSwitcher = ViewModelProvider(this)[LanguageSwitcher::class.java]
-        gameHistory = ViewModelProvider(this)[GameHistory::class.java]
         gameStatus = GameStatus(audioPlayer)
 
+        audioPlayer.loadSounds(this)
         gameHistory.initDatabase(this@MainActivity)
         savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
 
@@ -129,14 +128,12 @@ class MainActivity : AppCompatActivity()
     override fun onPause()
     {
         super.onPause()
-        if(::audioPlayer.isInitialized)
-            audioPlayer.pause()
+        audioPlayer.pause()
     }
 
     override fun onResume()
     {
         super.onResume()
-        if(::audioPlayer.isInitialized)
-            audioPlayer.resume()
+        audioPlayer.resume()
     }
 }

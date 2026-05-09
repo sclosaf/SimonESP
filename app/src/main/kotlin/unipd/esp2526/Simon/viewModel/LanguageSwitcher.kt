@@ -1,6 +1,5 @@
 package unipd.esp2526.Simon.viewModel
 
-import android.util.Log
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.getValue
@@ -56,11 +55,7 @@ class LanguageSwitcher : ViewModel()
      */
     fun toggleLanguage()
     {
-        Log.d(TAG, "Toggling language")
-
         val nextLanguage = if (currentLanguage.startsWith("it")) "en" else "it"
-
-        Log.i(TAG, "Switching from $currentLanguage to $nextLanguage")
 
         val appLocale = LocaleListCompat.forLanguageTags(nextLanguage)
         AppCompatDelegate.setApplicationLocales(appLocale)

@@ -10,12 +10,12 @@
     <string name="end">End Game</string>
     <string name="number">#</string>
     <string name="sequence">Sequence</string>
-    <string name="press">Press \'%s\' to begin a match</string>
-    <string name="concluded">Wrong sequence! The match ended. Press \'%s\' to exit</string>
+    <string name="press">Press \'%s\' to begin a match.</string>
+    <string name="concluded">Wrong sequence! The match ended. Press \'%s\' to exit.</string>
     <string name="wait">Memorize the sequence...</string>
     <string name="play">Play the sequence...</string>
     <string name="advance">Continue</string>
-    <string name="choice">Press \'%1$s\' to continue playing, otherwise use \'%2$s\' to exit</string>
+    <string name="choice">Press \'%1$s\' to continue playing, otherwise use \'%2$s\' to exit.</string>
     <string name="detail">Detail Match</string>
     <string name="longest">Longest sequence:</string>
     <string name="index">Erroneous element:</string>

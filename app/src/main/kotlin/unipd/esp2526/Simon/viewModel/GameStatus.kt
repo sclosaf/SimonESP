@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -33,6 +34,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         private const val KEY_PLAYED_SEQUENCE = "playedSequence"
         private const val KEY_IS_PAUSED = "isPaused"
         private const val KEY_ERROR_INDEX = "errorIndex"
+        private const val KEY_CURRENT_INDEX = "computerIndex"
     }
 
     var currentPhase by mutableStateOf(GamePhase.IDLE)
@@ -53,10 +55,63 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
     var errorIndex by mutableStateOf<Int?>(null)
         private set
 
+    var computerIndex by mutableStateOf(0)
+        private set
+
     private var toResume = false
 
-    private var playerLightJob: kotlinx.coroutines.Job? = null
-    private var computerLightJob: kotlinx.coroutines.Job? = null
+    private var currentLightJob: Job? = null
+
+    private fun illuminateColor(color: ColorType)
+    {
+        currentLightJob?.cancel()
+
+        currentLightJob = viewModelScope.launch {
+
+            litColor = color
+            audioPlayer.play(color)
+            delay(LIGHT_DURATION_MS)
+            if(litColor == color)
+                litColor = null
+        }
+    }
+
+    private fun illuminateSequence()
+    {
+        currentLightJob?.cancel()
+
+        currentLightJob = viewModelScope.launch{
+            for(index in computerIndex until targetSequence.size)
+            {
+                while(isPaused)
+                    delay(DELAY_PAUSED_GAME_DURATION_MS)
+
+                computerIndex = index
+                val color = targetSequence[index]
+
+                audioPlayer.play(color)
+
+                litColor = color
+
+                delay(LIGHT_DURATION_MS)
+
+                if(litColor == color)
+                    litColor = null
+
+                delay(DELAY_BETWEEN_COLORS_DURATION_MS)
+            }
+
+            if(currentPhase == GamePhase.COMPUTER)
+            {
+                while(isPaused)
+                    delay(DELAY_PAUSED_GAME_DURATION_MS)
+
+                currentPhase = GamePhase.PLAYER
+                playedSequence = emptyList()
+                computerIndex = 0
+            }
+        }
+    }
 
     public fun startGame()
     {
@@ -72,8 +127,9 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
         playedSequence = emptyList()
         targetSequence += ColorType.values().random()
+        computerIndex = 0
 
-        illuminateComputerSequence()
+        illuminateSequence()
     }
 
     public fun continueNextRound()
@@ -85,48 +141,12 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         nextRound()
     }
 
-    private fun illuminateComputerSequence()
-    {
-        computerLightJob?.cancel()
-        computerLightJob = viewModelScope.launch{
-
-            for((index, color) in targetSequence.withIndex())
-            {
-                while(isPaused)
-                    delay(DELAY_PAUSED_GAME_DURATION_MS)
-
-                audioPlayer.play(color)
-                illuminateColor(color)
-                delay(LIGHT_DURATION_MS)
-                turnOffColor(color)
-                delay(DELAY_BETWEEN_COLORS_DURATION_MS)
-            }
-
-            if(currentPhase == GamePhase.COMPUTER)
-            {
-                while(isPaused)
-                    delay(DELAY_PAUSED_GAME_DURATION_MS)
-
-                currentPhase = GamePhase.PLAYER
-                playedSequence = emptyList()
-            }
-        }
-    }
-
     public fun colorPressed(color: ColorType) : Pair<List<ColorType>, Int?>?
     {
         if(currentPhase != GamePhase.PLAYER)
             return null
 
-        audioPlayer.play(color)
-
-        playerLightJob?.cancel()
-        playerLightJob = viewModelScope.launch{
-
-            illuminateColor(color)
-            delay(LIGHT_DURATION_MS)
-            turnOffColor(color)
-        }
+        illuminateColor(color)
 
         playedSequence += color
 
@@ -142,17 +162,6 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         return null
     }
 
-    private fun illuminateColor(color: ColorType)
-    {
-        litColor = color
-    }
-
-    private fun turnOffColor(color: ColorType)
-    {
-        if(litColor == color)
-            litColor = null
-    }
-
     public fun togglePause()
     {
         if(currentPhase == GamePhase.COMPUTER)
@@ -161,12 +170,13 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
     private fun endGame() : Pair<List<ColorType>, Int?>?
     {
-        if(currentPhase == GamePhase.OVER || currentPhase == GamePhase.IDLE)
-            return null
+        if(currentPhase == GamePhase.OVER)
+        {
+            return if(targetSequence.isNotEmpty()) Pair(targetSequence, errorIndex) else null
+        }
 
-        playerLightJob?.cancel()
-        computerLightJob?.cancel()
-        litColor = null
+        if(currentPhase == GamePhase.IDLE)
+            return null
 
         if(currentPhase != GamePhase.IDLE && targetSequence.isNotEmpty())
         {
@@ -180,10 +190,6 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
     public fun forceEndGame() : Pair<List<ColorType>, Int?>?
     {
-        playerLightJob?.cancel()
-        computerLightJob?.cancel()
-        litColor = null
-
         if(targetSequence.size == 1 && playedSequence.isEmpty() && errorIndex == null)
         {
             resetGame()
@@ -203,21 +209,23 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
     public fun resetGame()
     {
-        playerLightJob?.cancel()
-        computerLightJob?.cancel()
-
         targetSequence = emptyList()
         playedSequence = emptyList()
 
         currentPhase = GamePhase.IDLE
 
+        currentLightJob?.cancel()
         litColor = null
+
         isPaused = false
         errorIndex = null
+        computerIndex = 0
     }
 
     public fun saveState(bundle: Bundle)
     {
+        currentLightJob?.cancel()
+
         bundle.putString(KEY_CURRENT_PHASE, currentPhase.name)
         bundle.putStringArrayList(KEY_TARGET_SEQUENCE, ArrayList(targetSequence.map { it.name }))
         bundle.putStringArrayList(KEY_PLAYED_SEQUENCE, ArrayList(playedSequence.map { it.name }))
@@ -225,6 +233,8 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
         if(errorIndex != null)
             bundle.putInt(KEY_ERROR_INDEX, errorIndex!!)
+
+        bundle.putInt(KEY_CURRENT_INDEX, computerIndex)
     }
 
     public fun restoreState(bundle: Bundle)
@@ -236,9 +246,10 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         targetSequence = bundle.getStringArrayList(KEY_TARGET_SEQUENCE)?.mapNotNull { name -> ColorType.valueOf(name) } ?: emptyList()
         playedSequence = bundle.getStringArrayList(KEY_PLAYED_SEQUENCE)?.mapNotNull { name -> ColorType.valueOf(name) } ?: emptyList()
 
-        isPaused = bundle.getBoolean(KEY_IS_PAUSED, true)
+        isPaused = bundle.getBoolean(KEY_IS_PAUSED)
 
         errorIndex = if(bundle.containsKey(KEY_ERROR_INDEX)) bundle.getInt(KEY_ERROR_INDEX) else null
+        computerIndex = bundle.getInt(KEY_CURRENT_INDEX)
     }
 
     public fun resumeIfNeeded()
@@ -249,13 +260,12 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         toResume = false
 
         if(currentPhase == GamePhase.COMPUTER)
-            illuminateComputerSequence()
+            illuminateSequence()
     }
 
     override fun onCleared()
     {
         super.onCleared()
-        playerLightJob?.cancel()
-        computerLightJob?.cancel()
+        currentLightJob?.cancel()
     }
 }

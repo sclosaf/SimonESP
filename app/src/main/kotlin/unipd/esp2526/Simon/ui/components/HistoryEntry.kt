@@ -24,6 +24,8 @@ fun HistoryEntry(
     onClick: () -> Unit
 )
 {
+    val correctLength = if(match.errorIndex == null || match.errorIndex == match.fullSequence.size) match.fullSequence.size else match.fullSequence.size - 1
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -34,7 +36,7 @@ fun HistoryEntry(
     )
     {
         Text(
-            text = (match.errorIndex ?: match.fullSequence.size).toString(),
+            text = correctLength.toString(),
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .weight(1f)

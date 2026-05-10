@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity()
         gameStatus = GameStatus(audioPlayer)
 
         audioPlayer.loadSounds(this)
-        gameHistory.initDatabase(this@MainActivity)
-        savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
+        gameHistory.initDatabase(this)
+        savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> if(gameStatus.canRestore(bundle)) gameStatus.restoreState(bundle) }
 
         enableEdgeToEdge()
 
@@ -123,6 +123,13 @@ class MainActivity : AppCompatActivity()
             gameStatus.saveState(bundle)
             outState.putBundle(KEY_GAME_STATUS, bundle)
         }
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
+        if(isFinishing())
+            gameStatus.disableRestore()
     }
 
     override fun onPause()

@@ -57,6 +57,9 @@ class GameHistory : ViewModel()
         if(!::database.isInitialized)
             return
 
+        if(sequence.isEmpty() || errorIndex == null)
+            return
+
         viewModelScope.launch(Dispatchers.IO)
         {
             database.matchDao().insert(

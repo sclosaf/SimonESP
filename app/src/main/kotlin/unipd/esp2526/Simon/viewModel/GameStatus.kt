@@ -53,7 +53,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
     var isPaused by mutableStateOf(false)
         private set
 
-    var errorIndex by mutableStateOf<Int>(-1)
+    var errorIndex by mutableStateOf<Int?>(null)
         private set
 
     var computerIndex by mutableStateOf(0)
@@ -145,7 +145,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         nextRound()
     }
 
-    public fun colorPressed(color: ColorType) : Pair<List<ColorType>, Int>?
+    public fun colorPressed(color: ColorType) : Pair<List<ColorType>, Int?>?
     {
         if(currentPhase != GamePhase.PLAYER)
             return null
@@ -172,10 +172,10 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
             isPaused = !isPaused
     }
 
-    private fun endGame() : Pair<List<ColorType>, Int>?
+    private fun endGame() : Pair<List<ColorType>, Int?>?
     {
         if(currentPhase == GamePhase.OVER)
-            return if(targetSequence.isNotEmpty()) Pair(targetSequence, errorIndex) else null
+            return Pair(targetSequence, errorIndex)
 
         if(currentPhase == GamePhase.IDLE)
             return null
@@ -190,15 +190,18 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         return null
     }
 
-    public fun forceEndGame() : Pair<List<ColorType>, Int>?
+    public fun forceEndGame() : Pair<List<ColorType>, Int?>?
     {
-        if(targetSequence.size == 1 && playedSequence.isEmpty() && errorIndex == -1)
+        if(targetSequence.size == 1 && playedSequence.isEmpty())
         {
-            resetGame()
-            return null
+            if(currentPhase == GamePhase.COMPUTER)
+            {
+                resetGame()
+                return null
+            }
         }
 
-        if(errorIndex == null && targetSequence.isNotEmpty())
+        if(errorIndex == null)
         {
             if(currentPhase == GamePhase.CONTINUE && playedSequence.isEmpty())
                 errorIndex = targetSequence.size
@@ -220,7 +223,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         litColor = null
 
         isPaused = false
-        errorIndex = -1
+        errorIndex = null
         computerIndex = 0
     }
 
@@ -233,7 +236,9 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         bundle.putStringArrayList(KEY_PLAYED_SEQUENCE, ArrayList(playedSequence.map { it.name }))
         bundle.putBoolean(KEY_IS_PAUSED, isPaused)
 
-        bundle.putInt(KEY_ERROR_INDEX, errorIndex)
+        if(errorIndex != null)
+            bundle.putInt(KEY_ERROR_INDEX, errorIndex!!)
+
         bundle.putInt(KEY_CURRENT_INDEX, computerIndex)
 
         bundle.putBoolean(KEY_ALLOW_RESTORE, allowRestore)
@@ -250,8 +255,8 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
         isPaused = bundle.getBoolean(KEY_IS_PAUSED)
 
-        errorIndex = bundle.getInt(KEY_ERROR_INDEX)
-        computerIndex = bundle.getInt(KEY_CURRENT_INDEX)
+        errorIndex = if(bundle.containsKey(KEY_ERROR_INDEX)) bundle.getInt(KEY_ERROR_INDEX) else null
+        computerIndex = bundle.getInt(KEY_CURRENT_INDEX) + 1
 
         allowRestore = bundle.getBoolean(KEY_ALLOW_RESTORE)
     }

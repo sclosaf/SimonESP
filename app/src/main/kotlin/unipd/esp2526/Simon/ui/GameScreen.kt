@@ -58,13 +58,13 @@ fun GameScreen(
     val isPauseEnabled = currentPhase == GamePhase.COMPUTER
     val isEndEnabled = currentPhase != GamePhase.IDLE
 
+    var lastResult by remember { mutableStateOf<Pair<List<ColorType>, Int?>?>(null) }
+
     LaunchedEffect(currentPhase)
     {
         if(currentPhase == GamePhase.COMPUTER)
             gameStatus.resumeIfNeeded()
     }
-
-    var lastResult by remember { mutableStateOf<Pair<List<ColorType>, Int?>?>(null) }
 
     val colors = listOf(
         ColorType.RED,
@@ -97,6 +97,8 @@ fun GameScreen(
                 lastResult = null
             }
         }
+        else
+            onGameEnd(emptyList(), null)
     }
 
     BackHandler(enabled = currentPhase != GamePhase.IDLE) { clickEnd() }

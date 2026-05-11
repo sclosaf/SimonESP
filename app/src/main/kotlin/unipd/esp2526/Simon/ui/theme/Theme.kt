@@ -2,7 +2,6 @@ package unipd.esp2526.Simon.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -79,7 +78,7 @@ val lightStart = Color(0xFF059669)
 val darkContinue = Color(0xFF0D7F5B)
 
 /**
- * Color for the continue button in the light theme
+ * Color for the continue button in the light theme.
  */
 val lightContinue = Color(0xFF059669)
 

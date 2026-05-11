@@ -14,7 +14,7 @@ import unipd.esp2526.Simon.ui.theme.ColorType
 
 /**
  * Utility function that builds an annotated string with visual highlighting
- * of the correct and error parts, based on the indexes proviced.
+ * of the correct and error parts, based on the indexes provided.
  *
  * The sequence is formatted as comma-separated color short names (e.g., "R, G, B").
  *

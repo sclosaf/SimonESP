@@ -3,6 +3,7 @@ package unipd.esp2526.Simon.viewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class GameHistory : ViewModel()
 
     private lateinit var database: MatchDatabase
 
-    public fun initDatabase(context: android.content.Context)
+    public fun initDatabase(context: Context)
     {
         if(!::database.isInitialized)
         {

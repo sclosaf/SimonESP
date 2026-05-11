@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -29,6 +28,15 @@ import unipd.esp2526.Simon.viewModel.Match
 import unipd.esp2526.Simon.ui.theme.divider
 import unipd.esp2526.Simon.R
 
+/**
+ * Displays detailed information of a completed match.
+ *
+ * This composable shows two elements:
+ * - The longest sequence correctly reproduced by the player
+ * - The position where the first error occurred (if any)
+ *
+ * @param match The match data containing the full sequence and the error index
+ */
 @Composable
 fun GameScore(match : Match)
 {

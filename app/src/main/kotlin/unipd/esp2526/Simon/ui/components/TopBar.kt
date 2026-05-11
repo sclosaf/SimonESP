@@ -1,6 +1,5 @@
 package unipd.esp2526.Simon.ui.components
 
-
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +35,17 @@ import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.AudioPlayer
 
+/**
+ * Top bar providing language and audio toggle controls.
+ *
+ * This composable displays a title and two control icons,
+ * which are mute/unmute and a language switching button
+ * that toggles between Italian and English.
+ *
+ * @param title The text displayed as the bar's title
+ * @param languageSwitcher Manages the current language state
+ * @param audioPlayer Optional audio player instance, if provided, a mute/unmute button is shown
+ */
 @Composable
 fun TopBar(
     title: String,
@@ -77,7 +87,7 @@ fun TopBar(
                     IconButton( onClick = { audioPlayer.toggleMute() })
                     {
                         Icon(
-                            imageVector = if (isMuted) Icons.AutoMirrored.Filled.VolumeOff else Icons.AutoMirrored.Filled.VolumeUp,
+                            imageVector = if(isMuted) Icons.AutoMirrored.Filled.VolumeOff else Icons.AutoMirrored.Filled.VolumeUp,
                             contentDescription = null,
                             modifier = Modifier.size(24.dp)
                         )

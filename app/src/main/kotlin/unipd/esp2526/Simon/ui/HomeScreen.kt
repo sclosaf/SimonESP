@@ -15,7 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 
@@ -30,6 +29,20 @@ import unipd.esp2526.Simon.ui.components.ClearHistoryButton
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 
+/**
+ * Home screen which displays a welcome message or the list of completed matches.
+ *
+ * This composable is the main entry point of the application:
+ * - Clicking on a match entry, it navigates to the detail screen for that match.
+ * - Clicking the newMatch button, it navigates to the game screen to start a new one.
+ * - Clicking the clearHistory button, all displayed entries are deleted.
+ *
+ * @param gameHistory Contains the list of completed matches to display
+ * @param languageSwitcher Manages the current language state
+ * @param onMatchClick Callback invoked when a match entry is clicked
+ * @param onNewGame Callback invoked when the New Game button is pressed
+ * @param onClearHistory Callback invoked when the Clear History button is pressed
+ */
 @Composable
 fun HomeScreen(
     gameHistory: GameHistory,

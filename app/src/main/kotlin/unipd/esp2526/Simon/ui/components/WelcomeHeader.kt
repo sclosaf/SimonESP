@@ -15,6 +15,10 @@ import androidx.compose.ui.res.stringResource
 
 import unipd.esp2526.Simon.R
 
+/**
+ * Welcome header displayed on the home screen,
+ * when no matches have been played yet.
+ */
 @Composable
 fun WelcomeHeader()
 {

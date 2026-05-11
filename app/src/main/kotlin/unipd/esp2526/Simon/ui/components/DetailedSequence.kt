@@ -19,6 +19,14 @@ import androidx.compose.material3.ElevatedCard
 import unipd.esp2526.Simon.viewModel.Match
 import unipd.esp2526.Simon.utils.buildSequence
 
+/**
+ * Displays the complete scrollable sequence of a match.
+ *
+ * This composable shows the full color sequence of a match,
+ * with the error portion visually distinguished from the correct one.
+ *
+ * @param match The match data containing the fullSequence and the errorIndex
+ */
 @Composable
 fun DetailedSequence(match: Match)
 {

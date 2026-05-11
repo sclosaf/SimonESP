@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -25,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 
 import unipd.esp2526.Simon.ui.components.ButtonGrid
 import unipd.esp2526.Simon.ui.components.ColorSequence
@@ -37,6 +35,22 @@ import unipd.esp2526.Simon.viewModel.AudioPlayer
 import unipd.esp2526.Simon.viewModel.GamePhase
 import unipd.esp2526.Simon.R
 
+/**
+ * Game screen where the Simon game is played.
+ *
+ * This composable handles the gameplay graphics, displaying:
+ * - A 3x2 grid of colored interactive buttons
+ * - A text area showing the current played sequence or a status message
+ * - Controlling flow buttons
+ *
+ * The layout adapts to both portrait and landscape orientations.
+ *
+ * @param onGameEnd Callback invoked when the game ends, passing the full sequence
+ *                  and the index where the first error occurred (if any)
+ * @param languageSwitcher Manages the current language state
+ * @param gameStatus Manages the game state, logic and feedback
+ * @param audioPlayer Manages the audio feedback for the button grid
+ */
 @Composable
 fun GameScreen(
     onGameEnd: (fullSequence: List<ColorType>, errorIndex: Int?) -> Unit,
@@ -45,7 +59,7 @@ fun GameScreen(
     audioPlayer: AudioPlayer
 )
 {
-    val isLandscape = LocalConfiguration.current.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+    val isLandscape = LocalConfiguration.current.orientation == ORIENTATION_LANDSCAPE
 
     val currentPhase by remember { derivedStateOf { gameStatus.currentPhase } }
     val playedSequence by remember { derivedStateOf { gameStatus.playedSequence } }

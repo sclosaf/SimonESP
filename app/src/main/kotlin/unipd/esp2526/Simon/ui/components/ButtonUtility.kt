@@ -36,6 +36,27 @@ import unipd.esp2526.Simon.ui.theme.darkEnd
 import unipd.esp2526.Simon.ui.theme.lightEnd
 import unipd.esp2526.Simon.R
 
+/**
+ * A configurable utility set of buttons to control the game flow.
+ *
+ * This composable displays three buttons in a row:
+ * - Left button: "Start game" or "Continue" depending on game state
+ * - Center button: "Pause" or "Resume" depending on pause state
+ * - Right button: "End game"
+ *
+ * Button states are controlled by boolean flags
+ * that determine both color and interactivity.
+ *
+ * @param onStart Callback invoked when the left button is clicked at the beginning
+ * @param onContinue Callback invoked when the left button is clicked to continue
+ * @param onPauseResume Callback invoked when the center button is clicked (Pause/Resume)
+ * @param onEnd Callback invoked when the right button (End) is clicked
+ * @param isStartEnabled When true, left button shows (Start) and is clickable (mutually exclusive with isContinueEnabled)
+ * @param isContinueEnabled When true, left button shows (Continue) and is clickable (mutually exclusive with isStartEnabled)
+ * @param isPaused When true, center button shows "Resume", otherwise shows "Pause"
+ * @param isPauseEnabled When true, center button (Pause/Resume) is clickable
+ * @param isEndEnabled When true, right button (End) is clickable
+ */
 @Composable
 fun ButtonUtility(
     onStart: () -> Unit,

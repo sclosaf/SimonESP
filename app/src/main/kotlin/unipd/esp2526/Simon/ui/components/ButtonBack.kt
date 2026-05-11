@@ -24,6 +24,14 @@ import unipd.esp2526.Simon.R
 import unipd.esp2526.Simon.ui.theme.darkBack
 import unipd.esp2526.Simon.ui.theme.lightBack
 
+/**
+ * Back button component.
+ *
+ * This composable is designed to allow the user
+ * to navigate back to a previous screen.
+ *
+ * @param onClick Callback invoked when the button is pressed by the user.
+ */
 @Composable
 fun ButtonBack(onClick : () -> Unit)
 {

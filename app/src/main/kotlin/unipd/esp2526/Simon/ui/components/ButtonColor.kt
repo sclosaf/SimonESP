@@ -40,7 +40,7 @@ import unipd.esp2526.Simon.ui.theme.YellowNormal
  * @param color The type of color this button represents
  * @param isLit Whether the button should be displayed in its lit (illuminated) state.
  * @param onClick Callback invoked when the button is pressed by the user.
- *                Adds the corresponding color to the current sequence.
+ *                Adds the corresponding color to the current played sequence.
  * @param modifier Modifier to be applied to the button for layout customization.
  */
 @Composable
@@ -65,10 +65,7 @@ fun ButtonColor(color: ColorType, isLit: Boolean, onClick: () -> Unit, modifier:
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null
-                )
-                {
-                    onClick()
-                }
+                ){ onClick() }
         )
     }
 }

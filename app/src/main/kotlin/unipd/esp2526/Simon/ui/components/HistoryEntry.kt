@@ -16,8 +16,19 @@ import androidx.compose.ui.unit.dp
 
 import unipd.esp2526.Simon.utils.buildSequence
 import unipd.esp2526.Simon.viewModel.Match
-import unipd.esp2526.Simon.ui.theme.ColorType
 
+/**
+ * A single entry in the match history.
+ *
+ * This composable displays a summary of the given match, showing:
+ * - The maximum length of a sequence correctly reproduced by the player
+ * - The full sequence of colors with highlighted partitioning of
+ *   the correct and error portion
+ *
+ * @param match The match data to display
+ * @param onClick Callback invoked when the entry is clicked,
+ *                used to navigate to the match detail screen
+ */
 @Composable
 fun HistoryEntry(
     match : Match,

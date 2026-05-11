@@ -11,36 +11,28 @@ import androidx.lifecycle.ViewModel
 /**
  * ViewModel used to manage the application's language.
  *
- * This class is responsible to handle the current language preference
+ * This class is responsible for handling the current language preference
  * and toggles between supported languages (English and Italian).
  */
 class LanguageSwitcher : ViewModel()
 {
-    companion object
-    {
-        /**
-         * Tag identifier used for Android logging messages.
-         */
-        private val TAG = LanguageSwitcher::class.java.simpleName
-    }
-
     /**
      * Class member used to store the current language code for the application.
      *
      * It attempts to retrieve the current application locale,
      * extracting the language code from the first locale in the list (index 0).
      * If unable to get the locale, it falls back to the system default locale.
-     * Defaulting in English if no locale is set or extraction fails.
+     * Defaulting to English if no locale is set or extraction fails.
      */
     var currentLanguage by mutableStateOf(getCurrentActiveLanguage())
         private set
 
     /**
      * Helper function used to retrieve the currently active language code.
-     * Applying specifics fallbacks:
+     * Applying specific fallbacks:
      * 1. Application locale
      * 2. System locale
-     * 3. Default "En"
+     * 3. Default "en"
      *
      * @return The language code (e.g. "en", "it") of the current active locale
      */
@@ -53,9 +45,9 @@ class LanguageSwitcher : ViewModel()
      * Toggles the application language between English and Italian.
      * Additionally, causes the activity to be recreated with the new strings.
      */
-    fun toggleLanguage()
+    public fun toggleLanguage()
     {
-        val nextLanguage = if (currentLanguage.startsWith("it")) "en" else "it"
+        val nextLanguage = if(currentLanguage.startsWith("it")) "en" else "it"
 
         val appLocale = LocaleListCompat.forLanguageTags(nextLanguage)
         AppCompatDelegate.setApplicationLocales(appLocale)

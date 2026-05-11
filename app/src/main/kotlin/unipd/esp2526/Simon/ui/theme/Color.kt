@@ -65,19 +65,18 @@ val CyanLit = Color(0xFF18FFFF)
 /**
  * Enumeration representing the six possible colors in the game.
  *
- * Each color has a long name and a single-character
+ * Each color has a single-character
  * short name used for sequence display.
  *
- * @property longName The full name of the color
  * @property shortName A abbreviation of the color used for
  *                     compact sequence representation in the history
  */
-enum class ColorType(val longName: String, val shortName: String)
+enum class ColorType(val shortName: String)
 {
-    RED("Red", "R"),
-    GREEN("Green", "G"),
-    BLUE("Blue", "B"),
-    MAGENTA("Magenta", "M"),
-    YELLOW("Yellow", "Y"),
-    CYAN("Cyan", "C")
+    RED("R"),
+    GREEN("G"),
+    BLUE("B"),
+    MAGENTA("M"),
+    YELLOW("Y"),
+    CYAN("C")
 }

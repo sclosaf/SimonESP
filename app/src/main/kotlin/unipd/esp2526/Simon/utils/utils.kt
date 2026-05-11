@@ -12,6 +12,17 @@ import unipd.esp2526.Simon.ui.theme.darkGreenText
 import unipd.esp2526.Simon.ui.theme.lightGreenText
 import unipd.esp2526.Simon.ui.theme.ColorType
 
+/**
+ * Utility function that builds an annotated string with visual highlighting
+ * of the correct and error parts, based on the indexes proviced.
+ *
+ * The sequence is formatted as comma-separated color short names (e.g., "R, G, B").
+ *
+ * @param fullSequence The complete list of colors in the match sequence
+ * @param errorIndex The index (0-based) where the first error occurred
+ * @param isDarkTheme Whether the current theme is dark mode, affecting the specific color used
+ * @return An AnnotatedString with styled spans for colored text rendering
+ */
 fun buildSequence(fullSequence: List<ColorType>, errorIndex: Int?, isDarkTheme: Boolean) : AnnotatedString
 {
     val errorColor = if(isDarkTheme) darkRedText else lightRedText
@@ -25,7 +36,7 @@ fun buildSequence(fullSequence: List<ColorType>, errorIndex: Int?, isDarkTheme: 
     return buildAnnotatedString{
         fullSequence.forEachIndexed{ index, color ->
 
-            withStyle(style = SpanStyle(color = if(index >= separator) Color.Red else Color.Green))
+            withStyle(style = SpanStyle(color = if(index >= separator) errorColor else correctColor))
             {
                 append(color.shortName)
                 if(index < fullSequence.size - 1)

@@ -116,22 +116,22 @@ val lightEnd = Color(0xFF2563EB)
 /**
  * Red color for text in dark theme.
  */
-val darkRedText = Color(0xFFFFB4AB)
+val darkRedText = Color(0xFFFF6B6B)
 
 /**
  * Red color for text in light theme.
  */
-val lightRedText = Color(0xFFBA1A1A)
+val lightRedText = Color(0xFFD32F2F)
 
 /**
  * Green color for text in dark theme.
  */
-val darkGreenText = Color(0xFFB6FFB5)
+val darkGreenText = Color(0xFF81FF81)
 
 /**
  * Green color for text in light theme.
  */
-val lightGreenText = Color(0xFF006E06)
+val lightGreenText = Color(0xFF00C853)
 
 /**
  * Color used for dividers.
@@ -168,7 +168,7 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)
 {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val colorScheme = if(darkTheme) DarkColorScheme else LightColorScheme
 
-    MaterialTheme(colorScheme = colorScheme, typography = Typography(), content = content)
+    MaterialTheme(colorScheme = colorScheme, content = content)
 }

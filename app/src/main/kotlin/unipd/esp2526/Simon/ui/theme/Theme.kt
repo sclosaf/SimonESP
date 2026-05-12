@@ -160,14 +160,12 @@ private val LightColorScheme = lightColorScheme(
  * - **Dark theme**: Automatically activated when the system is in dark mode
  * - **Light theme**: Automatically activated when the system is in light mode
  *
- * @param darkTheme Boolean indicating whether to force dark theme.
- *                  By default follows the system setting.
  * @param content The composable content to be wrapped with the theme.
  */
 @Composable
-fun Theme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit)
+fun Theme(content: @Composable () -> Unit)
 {
-    val colorScheme = if(darkTheme) DarkColorScheme else LightColorScheme
+    val colorScheme = if(isSystemInDarkTheme()) DarkColorScheme else LightColorScheme
 
     MaterialTheme(colorScheme = colorScheme, content = content)
 }

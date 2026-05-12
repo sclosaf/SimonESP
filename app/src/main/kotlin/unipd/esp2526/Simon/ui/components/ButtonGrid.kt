@@ -22,15 +22,22 @@ import unipd.esp2526.Simon.ui.theme.ColorType
  * This composable displays all the buttons arranged
  * in a 3x2 grid layout (3 rows, 2 columns).
  *
- * @param colors List of six ColorType values defining the colors to display
- *               in the grid. Must contain exactly 6 elements for proper layout.
  * @param lit The currently illuminated color, or null if none is lit.
  *            Buttons matching this value will display their lit state.
  * @param onColorClick Callback invoked when a button is pressed.
  */
 @Composable
-fun ButtonGrid(colors: List<ColorType>, lit: ColorType?, onColorClick: (ColorType) -> Unit)
+fun ButtonGrid(lit: ColorType?, onColorClick: (ColorType) -> Unit)
 {
+    val colors = listOf(
+        ColorType.RED,
+        ColorType.GREEN,
+        ColorType.BLUE,
+        ColorType.MAGENTA,
+        ColorType.YELLOW,
+        ColorType.CYAN
+    )
+
     ElevatedCard(
         modifier = Modifier
             .wrapContentSize()

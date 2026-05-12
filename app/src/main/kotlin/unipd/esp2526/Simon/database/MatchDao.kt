@@ -22,7 +22,7 @@ interface MatchDao
      * @param match The match entity
      */
     @Insert
-    suspend public fun insert(match: MatchEntity)
+    suspend fun insert(match: MatchEntity)
 
     /**
      * Retrieves all the matches from the table.
@@ -30,12 +30,12 @@ interface MatchDao
      * @return List of all matches ordered by ID in descending order
      */
     @Query("SELECT * FROM Matches ORDER BY id DESC")
-    suspend public fun getAllMatches(): List<MatchEntity>
+    suspend fun getAllMatches(): List<MatchEntity>
 
     /**
      * Deletes all the matches stored.
      * This operation is irreversible.
      */
     @Query("DELETE FROM Matches")
-    suspend public fun deleteAllMatches()
+    suspend fun deleteAllMatches()
 }

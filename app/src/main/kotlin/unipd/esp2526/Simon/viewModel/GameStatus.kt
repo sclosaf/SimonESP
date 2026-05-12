@@ -44,16 +44,12 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 {
     companion object
     {
-        /**
-         * Milliseconds of delay to use during each stage of the visual feedback.
-         */
+        // Milliseconds of delay to use during each stage of the visual feedback.
         private const val LIGHT_DURATION_MS = 800L
         private const val DELAY_BETWEEN_COLORS_DURATION_MS = 500L
         private const val DELAY_PAUSED_GAME_DURATION_MS = 150L
 
-        /**
-         * State persistence keys for the core class members.
-         */
+        // State persistence keys for the core class members.
         private const val KEY_CURRENT_PHASE = "currentPhase"
         private const val KEY_TARGET_SEQUENCE = "targetSequence"
         private const val KEY_PLAYED_SEQUENCE = "playedSequence"
@@ -138,7 +134,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
      * Helper method that plays the current target, starting from computerIndex.
      * Manages both visual and audio feedback for each color of the sequence.
      *
-     * Transitions to PLAYER phase once concluded.
+     * Transitions to the player phase once concluded.
      */
     private fun illuminateSequence()
     {

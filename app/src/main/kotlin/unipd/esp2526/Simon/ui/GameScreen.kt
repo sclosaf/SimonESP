@@ -80,16 +80,7 @@ fun GameScreen(
             gameStatus.resumeIfNeeded()
     }
 
-    val colors = listOf(
-        ColorType.RED,
-        ColorType.GREEN,
-        ColorType.BLUE,
-        ColorType.MAGENTA,
-        ColorType.YELLOW,
-        ColorType.CYAN
-    )
-
-    fun clickColor(color: ColorType)
+   fun clickColor(color: ColorType)
     {
         val result = gameStatus.colorPressed(color)
         if(result != null)
@@ -115,7 +106,7 @@ fun GameScreen(
             onGameEnd(emptyList(), null)
     }
 
-    BackHandler(enabled = currentPhase != GamePhase.IDLE) { clickEnd() }
+    BackHandler { clickEnd() }
 
     if(isLandscape)
     {
@@ -139,7 +130,6 @@ fun GameScreen(
                 )
 
                 ButtonGrid(
-                    colors = colors,
                     lit = litColor,
                     onColorClick = { color -> clickColor(color) }
                 )
@@ -184,7 +174,6 @@ fun GameScreen(
             )
 
             ButtonGrid(
-                colors = colors,
                 lit = litColor,
                 onColorClick = { color -> clickColor(color) }
             )

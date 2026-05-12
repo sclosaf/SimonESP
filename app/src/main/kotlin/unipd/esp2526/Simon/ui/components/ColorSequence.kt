@@ -28,7 +28,7 @@ import unipd.esp2526.Simon.viewModel.GamePhase
  * The content adapts dynamically to the current GamePhase:
  * - GamePhase.IDLE: Shows a starting message
  * - GamePhase.COMPUTER: Shows a waiting message while the computer plays
- * - GamePhase.CONTINUE: Asks the user to choose between advancing or ending
+ * - GamePhase.CONTINUE: Asks the user to choose between continuing or ending
  * - GamePhase.PLAYER: Shows the player's pressed sequence so far
  * - GamePhase.OVER: Shows a conclusion message
  *

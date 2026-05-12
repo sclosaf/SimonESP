@@ -59,7 +59,7 @@ class GameHistory : ViewModel()
 
     /**
      * Helper method that loads all the matches from the database into the ViewModel.
-     * The operation runs on an IO Dispatcher in order to not delay the main thread.
+     * The operation runs on an IO Dispatcher in order to avoid any delay on the main thread.
      */
     private fun loadAllMatches()
     {

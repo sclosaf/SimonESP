@@ -33,9 +33,9 @@ import unipd.esp2526.Simon.viewModel.LanguageSwitcher
  * Home screen which displays a welcome message or the list of completed matches.
  *
  * This composable is the main entry point of the application:
- * - Clicking on a match entry, it navigates to the detail screen for that match.
- * - Clicking the newMatch button, it navigates to the game screen to start a new one.
- * - Clicking the clearHistory button, all displayed entries are deleted.
+ * - Clicking on a match entry, it navigates to the detail screen for that match
+ * - Clicking the newMatch button, it navigates to the game screen to start a new one
+ * - Clicking the clearHistory button, all displayed entries are deleted
  *
  * @param gameHistory Contains the list of completed matches to display
  * @param languageSwitcher Manages the current language state

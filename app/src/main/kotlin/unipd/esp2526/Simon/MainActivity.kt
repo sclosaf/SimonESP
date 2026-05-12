@@ -30,7 +30,7 @@ import unipd.esp2526.Simon.viewModel.AudioPlayer
  * This activity serves as entry point for the app, managing:
  * - ViewModels initialization for language, audio and match history
  * - Game state persistence across configuration changes and activity lifecycle
- * - Navigation between the three screens (Home, Game, Detail)
+ * - Navigation between the three screens (Home, Game and Detail)
  * - Audio management (pause and resume) when the activity loses foreground
  *
  * Enables edge-to-edge display and applies a custom theme

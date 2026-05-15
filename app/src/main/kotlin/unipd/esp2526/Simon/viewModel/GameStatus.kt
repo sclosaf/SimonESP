@@ -173,8 +173,8 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
     }
 
     /**
-     * Starts a new  game and resets the game
-     * state to a default and begins the first round.
+     * Starts a new game, resets the game
+     * state to default and begins the first round.
      */
     public fun startGame()
     {

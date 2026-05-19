@@ -34,8 +34,8 @@ import unipd.esp2526.Simon.ui.theme.YellowNormal
  *
  * This composable is used to create the buttons needed for the Simon game.
  * Each button has two visual states:
- * - **Normal**: Standard color when not pressed
- * - **Lit**: Brighter color providing visual feedback when pressed
+ * - Normal: Standard color when not pressed
+ * - Lit: Brighter color providing visual feedback when pressed
  *
  * @param color The type of color this button represents
  * @param isLit Whether the button should be displayed in its lit (illuminated) state.

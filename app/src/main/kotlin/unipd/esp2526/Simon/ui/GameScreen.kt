@@ -41,7 +41,7 @@ import unipd.esp2526.Simon.R
  * This composable handles the gameplay graphics, displaying:
  * - A 3x2 grid of colored interactive buttons
  * - A text area showing the current played sequence or a status message
- * - Controlling flow buttons
+ * - Controlling game flow buttons
  *
  * The layout adapts to both portrait and landscape orientations.
  *

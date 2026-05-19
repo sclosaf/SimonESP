@@ -28,7 +28,7 @@ import unipd.esp2526.Simon.viewModel.GamePhase
  * The content adapts dynamically to the current GamePhase:
  * - GamePhase.IDLE: Shows a starting message
  * - GamePhase.COMPUTER: Shows a waiting message while the computer plays
- * - GamePhase.CONTINUE: Asks the user to choose between continuing or ending
+ * - GamePhase.CONTINUE: Asks the user to choose between continuing or ending the match
  * - GamePhase.PLAYER: Shows the player's pressed sequence so far
  * - GamePhase.OVER: Shows a conclusion message
  *
@@ -52,8 +52,8 @@ fun ColorSequence(sequence: String, phase: GamePhase)
             text = when(phase)
             {
                 GamePhase.IDLE -> stringResource(R.string.press, stringResource(R.string.start))
-                GamePhase.COMPUTER -> { stringResource(R.string.wait) }
-                GamePhase.CONTINUE -> { stringResource(R.string.choice, stringResource(R.string.advance), stringResource(R.string.end)) }
+                GamePhase.COMPUTER -> stringResource(R.string.wait)
+                GamePhase.CONTINUE -> stringResource(R.string.choice, stringResource(R.string.advance), stringResource(R.string.end))
                 GamePhase.PLAYER -> if(sequence.isEmpty()) stringResource(R.string.play) else sequence
                 GamePhase.OVER -> stringResource(R.string.concluded, stringResource(R.string.end))
                 else -> sequence

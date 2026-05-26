@@ -26,7 +26,7 @@ import unipd.esp2526.Simon.ui.theme.ColorType
 fun buildSequence(fullSequence: List<ColorType>, errorIndex: Int?, isDarkTheme: Boolean) : AnnotatedString
 {
     val errorColor = if(isDarkTheme) darkRedText else lightRedText
-    val correctColor = if (isDarkTheme) darkGreenText else lightGreenText
+    val correctColor = if(isDarkTheme) darkGreenText else lightGreenText
 
     if(fullSequence.isEmpty())
         return AnnotatedString("")

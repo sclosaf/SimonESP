@@ -21,6 +21,7 @@ import unipd.esp2526.Simon.ui.theme.Theme
 import unipd.esp2526.Simon.viewModel.Match
 import unipd.esp2526.Simon.viewModel.LanguageSwitcher
 import unipd.esp2526.Simon.viewModel.GameStatus
+import unipd.esp2526.Simon.viewModel.GamePhase
 import unipd.esp2526.Simon.viewModel.GameHistory
 import unipd.esp2526.Simon.viewModel.AudioPlayer
 
@@ -31,7 +32,7 @@ import unipd.esp2526.Simon.viewModel.AudioPlayer
  * - ViewModels initialization for language, audio and match history
  * - Game state persistence across configuration changes and activity lifecycle
  * - Navigation between the three screens (Home, Game and Detail)
- * - Audio management (pause and resume) when the activity loses foreground
+ * - Audio management (pause and resume) when the activity pauses or resumes
  *
  * Enables edge-to-edge display and applies a custom theme
  * with dark/light mode support.
@@ -42,8 +43,9 @@ import unipd.esp2526.Simon.viewModel.AudioPlayer
  * - GameScreen -> HomeScreen (on game ended, return to home)
  * - DetailScreen -> HomeScreen (return to home)
  *
- * The game state is saved and restored to preserve a match during any configuration change
- * with the exception when the activity is being closed by the user.
+ * The game state is saved and restored to preserve a match during
+ * any configuration change or suspensions with the exception
+ * when the activity is being closed by the user.
  */
 class MainActivity : AppCompatActivity()
 {
@@ -55,8 +57,7 @@ class MainActivity : AppCompatActivity()
     private val languageSwitcher: LanguageSwitcher by viewModels()
     private val audioPlayer: AudioPlayer by viewModels()
     private val gameHistory: GameHistory by viewModels()
-
-    private lateinit var gameStatus: GameStatus
+    private val gameStatus: GameStatus by viewModels()
 
     /**
      * Override onCreate method.
@@ -68,11 +69,9 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
 
-        gameStatus = GameStatus(audioPlayer)
-
+        gameStatus.initializeAudio(audioPlayer)
         audioPlayer.loadSounds(this)
         gameHistory.initDatabase(this)
-        savedInstanceState?.getBundle(KEY_GAME_STATUS)?.let { bundle -> if(gameStatus.canRestore(bundle)) gameStatus.restoreState(bundle) }
 
         enableEdgeToEdge()
 
@@ -89,12 +88,13 @@ class MainActivity : AppCompatActivity()
                             HomeScreen(
                                 gameHistory = gameHistory,
                                 languageSwitcher = languageSwitcher,
-                                onNewGame = { navigationController.navigate("GameScreen") },
+                                onNewGame = {
+                                    navigationController.navigate("GameScreen")
+                                },
                                 onMatchClick = { index ->
                                     navigationController.navigate("DetailScreen/${index}")
                                 },
                                 onClearHistory = { gameHistory.clearHistory() }
-
                             )
                         }
 
@@ -150,32 +150,28 @@ class MainActivity : AppCompatActivity()
     {
         super.onSaveInstanceState(outState)
 
-        if(::gameStatus.isInitialized)
-        {
-            val bundle = Bundle()
-            gameStatus.saveState(bundle)
-            outState.putBundle(KEY_GAME_STATUS, bundle)
-        }
+        val bundle = Bundle()
+
+        gameStatus.saveState(bundle)
+        outState.putBundle(KEY_GAME_STATUS, bundle)
     }
 
     /**
-     * Override onStop method.
+     * Override onRestoreInstanceState method.
      *
-     * Called when the activity is no longer visible.
-     *
-     * Disables game state restoration only when the activity is being
-     * permanently closed (user finishes the app).
-     * This prevents restoring a stale game state on a fresh launch.
+     * Restores the game state when the activity is recreated after a configuration change.
      */
-    override fun onStop()
+    override fun onRestoreInstanceState(savedInstanceState: Bundle)
     {
-        super.onStop()
-        if(isFinishing())
-            gameStatus.disableRestore()
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getBundle(KEY_GAME_STATUS)?.let { bundle -> gameStatus.restoreState(bundle) }
     }
 
     /**
      * Override onPause method.
+     *
+     * Pauses all audio playback to prevent sounds from
+     * continuing when the app is not in the foreground.
      */
     override fun onPause()
     {
@@ -185,6 +181,9 @@ class MainActivity : AppCompatActivity()
 
     /**
      * Override onResume method.
+     *
+     * Resumes audio playback that was previously paused in onPause(),
+     * ensuring sound effects work correctly when the user returns to the game.
      */
     override fun onResume()
     {

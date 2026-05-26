@@ -1,5 +1,6 @@
 package unipd.esp2526.Simon.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,6 +53,8 @@ fun HomeScreen(
     onClearHistory: () -> Unit
 )
 {
+    BackHandler(enabled = true) {}
+
     val matches = gameHistory.endedMatches
 
     Box(

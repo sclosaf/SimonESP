@@ -40,7 +40,7 @@ enum class GamePhase
  *
  * @param audioPlayer Used to play sound effects
  */
-class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
+class GameStatus() : ViewModel()
 {
     companion object
     {
@@ -55,8 +55,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         private const val KEY_PLAYED_SEQUENCE = "playedSequence"
         private const val KEY_IS_PAUSED = "isPaused"
         private const val KEY_ERROR_INDEX = "errorIndex"
-        private const val KEY_CURRENT_INDEX = "computerIndex"
-        private const val KEY_ALLOW_RESTORE = "allowRestore"
+        private const val KEY_COMPUTER_INDEX = "computerIndex"
     }
 
     /**
@@ -101,12 +100,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
     var computerIndex by mutableStateOf(0)
         private set
 
-    /**
-     * Stores whether the state restoration is allowed (set to false when the activity is finishing).
-     */
-    var allowRestore = true
-        private set
-
+    private lateinit var audioPlayer: AudioPlayer
     private var hasToResume = false
     private var currentLightJob: Job? = null
 
@@ -316,6 +310,16 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
     }
 
     /**
+     * Initializes the audio player class member.
+     *
+     * @param player The AudioPlayer instance to be used for playing sound effects
+     */
+    public fun initializeAudio(player: AudioPlayer)
+    {
+        this.audioPlayer = player
+    }
+
+    /**
      * Saves the current game state into the given Bundle.
      * Used to preserve the state across configuration changes.
      *
@@ -333,9 +337,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         if(errorIndex != null)
             bundle.putInt(KEY_ERROR_INDEX, errorIndex!!)
 
-        bundle.putInt(KEY_CURRENT_INDEX, computerIndex)
-
-        bundle.putBoolean(KEY_ALLOW_RESTORE, allowRestore)
+        bundle.putInt(KEY_COMPUTER_INDEX, computerIndex)
     }
 
     /**
@@ -355,9 +357,7 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
         isPaused = bundle.getBoolean(KEY_IS_PAUSED)
 
         errorIndex = if(bundle.containsKey(KEY_ERROR_INDEX)) bundle.getInt(KEY_ERROR_INDEX) else null
-        computerIndex = bundle.getInt(KEY_CURRENT_INDEX) + 1
-
-        allowRestore = bundle.getBoolean(KEY_ALLOW_RESTORE)
+        computerIndex = bundle.getInt(KEY_COMPUTER_INDEX) + 1
     }
 
     /**
@@ -373,25 +373,6 @@ class GameStatus(private val audioPlayer: AudioPlayer) : ViewModel()
 
         if(currentPhase == GamePhase.COMPUTER)
             illuminateSequence()
-    }
-
-    /**
-     * Disables future state restorations.
-     */
-    public fun disableRestore()
-    {
-        allowRestore = false
-    }
-
-    /**
-     * Checks whether a saved Bundle can be restored.
-     *
-     * @param bundle The Bundle to check
-     * @return true if restoration is allowed
-     */
-    public fun canRestore(bundle: Bundle): Boolean
-    {
-        return bundle.getBoolean(KEY_ALLOW_RESTORE, true)
     }
 
     /**

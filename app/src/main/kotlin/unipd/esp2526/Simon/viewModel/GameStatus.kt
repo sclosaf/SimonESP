@@ -135,14 +135,12 @@ class GameStatus() : ViewModel()
         currentLightJob?.cancel()
 
         currentLightJob = viewModelScope.launch{
-            for(index in computerIndex until targetSequence.size)
+            while(computerIndex < targetSequence.size)
             {
-                computerIndex = index
-
                 while(isPaused)
                     delay(DELAY_PAUSED_GAME_DURATION_MS)
 
-                val color = targetSequence[index]
+                val color = targetSequence[computerIndex]
 
                 audioPlayer.play(color)
 
@@ -151,6 +149,8 @@ class GameStatus() : ViewModel()
 
                 if(litColor == color)
                     litColor = null
+
+                computerIndex++
 
                 delay(DELAY_BETWEEN_COLORS_DURATION_MS)
             }
@@ -348,6 +348,8 @@ class GameStatus() : ViewModel()
      */
     public fun restoreState(bundle: Bundle)
     {
+        currentLightJob?.cancel()
+
         hasToResume = true
 
         currentPhase = GamePhase.valueOf(bundle.getString(KEY_CURRENT_PHASE, GamePhase.IDLE.name))
@@ -358,10 +360,7 @@ class GameStatus() : ViewModel()
         isPaused = bundle.getBoolean(KEY_IS_PAUSED)
 
         errorIndex = if(bundle.containsKey(KEY_ERROR_INDEX)) bundle.getInt(KEY_ERROR_INDEX) else null
-        computerIndex = bundle.getInt(KEY_COMPUTER_INDEX) + 1
-
-        if(computerIndex >= targetSequence.size)
-            computerIndex = targetSequence.size - 1
+        computerIndex = bundle.getInt(KEY_COMPUTER_INDEX)
     }
 
     /**

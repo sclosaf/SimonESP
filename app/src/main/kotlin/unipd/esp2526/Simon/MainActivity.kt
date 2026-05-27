@@ -101,10 +101,7 @@ class MainActivity : AppCompatActivity()
                         composable("DetailScreen/{index}") { entry ->
                             val index = entry.arguments?.getString("index")?.toIntOrNull() ?: -1
 
-                            val match = if(index in gameHistory.endedMatches.indices)
-                            gameHistory.endedMatches[index]
-                            else
-                            Match(emptyList(), null)
+                            val match = if(index in gameHistory.endedMatches.indices) gameHistory.endedMatches[index] else Match(emptyList(), null)
 
                             DetailScreen(
                                 languageSwitcher = languageSwitcher,
